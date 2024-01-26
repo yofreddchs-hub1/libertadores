@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "./static/css/main.82648e9d.css",
+    "main.js": "./static/js/main.e8f05773.js",
+    "static/js/498.260bb6ea.chunk.js": "./static/js/498.260bb6ea.chunk.js",
+    "static/js/703.9a244083.chunk.js": "./static/js/703.9a244083.chunk.js",
+    "static/js/513.a72e5335.chunk.js": "./static/js/513.a72e5335.chunk.js",
+    "static/js/787.8a981587.chunk.js": "./static/js/787.8a981587.chunk.js",
+    "static/media/logo.png": "./static/media/logo.b1a320eb565b3414c59f.png",
+    "static/media/enconstruccion.png": "./static/media/enconstruccion.9691ae2ce76faa7c2a4e.png",
+    "static/media/noexiste.png": "./static/media/noexiste.d877c0c995ea4789a416.png",
+    "static/media/logo512.png": "./static/media/logo512.972e764437b174af304c.png",
+    "static/media/excelmock3.jpg": "./static/media/excelmock3.f05feccef5b1cf5f27f4.jpg",
+    "static/media/sindatos.png": "./static/media/sindatos.c8d69ce9593767599a7a.png",
+    "static/media/sello.png": "./static/media/sello.eea2b11c91afe46513c7.png",
+    "static/media/logor.png": "./static/media/logor.6fdd85b96ef8ddeace43.png",
+    "static/media/logomisterio.png": "./static/media/logomisterio.0f94786fa6c31ee31bc5.png",
+    "static/media/excel.png": "./static/media/excel.6a794f2f02495f3ced77.png",
+    "index.html": "./index.html",
+    "main.82648e9d.css.map": "./static/css/main.82648e9d.css.map",
+    "main.e8f05773.js.map": "./static/js/main.e8f05773.js.map",
+    "498.260bb6ea.chunk.js.map": "./static/js/498.260bb6ea.chunk.js.map",
+    "703.9a244083.chunk.js.map": "./static/js/703.9a244083.chunk.js.map",
+    "513.a72e5335.chunk.js.map": "./static/js/513.a72e5335.chunk.js.map",
+    "787.8a981587.chunk.js.map": "./static/js/787.8a981587.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.82648e9d.css",
+    "static/js/main.e8f05773.js"
+  ]
+}
