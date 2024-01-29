@@ -69,8 +69,15 @@ export const Inicio=async()=>{
     // this.setState({cargando:false, progreso:0})
     return {}
   } );
-      
-  valores.http = process.env.REACT_APP_HTTP ? process.env.REACT_APP_HTTP : valores.http;
+  let dir = window.location.protocol;
+  console.log('>>>>>>>>>>', dir)
+  if (dir==='http:'){
+    valores.http = valores.http;
+  }else{
+    valores.http = valores.https
+  }
+  console.log('>>>>>>>>>>....', valores.http)
+  // valores.http = process.env.REACT_APP_HTTP ? process.env.REACT_APP_HTTP : valores.http;
   let config = await fetch(`utilidad/json/Api_${valores.app}.json`)
       .then(response => response.json())
       .then(datos => {
