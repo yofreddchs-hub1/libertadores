@@ -14,12 +14,14 @@ const Itemd = styled(Box)(({ theme }) => ({
 export default function Recibo(props) {
     const Tletra = 7;
     const [formulario,setFormulario] = React.useState();
+    // const [formulario1,setFormulario1] = React.useState();
     const[cabezera,setCabezera]= React.useState();
     const {datos}= props;
     const {totales} = datos.valores;
     const Condicion = Ver_Valores().datos_reporte;
     const valores = datos ? datos.valores : undefined;
     const mensualidades = valores && valores.mensualidades && valores.mensualidades.meses ? valores.mensualidades.meses: [];
+    const formapago = valores && valores.Formas_pago ? valores.Formas_pago : [];
     React.useEffect(()=>{
         const Iniciar = async()=>{
             let nuevos = await genera_formulario({valores:{}, campos: Form_todos('Form_Mensualidades') });
@@ -31,12 +33,24 @@ export default function Recibo(props) {
                 borderColor:'#000',
                 border:3,
             }
+            nuevos.titulos.meses.titulos='Titulos_Mensualidad3';
             setFormulario(nuevos);
+
             let titulos = await Titulos_todos(nuevos.titulos.meses.titulos);
-            titulos[2].field='totald';
-            titulos[3].field='total';
+            
+            titulos[2].field='total';
             
             setCabezera(titulos);
+            // let nuevos1 = await genera_formulario({valores:{}, campos: Form_todos('Form_FormasPago') });
+            // nuevos1.titulos.formapago.noeliminar=true;
+            // nuevos1.titulos.formapago.nopaginar=true;
+            // nuevos1.titulos.formapago.label='';
+            // nuevos1.titulos.formapago.style={
+            //     height:'auto',
+            //     borderColor:'#000',
+            //     border:3,
+            // }
+            // setFormulario1(nuevos1);
         }
         Iniciar();
     },[props])
@@ -90,7 +104,35 @@ export default function Recibo(props) {
             <Grid xs={12}>
                 <Box sx={{height:1.2, bgcolor:color}}/>
             </Grid>
-            
+            <Grid xs={12}>
+                <Grid xs={12} item >
+                    <Typography color={color} 
+                            align={'left'}
+                            fontSize={Tletra-1} noWrap          
+                    >
+                        Forma(s) de Pago(s) 
+                    </Typography>
+                </Grid>
+                {formapago
+                    ?   formapago.map(val=>
+                            <Grid key={Generar_id()} xs={12} item>
+                                <Typography color={color} 
+                                        align={'left'}
+                                        fontSize={Tletra-1} noWrap          
+                                >
+                                    {`- ${val.titulo}, ${val.referencia ? 'Referencia: ' + val.referencia +', ' : ''}${val.moneda} ${val.monto}`} 
+                                </Typography>
+                            </Grid>
+
+                            
+                        )
+                    :   null
+                }
+                {/* {formulario1 
+                    ? <TablaReporte datos={formapago ? formapago : []}  {...formulario1 && formulario1.titulos ? formulario1.titulos.formapago : {}} Condicion={Condicion}/>     
+                    : null
+                } */}
+            </Grid>
         </Grid>
         </Box>
     );

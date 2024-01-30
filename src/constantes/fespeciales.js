@@ -6,6 +6,8 @@ export default{
             || ((['Efectivo Bolívar','Efectivo Dolar'].indexOf(params.row.titulo)!==-1) 
                 && ['fecha','bancoo','bancod'].indexOf(params.field)!==-1)
             ||  (params.field==='moneda' && params.row.titulo!=='Otro')
+            || ((['Zelle'].indexOf(params.row.titulo)!==-1) 
+                  && ['bancoo','bancod'].indexOf(params.field)!==-1)
             ){ 
             editable=false;
         } 

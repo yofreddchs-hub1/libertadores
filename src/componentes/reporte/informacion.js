@@ -10,7 +10,7 @@ export function InformacionCHS(props) {
     // console.log(props)
     const {datos, Titulo, color_letra}= props;
     const valores = datos ? datos.valores : undefined;
-    const Tletra = 10;
+    const Tletra = 8;
     const color = color_letra ? color_letra : '#000000';
     const totalL = numeroALetras(valores.subtotalvalor.total,{
         plural: "BOLIVARES",
@@ -19,19 +19,19 @@ export function InformacionCHS(props) {
         centSingular: "CENTAVO"
     });
     return (
-        <Grid container spacing={0.5}>
+        <Grid container spacing={0.3}>
             
-            <Grid xs={3.5}>
+            <Grid xs={2.5}>
                 <Box>
                     <Typography color={color} fontSize={Tletra} fontWeight={'bold'}>
                         { !props.nomostrar ? `Hemos recibido del Sr. (a): ` : ''}
                     </Typography>
                 </Box>
             </Grid>
-            <Grid xs={8.5}>
+            <Grid xs={9.5}>
                 <Box>
                     <Typography color={color} fontSize={Tletra} >
-                        {`${valores && valores.representante ? valores.representante.nombres + ' ' + valores.representante.apellidos : ''}`}
+                        {`${valores && valores.representante ?  valores.representante.nombres + ' ' + valores.representante.apellidos + ', RIF/CI: ' + valores.representante.cedula: ''}`}
                     </Typography>
                 </Box>
             </Grid>
@@ -44,7 +44,7 @@ export function InformacionCHS(props) {
             </Grid>
             <Grid xs={9.5}>
                 <Box>
-                    <Typography color={color} fontSize={Tletra-2}>
+                    <Typography color={color} fontSize={Tletra}>
                         {`${valores && valores.subtotalvalor ? totalL : ''}`}
                     </Typography>
                 </Box>

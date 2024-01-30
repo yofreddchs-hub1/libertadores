@@ -484,7 +484,7 @@ export default function AntDesignGrid(props) {
       resultado
     } = props;
     const resul = await conexiones.Leer_C([tabla_verificar],{
-      [tabla_verificar]:{[campo_verificar]:resultado[field]}
+      [tabla_verificar]:{[campo_verificar]:resultado[field] ===undefined || typeof resultado==='string' ? resultado : resultado[field]}
     })
     
     if (resul.Respuesta==='Ok'){
@@ -545,6 +545,8 @@ export default function AntDesignGrid(props) {
               || ((['Efectivo Bolívar','Efectivo Dolar'].indexOf(dato.row.titulo)!==-1) 
                   && ['fecha','bancoo','bancod'].indexOf(field)!==-1)
               ||  (field==='moneda' && dato.row.titulo!=='Otro')
+              || ((['Zelle'].indexOf(dato.row.titulo)!==-1) 
+                  && ['bancoo','bancod'].indexOf(field)!==-1)
               ){ 
               editable=false;
           } 
@@ -568,7 +570,7 @@ export default function AntDesignGrid(props) {
                   "getOptionLabel": getOptionLabel ? getOptionLabel : [
                       "titulo"
                   ],
-                  "agregar": "false",
+                  "agregar": false,
                   "form": "",
                   "titulos": "",
                   "Subtotal": "",
@@ -598,7 +600,8 @@ export default function AntDesignGrid(props) {
                       mensaje_verificar_error, mensaje_verificar_ok,
                       resultado
                     })
-                    if (result.Respuesta==='Error'){
+                    
+                    if (result!==undefined && result.Respuesta==='Error'){
                       return result
                     }
                     if (tipo==='Fecha' && typeof resultado==='object'){

@@ -3677,6 +3677,37 @@
             "flex": 2
         }
       ],
+      "Titulos_Mensualidad3": [
+        {
+            "title": "Id",
+            "field": "id",
+            "tipo": "",
+            "formato": "",
+            "default": "",
+            "type": "",
+            "width": 60,
+            "flex": 1
+        },
+        {
+            "title": "Descripción",
+            "field": "descripcion",
+            "tipo": "",
+            "formato": "",
+            "default": "",
+            "type": "",
+            "width": 470,
+            "flex": 8
+        },
+        {
+            "title": "Monto Bs.",
+            "field": "monto",
+            "tipo": "",
+            "formato": "(dato)=> dato.monto ? dato.monto : 0",
+            "default": "",
+            "type": "number",
+            "flex": 3
+        }
+      ],
       "Titulos_Mensualidad":[
         {
             "title": "_id",
