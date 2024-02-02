@@ -20,6 +20,7 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Formulario from '../../../componentes/herramientas/formulario';
 import Cargando from '../../../componentes/esperar/cargar';
+import Scrollbars from '../../../componentes/herramientas/scrolbars';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -288,12 +289,25 @@ function Recibo (props) {
                             <IconButton color={'primary'} title={'Refrescar valores de Recibos'} onClick={Refrescar}>
                                 <AutorenewIcon style={color}/>
                             </IconButton>
-                            {state.formulario ? <Formulario {...state.formulario} /> : null}
+                            {state.formulario 
+                                ?   <Box sx={{width:window.innerWidth * 0.5}}>
+                                        <Scrollbars sx={{ flexGrow: 1, width:window.innerWidth * 0.4, overflow:'auto' ,display: { xs: 'flex', md: 'flex' } }}>
+                                            <Formulario {...state.formulario} 
+                                                        config={{...Ver_Valores().config,
+                                                            Estilos:{
+                                                                Input_label:{color:'#fff'}
+                                                            }
+                                                        }}
+                                            /> 
+                                        </Scrollbars>
+                                    </Box>
+                                : null}
                         </Stack>
                     }
                     acciones1={
                         [4,'4'].indexOf(User.categoria)===-1 
-                        ?   <Stack
+                        ?   <Scrollbars sx={{ justifyContent:window.innerWidth > 750 ? "flex-end" : "", flexGrow: 1, width:window.innerWidth > 750 ? window.innerWidth * 0.97: '100%', overflow:'auto' ,display: { xs: 'flex', md: 'flex' } }}>
+                            <Stack
                                 direction="row"
                                 divider={<Divider orientation="vertical" flexItem />}
                                 spacing={1}
@@ -308,6 +322,7 @@ function Recibo (props) {
                                 <Item title={`Total obtenido por pago movil en fecha indicada`}>Pago Movil: Bs. {state.totales ? Moneda(state.totales.pagomovil,'Bs',false) : 0 }</Item>
                                 <Item title={`Total facturado en fecha indicada`}>Facturado: Bs. {state.totales ? Moneda(state.totales.total,'Bs',false) : 0 }</Item>
                             </Stack>
+                            </Scrollbars>
                         : null
                     }
             />

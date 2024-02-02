@@ -33,6 +33,7 @@ import {Form_todos, Ver_Valores, genera_formulario, Titulos_todos, Funciones_Esp
 import { conexiones } from '../../constantes';
 import moment from 'moment';
 import Dialogo from './dialogo';
+import Scrollbars from './scrolbars';
 
 function customCheckbox(theme) {
   return {
@@ -502,16 +503,16 @@ export default function AntDesignGrid(props) {
   }
   return (
     <div style={{ height: '100%', width: '100%', marginTop:15, marginBottom:15, }}>
-      <Stack direction="row" 
+      <Stack direction={window.innerWidth > 750 ? "row" : "column"} 
              spacing={1}
              justifyContent="flex-start"
              alignItems="center"
              sx={{marginBottom:2}}
       >
-        <Typography variant="h6" gutterBottom component="div" sx={{...Config ? {color:Config.Estilos.Input_label}: {}}}>
+        <Typography variant={window.innerWidth > 750 ? "h6" : "subtitle1"} gutterBottom component="div" sx={{textAlign:'left',...Config ? {color:Config.Estilos.Input_label}: {}}}>
           {Titulo ? Titulo : 'Titulo'}
         </Typography>
-        <div style={{width:'45%'}}>
+        <div style={{width:window.innerWidth > 750 ? '45%' : '100%'}}>
           {Seleccion}
         </div>
         {props.enformulario && props.agregartodos
@@ -781,10 +782,13 @@ const SubTotales= (props) =>{
                   '& .MuiDataGrid-cell:hover': {
                     color: 'primary.main',
                   },
+                  
                 ...Config ? Config.Estilos.Tabla_subtotal : {}
               }} 
       spacing={0.1} 
     >
+      <Scrollbars sx={{  justifyContent:window.innerWidth > 750 ? "flex-end" : "", flexGrow: 1, width:window.innerWidth > 750 ? '100%': '100%', overflow:'auto' ,display: { xs: 'flex', md: 'flex' } }}>
+      <Stack >
       {props.Subtotal.map((val, i)=>
         
         <Stack  key={i+'-fila'} 
@@ -816,9 +820,9 @@ const SubTotales= (props) =>{
                       Calcular({...nuevo})
                     }}
                   />
-                  <Typography variant="subtitle1"  component="div">{col.title ? col.title : ''}</Typography>
+                  <Typography variant={window.innerWidth > 750 ? "subtitle1" : "caption"}  component="div">{col.title ? col.title : ''}</Typography>
                 </Stack>
-              : <Typography variant="subtitle1"  component="div">
+              : <Typography variant={window.innerWidth > 750 ? "subtitle1" : "caption"}  component="div" noWrap= {window.innerWidth > 750 ? false : true} sx={{textAlign:'right', minWidth: window.innerWidth > 750 ? window.innerWidth * 0.06 :  70}}>
                   {col.title && !col.field
                     ? col.title 
                     : col.field && col.title
@@ -834,8 +838,10 @@ const SubTotales= (props) =>{
         )}
       </Stack>
       )}
-      
+      </Stack>
+    </Scrollbars>  
     </Stack>
+    
   )
 }
 

@@ -95,7 +95,7 @@ function Representante_pagar (props) {
                 Inicio();
             }
         })
-        Inicio()
+        Inicio();
         return ()=>{}
     }, [props])
     const {Config}= props;

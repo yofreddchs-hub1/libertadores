@@ -164,18 +164,18 @@ export default function Verificar(props) {
                     )}</Alert>
                 : null
             }
-            <Typography variant="h6" component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
+            <Typography variant={window.innerWidth > 750 ? "h6" : "subtitle1"} component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
                 DATOS DEL REPRESENTANTE
             </Typography>
             <Divider />
             
-            <Typography variant="h6"  component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
+            <Typography variant={window.innerWidth > 750 ? "h6" : "subtitle1"}  component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
                 Cedula: {props.datos.valores.cedula}
             </Typography>
-            <Typography variant="h6" component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
+            <Typography variant={window.innerWidth > 750 ? "h6" : "subtitle1"} component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
                 Nombres y Apellidos : {props.datos.valores.nombres} {props.datos.valores.apellidos}
             </Typography>
-            <Typography variant="h6" component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
+            <Typography variant={window.innerWidth > 750 ? "h6" : "subtitle1"} component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
                 Direccion : {props.datos.valores.direccion}
             </Typography>
             

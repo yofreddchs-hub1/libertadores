@@ -188,8 +188,16 @@ function Tabla_multiple (props) {
             
         // })
     // }
+    const alto = Ver_Valores().tipo==='Web' 
+                    ? window.innerWidth > 750 && window.innerHeight > 300  
+                        ? window.innerHeight* 0.84 
+                        : window.innerHeight > 300 
+                            ? window.innerHeight* 0.73 
+                            : window.innerHeight* 0.69
+                    : window.innerHeight* 0.89
+    
     return (
-        <div style={{height:props.altoCuerpo ? props.altoCuerpo : Ver_Valores().tipo==='Web' ?  window.innerHeight* 0.84 : window.innerHeight* 0.89, width: '100%',position: "relative"}}>
+        <div style={{height:props.altoCuerpo ? props.altoCuerpo : alto, width: '100%',position: "relative"}}>
             <Tabla  {...props}
                     Titulo={Titulo_tabla}
                     Config={props.Config}

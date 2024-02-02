@@ -146,17 +146,17 @@ export default function Tabla(props) {
     <Paper sx={{ width: '100%', height:'100%' }}>
       <AppBar position="static" style={{padding:10, ...Config.Estilos.Tabla_cabezera ? Config.Estilos.Tabla_cabezera : {} }}>
         <Grid container spacing={0.5} justifyContent="center" alignItems="center">
-          <Grid item xs={3}>
-            <Typography variant="h5" gutterBottom component="div" align={'left'} 
+          <Grid item xs={window.innerWidth > 750 ? 3 : 4.5}>
+            <Typography variant={window.innerWidth > 750 ? "h5" : "subtitle1"} gutterBottom component="div" align={'left'} 
                         style={{...Config.Estilos.Tabla_titulo ? Config.Estilos.Tabla_titulo : {}}}
             >
               {Titulo}
             </Typography>
           </Grid>
-          <Grid item xs={5.5} align={'left'}>
+          <Grid item xs={window.innerWidth > 750 ? 5.5 : 7.5} align={'left'}>
             {acciones? acciones : props.enformulario ? Seleccion  :null}
           </Grid>
-          <Grid item xs={3.5}>
+          <Grid item xs={window.innerWidth > 750 ? 3.5 : 12}>
             <Stack spacing={{ xs: 1, sm: 2 }} direction="row"  justifyContent="center" alignItems="center" >
               <Typography variant="caption" display="block" gutterBottom>
                 {paginacion && paginacion.total ? paginacion.total:''}
@@ -351,17 +351,16 @@ export default function Tabla(props) {
         : paginacion && paginacion !== undefined && paginacion.paginas.length > 1 ?
           <div style={{padding:5, backgroundColor:'#000000', ...Config.Estilos.Tabla_titulos ? Config.Estilos.Tabla_titulos : {}}}>
             <Grid container spacing={0.5} justifyContent="center" alignItems="center">
-              <Grid item xs={3}></Grid>
-              <Grid item xs={6}>
+              <Grid item xs={window.innerWidth > 750 ? 3 : 0}></Grid>
+              <Grid item xs={window.innerWidth > 750 ? 6 : 11}>
                 <div style={{textAlign:'center', display:'inline-flex', backgroundColor:'#fff', borderRadius:10 }}>
                   <Pagination count={paginacion.paginas.length}
-                              
-                              
-                              onChange={Cambio }
+                          onChange={Cambio}
+                          siblingCount={0}
                   />
                 </div>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={ window.innerWidth > 750 ? 3 : 0}>
                 {/* <Typography variant="subtitle1" gutterBottom component="div" align={'right'} 
                           style={{...Config.Estilos.Tabla_titulo ? Config.Estilos.Tabla_titulo : {}}}
                 >

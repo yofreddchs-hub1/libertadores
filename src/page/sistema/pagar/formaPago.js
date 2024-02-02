@@ -171,12 +171,12 @@ export default function Formapago(props) {
     return (
         <Box sx={{ textAlign:'left' }}>
             <Grid container spacing={0.5} alignItems="center">
-                <Grid item xs={6}>
-                    <Typography variant="h5" gutterBottom component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
+                <Grid item xs={window.innerWidth > 750 ? 6 : 12}>
+                    <Typography variant={window.innerWidth > 750 ? "h5" : "subtitle1"} gutterBottom component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
                         Total a Cancelar: {`$ ${props.Subtotalvalor.totald.toFixed(2)}  Bs. ${props.Subtotalvalor.total.toFixed(3)}`}
                     </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={window.innerWidth > 750 ? 6 : 12}>
                     <Alert severity={props.Totales && props.Totales.mensaje==='Puede continuar' && props.Pendiente!==true ? "success" : props.Pendiente===true ? "warning" :"error"}>
                         {props.Totales 
                             ? `${props.Pendiente===true ? 'Pago pendiente por: Aprobar o Rechazar para continuar': props.Totales.mensaje}`

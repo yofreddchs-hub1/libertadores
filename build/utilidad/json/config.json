@@ -7,14 +7,14 @@
     "cloud_name":"yofreddchs",
     "carpeta":"libertadores",
     "models":[
-                "uecla_Recibo","uecla_Eliminados","uecla_Inscripcion",
-                "uecla_Arancel", "uecla_Docente",
-                "uecla_Asignatura","uecla_Cuenta",
-                "uecla_Reporte", "uecla_Articulo",
-                "uecla_User_api","uecla_Representante",
-                "uecla_Estudiante", "uecla_Mensualidad",
-                "uecla_Portada","uecla_Pago", "uecla_Referencia" 
-            ],
+        "uecla_Recibo","uecla_Eliminados","uecla_Inscripcion",
+        "uecla_Arancel", "uecla_Docente",
+        "uecla_Asignatura","uecla_Cuenta",
+        "uecla_Reporte", "uecla_Articulo",
+        "uecla_User_api","uecla_Representante",
+        "uecla_Estudiante", "uecla_Mensualidad",
+        "uecla_Portada","uecla_Pago", "uecla_Referencia" 
+    ],
     "colores":{
         "activo":"#148E05",
         "sinactivar":"#E6E900",

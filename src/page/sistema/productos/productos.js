@@ -180,7 +180,7 @@ export default function Producto(props) {
         <div style={{width:'100%', height:'100%',position: "relative"}}>
             <Box sx={{ textAlign:'left' }}>
                 <Grid container spacing={0.5}>
-                    <Grid item xs={3}> 
+                    <Grid item xs={window.innerWidth > 750 ? 3 : 12}> 
                     {formulario
                             ? <Formulario {...formulario.Cambio} config={Config}/>
                             : null
@@ -191,7 +191,7 @@ export default function Producto(props) {
                         ?   
                                 <Grid item container justifyContent="center" alignItems="center">
                                     
-                                    <Grid item xs={10} style={{height:75}}> 
+                                    <Grid item xs={window.innerWidth > 750 ? 10 : 12} style={{height:75}}> 
                                         <div style={{marginTop:-10}}/>
                                         <Formulario {...formulario.Meses} config={Config}/>
                                     </Grid>

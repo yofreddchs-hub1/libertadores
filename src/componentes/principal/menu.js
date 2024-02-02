@@ -178,7 +178,7 @@ export default function PrimarySearchAppBar(props) {
             />
           </Search> */}
           <Typography
-            variant="h6"
+            variant={window.innerWidth > 750 ? "h6" : "subtitle1"}
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}

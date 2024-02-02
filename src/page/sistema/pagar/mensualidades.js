@@ -246,7 +246,7 @@ export default function Mensualidad(props) {
         <div style={{width:'100%', height:'100%',position: "relative"}}>
             <Box sx={{ textAlign:'left' }}>
                 <Grid container spacing={0.5}>
-                    <Grid item xs={3}> 
+                    <Grid item xs={window.innerWidth > 750 ? 3: 12}> 
                     {formulario
                             ? <Formulario {...formulario.Cambio} config={Config}/>
                             : null
@@ -256,12 +256,12 @@ export default function Mensualidad(props) {
                     {formulario && formulario.Meses
                         ?   formulario.Meses.map(val=>
                                 <Grid item container key={val._id} justifyContent="center" alignItems="center" style={{marginTop:-15}}>
-                                    <Grid item xs={4}> 
+                                    <Grid item xs={window.innerWidth > 750 ? 4 : 12}> 
                                         <Typography variant="subtitle1" component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} :{}}}>
                                             {val.label}
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={8} > 
+                                    <Grid item xs={window.innerWidth > 750 ? 8 : 12} > 
                                         <div style={{marginTop:-10}}/>
                                         <Formulario {...val.meses} config={Config}/>
                                     </Grid>

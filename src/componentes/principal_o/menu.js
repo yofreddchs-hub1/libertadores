@@ -219,7 +219,7 @@ const ResponsiveAppBar = (props) => {
                          alt="logo" 
           /> 
           <Typography
-            variant="h6"
+            variant={window.innerWidth > 750 ? "h6" : "subtitle1"}
             noWrap
             component="a"
             href="/"
@@ -284,7 +284,7 @@ const ResponsiveAppBar = (props) => {
           </Box>
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
-            variant="h5"
+            variant={window.innerWidth > 750 ? "h6" : "subtitle1"}
             noWrap
             component="a"
             href=""
