@@ -14,16 +14,16 @@ import Cargando from '../../../componentes/esperar/cargar';
 import { Condicion_Estudiante, Condicion_Representante } from '../funciones';
 import { Titulos_todos } from '../../../constantes';
 import Tabla from '../../../componentes/herramientas/tabla';
-import RConstancia from '../pdf/constancia';
+// import RConstancia from '../pdf/constancia';
 
 import Constanciapdf from '../../reportes/constancia';
 import Reporte from '../../../componentes/reporte';
-import moment from 'moment';
+// import moment from 'moment';
 
 //Iconos
-import AddIcon from '@mui/icons-material/AddCircle';
+// import AddIcon from '@mui/icons-material/AddCircle';
 import CheckIcon from '@mui/icons-material/Check';
-import CancelIcon from '@mui/icons-material/Cancel';
+// import CancelIcon from '@mui/icons-material/Cancel';
 
 import Scrollbars from '../../../componentes/herramientas/scrolbars';
 
@@ -76,42 +76,42 @@ export default function MisDatos(props) {
         Buscar();
     }
 
-    const Agregar = async(dato)=>{
-        let representante = {
-            _id: dato._id, cedula:dato.cedula, nombres:dato.nombres, apellidos: dato.apellidos, parentesco:dato.parentesco ?  dato.parentesco.titulo : ''
-        }
-        let festudiante = await genera_formulario({ valores:{representante}, campos: Form_todos('Form_Estudiante', Config) });
-        festudiante.titulos[7].value.estatus.disabled=true;
-        festudiante.titulos[8].value.representante.disabled=true;
-        festudiante.botones=[
-            {
-                name:'guardar', label:'Guardar', title:'Guardar datos de estudiante',
-                variant:"contained", color:"success", icono:<CheckIcon/>,
-                onClick: Guardar('uecla_Estudiante', Form_todos('Form_Estudiante', Config)), validar:'true', 
-                sx:{...Config.Estilos.Botones ? Config.Estilos.Botones.Aceptar : {}},
-            },
-            {
-                name:'cancelar', label:'Cancelar', title:'Cancelar',
-                variant:"contained", color:"success", icono:<CancelIcon/>,
-                onClick:()=>{
-                    CambioState({dialogo:{open:false}})
-                    Buscar()
-                }, 
-                sx:{...Config.Estilos.Botones ? Config.Estilos.Botones.Cancelar : {}},
-            }
-        ]
-        let dialogo = {
-            ...state.dialogo, 
-            open: !state.dialogo.open,
-            Titulo:'Agregar Estudiante',
-            Cuerpo: <Formulario {...festudiante} Config={Config}/>,
-            Cerrar: ()=>{
-                CambioState({dialogo:{open:false}})
-                Buscar()
-            },
-        }
-        CambioState({dialogo})
-    }
+    // const Agregar = async(dato)=>{
+    //     let representante = {
+    //         _id: dato._id, cedula:dato.cedula, nombres:dato.nombres, apellidos: dato.apellidos, parentesco:dato.parentesco ?  dato.parentesco.titulo : ''
+    //     }
+    //     let festudiante = await genera_formulario({ valores:{representante}, campos: Form_todos('Form_Estudiante', Config) });
+    //     festudiante.titulos[7].value.estatus.disabled=true;
+    //     festudiante.titulos[8].value.representante.disabled=true;
+    //     festudiante.botones=[
+    //         {
+    //             name:'guardar', label:'Guardar', title:'Guardar datos de estudiante',
+    //             variant:"contained", color:"success", icono:<CheckIcon/>,
+    //             onClick: Guardar('uecla_Estudiante', Form_todos('Form_Estudiante', Config)), validar:'true', 
+    //             sx:{...Config.Estilos.Botones ? Config.Estilos.Botones.Aceptar : {}},
+    //         },
+    //         {
+    //             name:'cancelar', label:'Cancelar', title:'Cancelar',
+    //             variant:"contained", color:"success", icono:<CancelIcon/>,
+    //             onClick:()=>{
+    //                 CambioState({dialogo:{open:false}})
+    //                 Buscar()
+    //             }, 
+    //             sx:{...Config.Estilos.Botones ? Config.Estilos.Botones.Cancelar : {}},
+    //         }
+    //     ]
+    //     let dialogo = {
+    //         ...state.dialogo, 
+    //         open: !state.dialogo.open,
+    //         Titulo:'Agregar Estudiante',
+    //         Cuerpo: <Formulario {...festudiante} Config={Config}/>,
+    //         Cerrar: ()=>{
+    //             CambioState({dialogo:{open:false}})
+    //             Buscar()
+    //         },
+    //     }
+    //     CambioState({dialogo})
+    // }
     const Resumen = async(dato)=>{
         const resultado = await conexiones.Resumen(dato);
         let {recibos, mensualidad} = resultado;

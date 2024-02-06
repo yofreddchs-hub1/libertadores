@@ -341,7 +341,8 @@ const ResponsiveAppBar = (props) => {
               onClick={async()=>{
                 if (Ver_Valores().tipo==='Electron'){
                   confirmAlert({
-                    title: 'Desea eliminar datos locales y restaurarlo desde el servidor?',
+                    title: 'Eliminar?',
+                    message:'Desea eliminar datos locales?',
                     buttons: [
                       {label: 'SI', onClick: async()=>{
                         await Iniciar_data();

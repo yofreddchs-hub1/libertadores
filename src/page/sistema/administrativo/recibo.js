@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Tabla from '../../../componentes/herramientas/tabla';
-import {Ver_Valores, conexiones, genera_formulario, Moneda, Form_todos, Titulos_todos} from '../../../constantes';
+import {Ver_Valores, conexiones, genera_formulario, Moneda, Form_todos, Titulos_todos, ReporteExcell} from '../../../constantes';
 import Dialogo from '../../../componentes/herramientas/dialogo';
 import IconButton from '@mui/material/IconButton';
 import Esperar from '../../../componentes/esperar/cargar';
@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles';
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Reporte from '../../../componentes/reporte';
+// import Reporte from '../../../componentes/reporte';
 import Recibopdf from '../pagar/pdf/recibonuevo';
 //Iconos
 import AutorenewIcon from '@mui/icons-material/Autorenew';
@@ -21,7 +21,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Formulario from '../../../componentes/herramientas/formulario';
 import Cargando from '../../../componentes/esperar/cargar';
 import Scrollbars from '../../../componentes/herramientas/scrolbars';
-import Prueba from '../../pruebas';
+// import Prueba from '../../pruebas';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -74,18 +74,19 @@ function Recibo (props) {
 
     }
     const Reporte = () =>{
-        let formulario = state.formulario ? state.formulario : Formularios;
-        FInicio= formulario.titulos[0].value.inicio.value;
-        FFin = formulario.titulos[0].value.fin.value;
-        console.log(FInicio, FFin)
-        setDialogo({
-            ...dialogo, 
-            open: !dialogo.open,
-            Titulo: `Reporte ${moment(FInicio).format('DD/MM/YYYY')} - ${moment(FFin).format('DD/MM/YYYY')}`,
-            tam:'xl',
-            Cuerpo: <Prueba Datos={state.datos} Inicio={FInicio} Fin={FFin}/>,
-            Cerrar: ()=>setDialogo({...dialogo,open:false}),
-        })
+        ReporteExcell(state.datos,FInicio, FFin, `${moment(FInicio).format('DD-MM-YYYY')} al ${moment(FFin).format('DD-MM-YYYY')}`,`Reporte${moment(FInicio).format('DD-MM-YYYY')}al${moment(FFin).format('DD-MM-YYYY')}.xlsx`)
+        // let formulario = state.formulario ? state.formulario : Formularios;
+        // FInicio= formulario.titulos[0].value.inicio.value;
+        // FFin = formulario.titulos[0].value.fin.value;
+        // console.log(FInicio, FFin)
+        // setDialogo({
+        //     ...dialogo, 
+        //     open: !dialogo.open,
+        //     Titulo: `Reporte ${moment(FInicio).format('DD/MM/YYYY')} - ${moment(FFin).format('DD/MM/YYYY')}`,
+        //     tam:'xl',
+        //     Cuerpo: <Prueba Datos={state.datos} Inicio={FInicio} Fin={FFin}/>,
+        //     Cerrar: ()=>setDialogo({...dialogo,open:false}),
+        // })
     }
 
     const Abrir = async(valores) =>{

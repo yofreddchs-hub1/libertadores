@@ -26,7 +26,7 @@ export default function Esperar(props) {
           />
           <Box sx={{ width: '100%' }}>
             <LinearProgress color="inherit"/>
-            {'>'+process.env.PUBLIC_URL}
+            
           </Box>
         </div>
       </Backdrop>

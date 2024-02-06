@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {Actualizar_datos, encriptado, Procesar, Usuario, Ver_Valores} from '../constantes';
+import {Actualizar_datos, encriptado, Procesar, Tasa_cambio, Usuario, Ver_Valores} from '../constantes';
 import { uploadImagen } from './api_cloundinary';
 
 let User; 
@@ -283,11 +283,19 @@ async function Guardar_excel(valores){
 //Colegio
 //Ver tasa de cambio
 async function ValorCambio(){
-  const resultados= await Enviar({
+  let resultados= await Enviar({
                             datos:{User},
                             http_destino:'/api/valor_dolar',
                             method:'POST',
                           });
+  console.log(resultados)
+  if (resultados.Respuesta==='Ok'){
+    await Tasa_cambio({status:'Guardar', dato:{tasa:resultados.valor}})
+  }else{
+    resultados.Respuesta='Ok';
+    resultados.valor= await Tasa_cambio({});
+  }
+  
   return resultados
 }
 //Solicitar Mensualidades
@@ -299,7 +307,7 @@ async function Mensualidades(dato, mensaje='Guardando datos...'){
                             method:'POST',
                             destino:'archivos/imagenes',
                             mensaje_esperar:mensaje,
-                          });
+                          });                    
   return resultados
 }
 //Solicitar Solvencias

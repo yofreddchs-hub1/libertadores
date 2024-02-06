@@ -117,7 +117,7 @@ export default function Respaldo() {
             <Grid xs={12}>
                 <Item sx={{bgcolor:'#000', color:'#fff'}}>RESPALDAR DATOS</Item>
             </Grid>
-            <Grid xs={4}>
+            <Grid xs={window.innerWidth > 750 ? 4 : 12}>
                 <Item>
                     <IconButton color="primary" onClick={Listados} size="large">
                         <Icon>list</Icon>
@@ -127,7 +127,7 @@ export default function Respaldo() {
                     </IconButton>
                 </Item>
             </Grid>
-            <Grid xs={4}>
+            <Grid xs={window.innerWidth > 750 ? 4 : 12}>
                 <Item>
                     <ListItem
                         secondaryAction={
@@ -140,7 +140,7 @@ export default function Respaldo() {
                             <ListItemText primary={`Total de table: ${lista.length}, Seleccionadas: ${checked.length}`} />
                         </ListItemButton>
                     </ListItem>
-                    <Scrollbars sx={{height:window.innerHeight * 0.65}}>
+                    <Scrollbars sx={{height:window.innerWidth > 750 ? window.innerHeight * 0.65 : window.innerHeight * 0.2}}>
                         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                             {lista.map((value) => {
                                 return (
@@ -168,14 +168,14 @@ export default function Respaldo() {
                     </Scrollbars>
                 </Item>
             </Grid>
-            <Grid xs={4}>
+            <Grid xs={window.innerWidth > 750 ? 4 : 12}>
                 <Item>
                     <ListItem>
                         <ListItemButton role={undefined}  dense onClick={SeleccionarT} title={checked.length!==lista.length ? 'Seleccionar Todos' : 'Quitar todos'}>
                             <ListItemText primary={`Tablas copiadas: ${listac.length} de ${checked.length}`} />
                         </ListItemButton>
                     </ListItem>
-                    <Scrollbars sx={{height:window.innerHeight * 0.65}}>
+                    <Scrollbars sx={{height:window.innerWidth > 750 ? window.innerHeight * 0.65 : window.innerHeight * 0.2}}>
                         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                             {listac.map((value) => {
                                 return (

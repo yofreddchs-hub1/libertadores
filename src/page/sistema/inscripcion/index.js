@@ -141,6 +141,7 @@ export default function Inscripcion(props) {
                 if (p!==-1){
                     pos=i;
                 }
+                return val
             })
             if (pos!==-1){
                 valor.recibo = recibos[pos].valores.recibo;

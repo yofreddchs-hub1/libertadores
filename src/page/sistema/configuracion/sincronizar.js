@@ -136,7 +136,7 @@ export default function Sincronizar() {
         <Grid xs={12}>
             <Item sx={{bgcolor:'#000', color:'#fff'}}>SINCRONIZAR DATOS</Item>
         </Grid>
-        <Grid xs={4}>
+        <Grid xs={window.innerWidth > 750 ? 4 : 12}>
               <Item>
                   <IconButton color="primary"  title={'Sincronizar desde sistema anterior a nuevo'} size="large" onClick={SincronizarAN}>
                       <Icon>swipe_right</Icon>
@@ -149,14 +149,14 @@ export default function Sincronizar() {
                   </IconButton>
               </Item>
         </Grid>
-        <Grid xs={4}>
+        <Grid xs={window.innerWidth > 750 ? 4 : 12}>
             <Item>
                 <ListItem>
                     <ListItemButton role={undefined}  dense >
                         <ListItemText primary={`Lista a Sincronizar`} />
                     </ListItemButton>
                 </ListItem>
-                <Scrollbars sx={{height:window.innerHeight * 0.65}}>
+                <Scrollbars sx={{height:window.innerWidth > 750 ? window.innerHeight * 0.65 : window.innerHeight * 0.2}}>
                     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                         {lista.map((value) => {
                             return (
@@ -184,14 +184,14 @@ export default function Sincronizar() {
                 </Scrollbars>
             </Item>
         </Grid>
-        <Grid xs={4}>
+        <Grid xs={window.innerWidth > 750 ? 4 : 12}>
             <Item>
                 <ListItem>
                     <ListItemButton role={undefined}  dense >
                         <ListItemText primary={`Lista Sincronizada`} />
                     </ListItemButton>
                 </ListItem>
-                <Scrollbars sx={{height:window.innerHeight * 0.65}}>
+                <Scrollbars sx={{height:window.innerWidth > 750 ? window.innerHeight * 0.65 : window.innerHeight * 0.2}}>
                     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                         {listac.map((value) => {
                             return (

@@ -73,10 +73,13 @@ function Referencia (props) {
                 Seleccion= {Seleccion}
                 Acciones={
                     <Stack direction="row" spacing={1}>
-                       
-                        <IconButton color={'primary'} title={'Actualizar referencia utilizadas en los recibos'} onClick={Actualizar_Referencia}>
-                            <Icon style={color}>sticky_note_2</Icon>
-                        </IconButton>
+                        {Ver_Valores().tipo!=='Electron'
+                            ?   <IconButton color={'primary'} title={'Actualizar referencia utilizadas en los recibos'} onClick={Actualizar_Referencia}>
+                                    <Icon style={color}>sticky_note_2</Icon>
+                                </IconButton>
+                            :   null
+                        }
+                        
                     </Stack>
                 }
                 

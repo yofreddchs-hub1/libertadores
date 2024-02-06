@@ -6,7 +6,7 @@ import moment from 'moment';
 import {conexiones} from './conexiones';
 import {encriptado} from './encriptado';
 import {ExcelRenderer} from 'react-excel-renderer';
-import { read, utils, writeFile } from 'xlsx';
+import { read, utils, writeFile, writeFileXLSX } from 'xlsx';
 
 let categoria_usuario;
 
@@ -119,6 +119,7 @@ export const Tasa_cambio = async(props)=>{
         tasa =  tasa.tasa ? tasa.tasa : tasa;
         nuevo_Valores({tasa})
       }
+      console.log('>>>>>>>>Tasa de cambio',tasa)
       return tasa
     }catch(error){
       return null
@@ -480,6 +481,107 @@ export const AExcell = async(data, pagina='Hoja 1', archivo='uecla.xlsx')=>{
   })
   ws["!cols"] = tamano;
   writeFile(wb,archivo,{ compression: true }); 
+}
+export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='reporte.xlsx')=>{
+
+  let datos =[
+    {
+      No:'', fecha:'', representante:'', cedular:'', recibo:'', total:'',
+      mensualidad:'', anterior:'', abono:'', diferido:'',tmensualidad:'',otro:'',
+      cedula:'', nombres: ``,
+      inscripcion:'', septiembre:'',octubre:'',noviembre:'',
+      diciembre:'',enero:'',febrero:'',marzo:'', abril:'',
+      mayo:'',junio:'', julio:'',agosto:'', tasa:'',
+    },
+    
+  ]
+  const agregar = datos[0];
+  for (var i=0;i<3;i++){
+      datos=[...datos, agregar];
+  }
+  datos=[
+    ...datos,
+    {
+      No:"No.", fecha:"Fecha", representante:"Representante", cedular:"R.I.F.", recibo:"Recibo", total:"Factura",
+      mensualidad:"Mensualidad", anterior:"Abono Aterior", abono:"Abono", diferido:"Diferido",tmensualidad:"Mensualidad",otro:'',
+      cedula:"Estudiante", nombres: "Nombres y Apellidos",
+      inscripcion:"Inscip.", septiembre:"Sep",octubre:"Oct",noviembre:"Nov",
+      diciembre:"Dic",enero:"Ene",febrero:"Feb",marzo:"Mar", abril:"Abr",
+      mayo:"May",junio:'Jun', julio:'Jul',agosto:'Ago', tasa:'Bs/$',
+    }
+  ]
+  
+  data.map((dato,i)=>{
+    const fecha = moment(dato.valores.fecha).format('DD/MM/YYYY');
+    const recibo = dato.valores.recibo;
+    const cedular = dato.valores.representante.cedula;
+    const representante = `${dato.valores.representante.nombres} ${dato.valores.representante.apellidos}`;
+    const total = Number(dato.valores.totales.total).toFixed(2);
+    const tasa = dato.valores.valorcambio;
+    const tmensualidad = Number(dato.valores.subtotalvalor.total).toFixed(2);
+    let meses=[];
+    let abono = 0.00;
+    let abono_anterior=0.00;
+    let mensualidad = 0.00;
+    dato.valores.mensualidades.meses.map(mes=>{
+        if (mes.value==='abono_anterior'){
+            abono_anterior=Number(mes.monto).toFixed(2);
+        }
+        if(mes.value==='abono'){
+            console.log(recibo, mes.value, mes.monto)
+            abono=Number(mes.monto).toFixed(2);
+        }
+        return mes
+    })
+    dato.valores.mensualidades.meses.map(mes=>{
+      let pos = meses.findIndex(f=>f.cedula===mes.cedula);
+      if (pos===-1 && mes.value!=='abono_anterior' && mes.value!=='abono'){
+          meses=[...meses,{
+              cedula:mes.cedula, nombres: `${mes.nombres} ${mes.apellidos}`,
+              inscripcion:'', septiembre:'',octubre:'',noviembre:'',
+              diciembre:'',enero:'',febrero:'',marzo:'', abril:'',
+              mayo:'',junio:'', julio:'',agosto:'',
+          }];
+          
+          meses[meses.length-1][mes.value]=mes.monto;
+          mensualidad+=mes.monto;
+      }else if (pos!==-1){
+          meses[pos][mes.value]= Number(mes.monto).toFixed(2);
+          mensualidad+=mes.monto;
+      }
+    })
+    meses.map(val=>{
+      datos=[...datos,{
+          No:datos[datos.length -1].No === '' ? 1 : datos[datos.length -1].No+1 , fecha, representante, cedular, recibo, total,
+          mensualidad:mensualidad.toFixed(2),anterior:abono_anterior, abono:abono, diferido:'??',tmensualidad,otro:'??',
+          ...val, tasa
+      }]
+      return
+    })
+    
+    return 
+  })
+  console.log(datos, archivo, pagina)
+  const ws = utils.json_to_sheet(datos);
+  const wb = utils.book_new();
+  utils.book_append_sheet(wb, ws, pagina);
+  console.log('.........')
+  
+  utils.sheet_add_aoa(ws, [
+    ["","Fecha:", "U.E. COLEGIO LIBERTADORES DE AMERICA","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
+    ["",moment().format("DD/MM/YYYY"),"REPORTE"],
+    ["","",`DESDE: ${moment(Inicio).format('DD/MM/YYYY')} HASTA: ${moment(Fin).format('DD/MM/YYYY')}`],
+    ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
+    ["","","","Cédula ó","No.","Monto Bs.","","Mensualidad","Mensualidad","","Total por","","Cédula","","","","","","","","","","","","","","","Factor","Total en",""],
+    ["No.","Fecha","Representante","R.I.F.","Recibo","Factura","Mensualidad","Abono Aterior","Abono","Diferido","Mensualidad","","Estudiante","Nombres y Apellidos","Inscip.","Sep","Oct","Nov","Dic","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Bs/$","Divisa",""],
+  ], { origin: "A1" });
+  let tamano = Object.keys(datos[0]).map((key,i)=>{  
+    const max_width1 = datos.reduce((w, r) => Math.max(w, String(r[key]).length), 5);
+    return {wch: max_width1}
+  })
+  ws["!cols"] = tamano;
+  writeFile(wb,archivo,{ compression: true });
+  // writeFileXLSX(wb, "SheetJSReactAoO11.xlsx");
 }
 const item_form = async(val, valores, _id)=>{
   let resultado={

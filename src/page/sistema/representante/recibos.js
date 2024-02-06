@@ -92,31 +92,7 @@ function RecibosR (props) {
             }
         })
     }
-    // const Titulo = (dato)=>{
-    //     const texto = dato._id ? `Estudiante ${dato.nombres} ${dato.apellidos}`: `Nuevo Estudiante `
-    //     return <Stack
-    //                 direction={ 'row' }
-    //                 spacing={1}
-    //                 justifyContent="center" alignItems="center"
-    //             >
-    //                 {texto}
-    //                 { dato._id 
-    //                 ?   <Box>
-    //                         <IconButton size="large" color="inherit" title={'Resumen'} onClick={()=>Resumen(dato)}>
-    //                             <Icon >assignment</Icon>
-    //                         </IconButton>
-    //                         <IconButton size="large" color="inherit" title={'Constancia de Inscripción'} onClick={()=>Constancia(dato, 'inscripcion')}>
-    //                             <Icon >contact_page</Icon>
-    //                         </IconButton>
-    //                         <IconButton size="large" color="inherit" title={'Constancia de Estudio'} onClick={()=>Constancia(dato,'estudio')}>
-    //                             <Icon >portrait</Icon>
-    //                         </IconButton>
-    //                     </Box>
-    //                     : null
-    //                 }
-    //             </Stack>
-
-    // }
+   
     const Inicio = async() =>{
         let respu= await conexiones.Leer_C(['uecla_Representante'],{
             uecla_Representante:{_id:User._id}
