@@ -4245,13 +4245,13 @@
             },
             {
                 "title": "$",
-                "field": "Abonod",
+                "field": "abonod",
                 "default": 0,
-                "formato": "(dato, resultado)=>  Number(resultado.abonod ? resultado.abonod : 0)"
+                "formato": "(dato, resultado)=> dato.value==='abono' ? dato.montod + Number(resultado.abonod) : Number(resultado.abonod)"
             },
             {
                 "title": "Bs.",
-                "field": "Abono",
+                "field": "abono",
                 "default": 0,
                 "formato": "(dato, resultado)=>  Number(resultado.abono ? resultado.abono : 0)"
             },
@@ -4262,7 +4262,7 @@
                 "title": "$",
                 "field": "totald",
                 "default": 0,
-                "formato": "(dato, resultado)=>  dato.montod + Number(resultado.totald)"
+                "formato": "(dato, resultado)=>   dato.value!=='abono' ? dato.montod + Number(resultado.totald) : Number(resultado.totald)"
             },
             {
                 "title": "Bs.",

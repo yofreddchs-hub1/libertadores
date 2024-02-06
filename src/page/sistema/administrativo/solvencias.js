@@ -164,25 +164,30 @@ function Solvencia (props) {
     const Exportar = ()=>{
         
         const texto='CANCELADO';
-        const nuevo = state.datos.map((val,i)=>{
+        const nuevo = state.datos.map((val1,i)=>{
+            let val={};
+            Object.keys(val1).map(key=>{
+                val[key] = val1[key]==='No Cancelado' ? '' : val1[key];
+                return
+            })
             return {
                 ID:i+1,
                 NOMBRES:val.nombres,
                 APELLIDOS:val.apellidos,
                 PERIODO:val.periodo,
-                INSCRIPCIÓN:val.inscripcion ? val['mensaje-inscripcion'] ? val['mensaje-inscripcion']:  texto : '',
-                SEPTIEMBRE:val.septiembre ? val['mensaje-septiembre'] ? val['mensaje-septiembre']: texto : '',
-                OCTUBRE:val.octubre ? val['mensaje-octubre'] ? val['mensaje-octubre']:  texto : '',
-                NOVIEMBRE:val.noviembre ? val['mensaje-noviembre'] ? val['mensaje-noviembre']:  texto : '',
-                DICIEMBRE:val.diciembre ? val['mensaje-diciembre'] ? val['mensaje-diciembre']: texto : '',
-                ENERO:val.enero ? val['mensaje-enero'] ? val['mensaje-enero']: texto : '',
-                FEBRERO:val.febrero ? val['mensaje-febrero'] ? val['mensaje-febrero']: texto : '',
-                MARZO:val.marzo ? val['mensaje-marzo'] ? val['mensaje-marzo']: texto : '',
-                ABRIL:val.abril ? val['mensaje-abril'] ? val['mensaje-abril']: texto : '',
-                MAYO:val.mayo ? val['mensaje-mayo'] ? val['mensaje-mayo']: texto : '',
-                JUNIO:val.junio ? val['mensaje-junio'] ? val['mensaje-junio']: texto : '',
-                JULIO:val.julio ? val['mensaje-julio'] ? val['mensaje-julio']: texto : '',
-                AGOSTO:val.agosto ? val['mensaje-agosto'] ? val['mensaje-agosto']: texto : '',
+                INSCRIPCIÓN:val.inscripcion ? val['mensaje-inscripcion'] ? val['mensaje-inscripcion'].toUpperCase():  texto : '',
+                SEPTIEMBRE:val.septiembre ? val['mensaje-septiembre'] ? val['mensaje-septiembre'].toUpperCase(): texto : '',
+                OCTUBRE:val.octubre ? val['mensaje-octubre'] ? val['mensaje-octubre'].toUpperCase():  texto : '',
+                NOVIEMBRE:val.noviembre ? val['mensaje-noviembre'] ? val['mensaje-noviembre'].toUpperCase():  texto : '',
+                DICIEMBRE:val.diciembre ? val['mensaje-diciembre'] ? val['mensaje-diciembre'].toUpperCase(): texto : '',
+                ENERO:val.enero ? val['mensaje-enero'] ? val['mensaje-enero'].toUpperCase(): texto : '',
+                FEBRERO:val.febrero ? val['mensaje-febrero'] ? val['mensaje-febrero'].toUpperCase(): texto : '',
+                MARZO:val.marzo ? val['mensaje-marzo'] ? val['mensaje-marzo'].toUpperCase(): texto : '',
+                ABRIL:val.abril ? val['mensaje-abril'] ? val['mensaje-abril'].toUpperCase(): texto : '',
+                MAYO:val.mayo ? val['mensaje-mayo'] ? val['mensaje-mayo'].toUpperCase(): texto : '',
+                JUNIO:val.junio ? val['mensaje-junio'] ? val['mensaje-junio'].toUpperCase(): texto : '',
+                JULIO:val.julio ? val['mensaje-julio'] ? val['mensaje-julio'].toUpperCase(): texto : '',
+                AGOSTO:val.agosto ? val['mensaje-agosto'] ? val['mensaje-agosto'].toUpperCase(): texto : '',
             }
         })
         

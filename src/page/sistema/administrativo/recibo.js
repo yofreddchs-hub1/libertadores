@@ -21,6 +21,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Formulario from '../../../componentes/herramientas/formulario';
 import Cargando from '../../../componentes/esperar/cargar';
 import Scrollbars from '../../../componentes/herramientas/scrolbars';
+import Prueba from '../../pruebas';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -72,6 +73,21 @@ function Recibo (props) {
         })
 
     }
+    const Reporte = () =>{
+        let formulario = state.formulario ? state.formulario : Formularios;
+        FInicio= formulario.titulos[0].value.inicio.value;
+        FFin = formulario.titulos[0].value.fin.value;
+        console.log(FInicio, FFin)
+        setDialogo({
+            ...dialogo, 
+            open: !dialogo.open,
+            Titulo: `Reporte ${moment(FInicio).format('DD/MM/YYYY')} - ${moment(FFin).format('DD/MM/YYYY')}`,
+            tam:'xl',
+            Cuerpo: <Prueba Datos={state.datos} Inicio={FInicio} Fin={FFin}/>,
+            Cerrar: ()=>setDialogo({...dialogo,open:false}),
+        })
+    }
+
     const Abrir = async(valores) =>{
         const {mensualidades, Formas_pago, recibo, subtotalvalor, totales}=valores.valores
         let Fmensualidad = await genera_formulario({valores:mensualidades, campos: Form_todos('Form_Mensualidades') })
@@ -288,6 +304,9 @@ function Recibo (props) {
                         <Stack direction="row" spacing={1}>
                             <IconButton color={'primary'} title={'Refrescar valores de Recibos'} onClick={Refrescar}>
                                 <AutorenewIcon style={color}/>
+                            </IconButton>
+                            <IconButton color={'primary'} title={'Reporte'} onClick={Reporte}>
+                            <Icon style={color}>assignment</Icon>
                             </IconButton>
                             {state.formulario 
                                 ?   <Box sx={{width:window.innerWidth * 0.5}}>

@@ -472,9 +472,14 @@ export const Excell = async(archivo)=>{
 }
 //Guardar de json a excell
 export const AExcell = async(data, pagina='Hoja 1', archivo='uecla.xlsx')=>{
-  var wb =utils.book_new(), ws=utils.json_to_sheet(data);
+  const wb =utils.book_new(), ws=utils.json_to_sheet(data);
   utils.book_append_sheet(wb,ws,pagina);
-  writeFile(wb,archivo); 
+  let tamano = Object.keys(data[0]).map((key,i)=>{
+    const max_width1 = data.reduce((w, r) => Math.max(w, String(r[key]).length), 10);
+    return {wch: max_width1+1}
+  })
+  ws["!cols"] = tamano;
+  writeFile(wb,archivo,{ compression: true }); 
 }
 const item_form = async(val, valores, _id)=>{
   let resultado={
