@@ -6,7 +6,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import { Titulos_todos, Moneda, Generar_id } from '../../constantes';
 const Item = styled(Box)(({ theme }) => ({
-    color:'#000', padding:2, border: '2px solid black'
+    color:'#000', padding:2, border: '0.5px solid black'
 }));
 const Itemd = styled(Box)(({ theme }) => ({
     color:'#000', padding:1, //border: '1px solid grey'
@@ -19,6 +19,7 @@ export default function TablaReporte(props) {
     const {Condicion} = props;
     const color = '#000000';
     const Tletra = 7;
+    
     const Cabezera = ()=>{
 
         return(
@@ -51,14 +52,13 @@ export default function TablaReporte(props) {
             <Grid key={Generar_id()} container xs={12} spacing={0}>
                 {cabezera.map(val=>{
                     let valor = val.type && val.type==='number' ? Number(dat[val.field]).toFixed(2) : dat[val.field];
-                    if (['precio','total'].indexOf(val.field)!==-1){
+                    if (['precio','total','monto'].indexOf(val.field)!==-1){
                         valor = Condicion 
                                 && Condicion.moneda 
                                 && Condicion.moneda._id===1 
                                 ? Moneda(Number(dat[val.field]),'$',false)
-                                : Moneda(Number(dat[val.field] * Number(Condicion.tasa)),'Bs', false)
+                                : Moneda(Number(dat[val.field]),'Bs', false)
                     }
-                    
                     return(
                         <Grid key={Generar_id()} xs={val.flex ? val.flex : 12/cabezera.length}>
                             <Itemd component="div" >

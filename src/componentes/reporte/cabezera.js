@@ -20,7 +20,7 @@ export function CabezeraCHS(props) {
         <Grid container spacing={0.3} sx={{mt:-1}}>
             <Grid xs={3}>
                 <Box component={'div'}>
-                    <img alt='logo' src={logo} height={55}/>
+                    <img alt='logo' src={logo} height={58}/>
                 </Box>
             </Grid>
             <Grid xs={8.2}>
@@ -52,7 +52,14 @@ export function CabezeraCHS(props) {
                                 fontFamily={'Calibri (Cuerpo)'}
                                 sx={{ fontWeight:'bold'}}           
                     >
-                        Falcón. Telf (0268) 253.04.45
+                        Falcón. Telf 0426-3676002
+                    </Typography>
+                    <Typography color={color} 
+                                fontSize={Tletrad}
+                                fontFamily={'Calibri (Cuerpo)'}
+                                sx={{ fontWeight:'bold'}}           
+                    >
+                        https://ue-libertadores-de-america.onrender.com
                     </Typography>
                 </Box>
             </Grid>

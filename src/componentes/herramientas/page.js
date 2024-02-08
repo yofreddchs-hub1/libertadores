@@ -764,7 +764,7 @@ export default function Page(props) {
       }
       <div className={classes.item}>
         {props.datos.Mensaje.tipo && props.datos.Mensaje
-          ? props.datos.Mensaje.tipo==='Error' 
+          ? props.datos.Mensaje.tipo==='Error' || props.datos.Mensaje.tipo==='Error_c'
           ? <Alert severity="error" >{props.datos.Mensaje.mensaje ? props.datos.Mensaje.mensaje : props.datos.Mensaje.Mensaje}</Alert>
           : <Alert severity="success">Proceso realizado con exito</Alert>
           : null

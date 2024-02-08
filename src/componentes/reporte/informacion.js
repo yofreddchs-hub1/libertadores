@@ -15,8 +15,8 @@ export function InformacionCHS(props) {
     const totalL = numeroALetras(valores.subtotalvalor.total,{
         plural: "BOLIVARES",
         singular: "BOLIVAR",
-        centPlural: "CENTAVOS",
-        centSingular: "CENTAVO"
+        centPlural: "CENTIMOS",
+        centSingular: "CENTIMO"
     });
     return (
         <Grid container spacing={0.3}>

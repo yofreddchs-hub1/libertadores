@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles';
 import moment from 'moment';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-// import Reporte from '../../../componentes/reporte';
+import Reporte from '../../../componentes/reporte';
 import Recibopdf from '../pagar/pdf/recibonuevo';
 //Iconos
 import AutorenewIcon from '@mui/icons-material/Autorenew';
@@ -73,7 +73,8 @@ function Recibo (props) {
         })
 
     }
-    const Reporte = () =>{
+
+    const ReporteM = () =>{
         ReporteExcell(state.datos,FInicio, FFin, `${moment(FInicio).format('DD-MM-YYYY')} al ${moment(FFin).format('DD-MM-YYYY')}`,`Reporte${moment(FInicio).format('DD-MM-YYYY')}al${moment(FFin).format('DD-MM-YYYY')}.xlsx`)
         // let formulario = state.formulario ? state.formulario : Formularios;
         // FInicio= formulario.titulos[0].value.inicio.value;
@@ -306,7 +307,7 @@ function Recibo (props) {
                             <IconButton color={'primary'} title={'Refrescar valores de Recibos'} onClick={Refrescar}>
                                 <AutorenewIcon style={color}/>
                             </IconButton>
-                            <IconButton color={'primary'} title={'Reporte'} onClick={Reporte}>
+                            <IconButton color={'primary'} title={'Reporte'} onClick={ReporteM}>
                             <Icon style={color}>assignment</Icon>
                             </IconButton>
                             {state.formulario 

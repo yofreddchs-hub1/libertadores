@@ -31,7 +31,7 @@ export default function Recibo(props) {
             nuevos.titulos.meses.style={
                 height:'auto',
                 borderColor:'#000',
-                border:3,
+                border:1,
             }
             nuevos.titulos.meses.titulos='Titulos_Mensualidad3';
             setFormulario(nuevos);
@@ -77,6 +77,7 @@ export default function Recibo(props) {
             {cabezera
                 ?   cabezera.map((val, i)=>{
                         // console.log('>>>>>>>>>>>>>>',val.field, totales[val.field])
+                        
                         let valor = totales[val.field]
                             ?   Condicion 
                                 && Condicion.moneda 
