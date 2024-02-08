@@ -621,7 +621,7 @@ export default function AntDesignGrid(props) {
                   },
                   sx:{...Config.Estilos.Botones ? Config.Estilos.Botones.Aceptar : {}},
                 },
-                ...dato.colDef.verificar ? [
+                ...dato.colDef.verificar==='quitar por ahora' ? [
                   {
                     name:'verificar', label:'Buscar', title: mensaje_verificar ? mensaje_verificar : `Comprueba si existe ${field}`,
                     variant:"contained", color:"success", icono:<Icon>pageview</Icon>,

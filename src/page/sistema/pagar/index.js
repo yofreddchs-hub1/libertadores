@@ -56,16 +56,27 @@ export default function Pagar(props) {
     let abonod=0;
     let aprobar = true;
     formapago.map(val=>{
-      
-      // Object.keys(val).filter(f=>['_id','titulo','value','permisos','id'].indexOf(f)===-1).map(n=>{
-      //   console.log(val.value, n);
-      //   if(val.value==='debito' && ['bancod'].indexOf(n)===-1){
-      //     aprobar = Aprobar(val[n]);
-      //   }else if (['efectivobolivar','efectivodolar'].indexOf(val.value)!==-1 && ['monto'].indexOf(n)!==-1){
-      //     aprobar = Aprobar(val[n]);
-      //   }
-      //   return n
-      // })
+      console.log(val)
+      // Object.keys(val).filter(f=>['_id','titulo','value','permisos','id'].indexOf(f)===-1)
+      const operaciones = ["bancoo","bancod","referencia"]
+      operaciones.map(n=>{
+        console.log(val.value, n);
+        if (
+          (n==='bancoo' && ['transferencia','debito', 'pagomovil'].indexOf(val.value)!==-1)
+          ||
+          (n==='bancod' && ['transferencia', 'pagomovil'].indexOf(val.value)!==-1)
+          ||
+          (n==='referencia')
+        ){
+          aprobar = Aprobar(val[n]);
+        }
+        // if(val.value==='debito' && ['bancod'].indexOf(n)===-1){
+        //   aprobar = Aprobar(val[n]);
+        // }else if (['efectivobolivar','efectivodolar'].indexOf(val.value)!==-1 && ['monto'].indexOf(n)!==-1){
+        //   aprobar = Aprobar(val[n]);
+        // }
+        return n
+      })
       if (['efectivodolar','zelle','otro'].indexOf(val.value)===-1 ||(val.value==='otro' && val.moneda==='Bs')){
         bolivar+= val.monto ? Number(val.monto) : 0;
       }else{
@@ -83,7 +94,7 @@ export default function Pagar(props) {
     
     let mensaje = '';
     if (Number(restan.toFixed(2))<0){
-      mensaje= 'El monto es menor al monto a cancelar, ';
+      mensaje= `El monto es menor al monto a cancelar${!aprobar? ', ': ''}`;
     }
     if (!aprobar){
       mensaje = mensaje + 'Debe indicar todos los datos';

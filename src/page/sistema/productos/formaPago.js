@@ -104,7 +104,7 @@ export default function Formapago(props) {
             <Grid container spacing={0.5} alignItems="center">
                 <Grid item xs={window.innerWidth > 750 ? 6 : 12}>
                     <Typography variant={window.innerWidth > 750 ? "h5" : "subtitle1"} gutterBottom component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
-                        Total a Cancelar: {`$ ${props.Subtotalvalor.totald.toFixed(2)}  Bs. ${props.Subtotalvalor.total.toFixed(3)}`}
+                        Total a Cancelar: {`$ ${props.Subtotalvalor.totald.toFixed(2)}  Bs. ${props.Subtotalvalor.total.toFixed(2)}`}
                     </Typography>
                 </Grid>
                 <Grid item xs={window.innerWidth > 750 ? 6 : 12}>

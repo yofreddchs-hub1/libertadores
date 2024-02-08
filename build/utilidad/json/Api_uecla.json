@@ -3915,7 +3915,7 @@
             "tabla_verificar":"uecla_Referencia",
             "campo_verificar":"valores.referencia",
             "mensaje_verificar":"Verifica si se encuentra registrada la referencia",
-            "mensaje_verificar_error": "Referecia utilizada en el recibo: ",
+            "mensaje_verificar_error": "Referecia utilizada en recibo: ",
             "mensaje_verificar_ok":"Referencia no se encuentra registrada"
         },
         {
