@@ -288,7 +288,7 @@ async function ValorCambio(){
                             http_destino:'/api/valor_dolar',
                             method:'POST',
                           });
-  console.log(resultados)
+  
   if (resultados.Respuesta==='Ok'){
     await Tasa_cambio({status:'Guardar', dato:{tasa:resultados.valor}})
   }else{

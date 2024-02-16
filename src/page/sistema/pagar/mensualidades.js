@@ -223,11 +223,14 @@ export default function Mensualidad(props) {
         // console.log(Fmeses);
         //los datos de la mensualidades cuando sea pago previo
         let mensualidades=props.Mensualidades ? props.Mensualidades : {meses:[]}
-        let Fmensualidad = await genera_formulario({valores:mensualidades, campos: Form_todos('Form_Mensualidades', Config) })
+        let Fmensualidad = {... await genera_formulario({valores:mensualidades, campos: Form_todos('Form_Mensualidades', Config) })}
         Fmensualidad.titulos.meses.noeliminar=true;
         Fmensualidad.titulos.meses.nopaginar=true;
         Fmensualidad.titulos.meses.style={height:280};
         Fmensualidad.titulos.meses.Subtotalvalor= props.Subtotalvalor;
+        Fmensualidad.titulos.meses.Subtotal[0][1].default= props.Subtotalvalor.abonod ? props.Subtotalvalor.abonod : 0;
+        Fmensualidad.titulos.meses.Subtotal[0][2].default= props.Subtotalvalor.abono ? props.Subtotalvalor.abono : 0;
+        console.log(Fmensualidad.titulos)
         // nuevos.titulos.representados.noeliminar=true;
         // nuevos.titulos.representados.style={height:250, width:775};
         Mensualidades= props.Meses ? props.Meses : {}

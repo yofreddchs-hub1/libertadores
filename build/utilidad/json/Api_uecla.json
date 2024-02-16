@@ -4247,13 +4247,14 @@
                 "title": "$",
                 "field": "abonod",
                 "default": 0,
-                "formato": "(dato, resultado)=> dato.value==='abono' ? dato.montod + Number(resultado.abonod) : Number(resultado.abonod)"
+                "formato": "(dato, resultado)=> dato.value==='abono' ? dato.montod ? dato.montod : 0 : Number(resultado.abonod)",
+                "formato_anterior": "(dato, resultado)=> dato.value==='abono' ? dato.montod + Number(resultado.abonod) : Number(resultado.abonod)"
             },
             {
                 "title": "Bs.",
                 "field": "abono",
                 "default": 0,
-                "formato": "(dato, resultado)=>  Number(resultado.abono ? resultado.abono : 0)"
+                "formato": "(dato, resultado)=>  dato.value==='abono' ? dato.monto ? dato.monto : 0 : Number(resultado.abono)"
             },
             {
                 "title": "Total"

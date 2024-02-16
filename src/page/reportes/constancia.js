@@ -22,6 +22,7 @@ export default function Constancia(props) {
         Iniciar();
     },[props])
     const color = '#000000';
+    const colorF= '#737373';
     const Tletra = props.sizeLetra ? props.sizeLetra.Tletra : 11;
     const Tletrad = props.sizeLetra ? props.sizeLetra.Tletrad : 9;
     const Mes=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -116,9 +117,9 @@ export default function Constancia(props) {
                 </Grid>
                 {/* ------------Sello y firma--------------------- */}
                 <Grid xs={1} ></Grid>
-                <Grid xs={3} >
+                <Grid xs={2} >
                     <Box component={'div'}>
-                        <img alt='logo' src={sello} height={85}/>
+                        {/* <img alt='logo' src={sello} height={85}/> */}
                     </Box>
                 </Grid>
                 <Grid xs={6} sx={{textAlign:'center'}}>
@@ -138,9 +139,21 @@ export default function Constancia(props) {
                         {titulo}
                     </Typography>
                 </Grid>
-                <Grid xs={2} ></Grid>
+                <Grid xs={3} ></Grid>
                 {/* ------------Fin Sello y firma--------------------- */}
-                
+                <Grid xs={12}>
+                    <Box sx={{height:15}}/>
+                </Grid>
+                <Grid xs={12} sx={{textAlign:'center'}}>
+                    <Typography color={colorF}  
+                                fontSize={Tletrad-3}
+                                fontFamily={'Calibri (Cuerpo)'}
+                                sx={{ textAlign:'center'}}           
+                    >
+                        Se requiere de firma y sello
+                    </Typography>
+                    
+                </Grid>
             </Grid>
             </Box>
             {/* ---------------Pie de pagina--------------------- */}
