@@ -169,6 +169,7 @@ export default function Tabla(props) {
                   placeholder="Búsqueda…"
                   inputprops={{ 'aria-label': 'search' }}
                   onChange={props.Buscar ? props.Buscar : (value)=>console.log('Buscar =>',value.target.value)}
+                  // onKeyDown={(value)=>console.log('dejo de escribir ...', value)}
                   style={{...Config.Estilos.Tabla_buscar_input ? Config.Estilos.Tabla_buscar_input : {}}}
                 />
               </Search>
@@ -278,7 +279,7 @@ export default function Tabla(props) {
                             >
                               {column.tipo && column.tipo==='monto' 
                                 ? <div style={{textAlign:'right'}}>
-                                    {Moneda(column.formato ? column.formato(row): value, column.moneda ? column.moneda : 'Bs', true)}
+                                    {Moneda(column.formato ? column.formato(row): value, column.moneda ? column.moneda : 'Bs', true, column.digitos ? column.digitos : 2)}
                                   </div>
                                 : column.format && typeof value === 'number'
                                 ? column.format(value)

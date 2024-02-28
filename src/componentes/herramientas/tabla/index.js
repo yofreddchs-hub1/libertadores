@@ -3,6 +3,7 @@ import {Paginas, Titulo_default, Resultado_encontrados, conexiones, Ver_Valores}
 import Page from './page';
 
 const itemsF=20;
+let timeout;
 
 class Tabla extends Component {
   constructor(props) {
@@ -303,6 +304,7 @@ class Tabla extends Component {
       //   total=[...datos];
       //   datos=[];
       // }else 
+      console.log('>>>>>>>>>>>>>>por cargaporpate')
       if (value===''){
         datos=[...total];
       }
@@ -335,23 +337,32 @@ class Tabla extends Component {
       
       // this.setState({ datos:nuevodatos, paginacion, pagina, actualizando:false, buscar:value})
       this.setState({[name]:value});
-      let resultados= await conexiones.Leer_C([table], 
-        {
-          [table]:{$text: {$search: value, $caseSensitive: false}},
+
+      
+      clearTimeout(timeout)
+      timeout=setTimeout(async() => {
+        // console.log('>>>>>>>>>>>>>>termino')
+        let resultados= await conexiones.Leer_C([table], 
+          {
+            [table]:{$text: {$search: value, $caseSensitive: false}},
+            
+          }
+        );
+        // console.log(resultados.datos[table])
+        let nuevodatos=ordenar ? ordenar(Resultado_encontrados(resultados.datos[table],value)) : Resultado_encontrados(resultados.datos[table],value);
+        let paginacion =Paginas({
+          datos:nuevodatos, cantp: items,
+          pagina: pagina,
+          buscar: this.state.buscar,
           
-        }
-      );
-      let nuevodatos=ordenar ? ordenar(resultados.datos[table]) : resultados.datos[table];
-      let paginacion =Paginas({
-        datos:nuevodatos, cantp: items,
-        pagina: pagina,
-        buscar: this.state.buscar,
+        });
         
-      });
+        paginacion.cantidad=items;
+        
+        this.setState({ datos:nuevodatos, paginacion, pagina, actualizando:false})  
+        clearTimeout(timeout)
+      }, 1000);
       
-      paginacion.cantidad=items;
-      
-      this.setState({ datos:nuevodatos, paginacion, pagina, actualizando:false,})
     }else{
 
       this.setState({[name]:value});

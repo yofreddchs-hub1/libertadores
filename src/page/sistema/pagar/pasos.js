@@ -101,7 +101,8 @@ export default function Pasos(props) {
             size="small"
             onClick={handleNext}
             disabled={siguiente}
-            style={{color:siguiente ? '#B0AFAF' : Config ? Config.Estilos.Input_label.color : '#fff'}}
+            variant="contained"
+            style={{backgroundColor:'#3E9707', color:siguiente ? '#B0AFAF' : '#fff'}}
           >
             { activeStep === maxSteps - 2 && !props.enviando
               ? 'Enviar'
@@ -119,7 +120,7 @@ export default function Pasos(props) {
           </Button>
         }
         backButton={ 
-          <Button size="small" onClick={handleBack} style={{color:anterior ? '#B0AFAF' :  Config ? Config.Estilos.Input_label.color : '#fff'}} disabled={anterior}>
+          <Button size="small" onClick={handleBack}  variant="contained" style={{backgroundColor:'#BEB802',color:anterior ? '#B0AFAF' :  '#fff'}} disabled={anterior}>
               {theme.direction === 'rtl' ? (
                 <KeyboardArrowRight />
               ) : (

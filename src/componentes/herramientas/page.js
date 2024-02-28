@@ -360,7 +360,7 @@ export default function Page(props) {
           id: "filled-"+valor,
           key: "filled-"+valor,
           name: valor,
-          value: values.resultados[valor]!==null && values.resultados[valor]!==undefined ? values.resultados[valor]: '',
+          value: values.resultados[valor]!==null && values.resultados[valor]!==undefined ? values.resultados[valor]: lista[valor].default ? lista[valor].default :'',
           label: lista[valor].label,
           type: lista[valor].type,
           lista:lista[valor].lista,

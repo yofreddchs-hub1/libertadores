@@ -103,7 +103,18 @@ const ResponsiveAppBar = (props) => {
   if (selectedIndex===undefined && Config.Menu) setSelectedIndex(Config.Menu[0].value)
 
   const Menus = (menus, reducido)=>{
-    const {tipo, User} = Ver_Valores();
+    const {tipo, User, categoria_usuario} = Ver_Valores();
+    // User && User!==null && 
+    let categoria = !User ? undefined:User.categoria._id ? categoria_usuario[User.categoria._id] : categoria_usuario[User.categoria];
+    if (User && User.permisos){
+      // categoria.permisos=[...categoria.permisos, ...User.permisos.split(',')];
+      User.permisos.split(',').map(valor=>{
+        if (categoria.permisos.indexOf(valor)===-1){
+          categoria.permisos= [...categoria.permisos, valor];
+        }
+        return valor
+      })
+    }
     return !User ? null : menus.map((page,i) => {
       let mostrar = false;
       
@@ -112,9 +123,12 @@ const ResponsiveAppBar = (props) => {
           // Representante
           || (page.libre==='false' && ([4,'4'].indexOf(User.categoria)!==-1 && page.representante))
           //Configuracion solo web
-          || (page.libre==='false' &&(tipo==='Web' && page.web))
+          || (page.libre==='false' && [0,'0'].indexOf(User.categoria)!==-1 && (tipo==='Web' && page.web))
           //Administracion 
-          || (page.libre==='false' && ([0,'0'].indexOf(User.categoria)!==-1 && !page.representante && !page.web))
+          || (page.libre==='false' && ([0,'0', 1, '1'].indexOf(User.categoria)!==-1 && !page.representante && !page.web))
+          //Los demas
+          || (page.libre==='false' && (categoria.permisos.indexOf('*')!==-1 && !page.representante && !page.web))
+          || (page.libre==='false' && (categoria.permisos.indexOf(page.value)!==-1 && !page.representante && !page.web))
         ){
         mostrar = true;
       }//else if (page.libre==='false' &&(tipo==='Web' && page.web)){//Adminstrativo
@@ -164,6 +178,13 @@ const ResponsiveAppBar = (props) => {
             }}
           >
             {page.childen.map(val=>
+              categoria &&
+              (
+                categoria.permisos.indexOf('*')!==-1
+                ||
+                categoria.permisos.indexOf(val.value)!==-1
+              )
+              ?
               <MenuItem key={val.value} 
                 onClick={()=>{
                   handleCloseNavMenu(val,page);
@@ -176,7 +197,7 @@ const ResponsiveAppBar = (props) => {
                 </ListItemIcon>
                 <Typography textAlign={reducido ? "left" : "center"} >{val.primary}</Typography>
               </MenuItem>
-              
+              : null
             )}
           </Menu>
           : null

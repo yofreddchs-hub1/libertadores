@@ -208,6 +208,9 @@ class InicioPrincipal extends Component {
       
     })
     socket.on("Actualizar", async (datos)=>{
+      if (datos==='uecla_User_api'){
+        this.Refrescar();
+      }
       if (Ver_Valores().tipo==='Electron'){
         let fechaexterna = new Date(datos);
         let fechalocal =  await Ultima_fecha();
@@ -240,6 +243,21 @@ class InicioPrincipal extends Component {
   Refrescar = async()=>{
     let Config = await Inicio();
     let User = await Usuario();
+    if (User && User!==null){
+      let nuevo = await conexiones.Leer_C(['uecla_user_api'],{
+        uecla_user_api:{'valores.username':User.username}
+      })
+      if(nuevo.Respuesta==='Ok'){
+        nuevo = nuevo.datos.uecla_user_api.length!==0 ? nuevo.datos.uecla_user_api[0].valores : null
+        if((nuevo && nuevo.categoria.titulo!== User.categoria.titulo) || (nuevo && nuevo.permisos!==User.permisos)){
+          User.categoria= nuevo.categoria;
+          User.permisos= nuevo.permisos;
+          await Usuario({status:'Guardar', dato:User});
+          window.location.reload();
+        }
+        
+      }
+    }
     this.setState({Config, User:{...User, userID: this.state.User && this.state.User.userID ? this.state.User.userID : null}, esperar:false});
     window.addEventListener('online', this.Conectado);
     window.addEventListener('offline', this.Conectado);

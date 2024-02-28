@@ -2598,6 +2598,84 @@
               }
           ]
       },
+      "Form_horario": {
+        "columna": 4,
+        "value": [
+            {
+                "nombre": "periodo",
+                "name": "periodo",
+                "label": "Periodo",
+                "placeholder": "Periodo Académico",
+                "title": "Periodo Académico",
+                "required": "false",
+                "disabled": false,
+                "tipo": "lista_multiuso",
+                "lista": "uecla_Inscripcion",
+                "multiple": false,
+                "agregar": false,
+                "getOptionLabel": [
+                    "periodo"
+                ],
+                "form": "Form_Inscripcion",
+                "cargar":true,
+                "ordenar":"(lista)=> lista.sort((a,b)=> a.periodo>b.periodo ? -1 : 1)"
+            },
+            {
+                "nombre": "tipo",
+                "tipo": "lista_multiuso",
+                "label": "Tipo Horario",
+                "placeholder": "Tipo Horario",
+                "title": "Tipo Horario",
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_tipo_horario",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "key": "tipo",
+                "name": "tipo",
+                "multiline": false,
+                "cargar":true
+            },
+            {
+                "nombre": "grado",
+                "tipo": "lista_multiuso",
+                "label": "Grado",
+                "placeholder": "Grado",
+                "title": "Grado",
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_colegio_grado",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "key": "grado",
+                "name": "grado",
+                "multiline": false,
+                "cargar":true
+            },
+            {
+                "nombre": "lista",
+                "tipo": "lista_multiuso",
+                "label": "Datos",
+                "placeholder": "Datos",
+                "title": "Datos",
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_colegio_seccion",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "key": "lista",
+                "name": "lista",
+                "multiline": false,
+                "cargar":true
+            }
+        ]
+    },
       "Form_User_api": {
         "columna": 2,
         "value": [
@@ -2649,6 +2727,11 @@
             "key": "nombre",
             "name": "nombre",
             "placeholder": "Nombre y Apellido"
+          },
+          {
+            "key": "permisos",
+            "name": "permisos",
+            "placeholder": "Permisos Adicionales Ejempo, guardar"
           }
         ]
       },
@@ -2694,7 +2777,7 @@
     {
         "_id": 2,
         "titulo": "Personal",
-        "permisos": []
+        "permisos": ["Cobranza", "Pagar", "Administrativo", "Representantes","Estudiantes"]
     },
     {
         "_id": 3,
@@ -2704,7 +2787,7 @@
     {
         "_id": 4,
         "titulo": "Representante",
-        "permisos": ["Representante","/representante"]
+        "permisos": ["Representante","/representante","Pagar", "RecibosR", "MisDatos"]
     },
     {
         "_id": 5,
@@ -2716,6 +2799,30 @@
         "titulo": "Contador",
         "permisos": ["Sistema","/sistema","recibos", "Recibos"]
     }
+    ],
+    "lista_tipo_horario": [
+        {
+            "_id": 0,
+            "titulo": "Secciones",
+            "value": "seccion",
+            "permisos": "",
+            "id": 1,
+            "otro": ""
+        },
+        {
+            "_id": 1,
+            "titulo": "Docentes",
+            "value": "docente",
+            "permisos": "",
+            "id": 2,
+            "otro": ""
+        },
+        {
+            "_id": 2,
+            "titulo": "Aula",
+            "value": "aula",
+            "permisos": ""
+        }
     ],
     "lista_Meses": [
         {
@@ -2952,6 +3059,12 @@
         "_id": 1,
         "titulo": "Debito",
         "value": "debito",
+        "permisos": ""
+    },
+    {
+        "_id": 7,
+        "titulo": "Credito",
+        "value": "credito",
         "permisos": ""
     },
     {
@@ -4039,8 +4152,9 @@
               "title": "Valor Dolar",
               "field": "dolar",
               "tipo": "monto",
-              "moneda": "$",
-              "formato": "(dato)=> `${dato.valores.totales.totald.toFixed(2)}`",
+              "moneda": "Bs",
+              "digitos": 4,
+              "formato": "(dato)=> `${Number(dato.valores.valorcambio).toFixed(4)}`",
               "default": "",
               "type": ""
           }

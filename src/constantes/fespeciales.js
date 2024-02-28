@@ -2,7 +2,7 @@ import moment from "moment";
 export default{
     Editores_formapago:(params)=>{
         let editable=true;
-        if ((params.row.titulo==='Debito' && ['bancod'].indexOf(params.field)!==-1) 
+        if ((['Debito','Credito'].indexOf(params.row.titulo)!==-1 && ['bancod'].indexOf(params.field)!==-1) 
             || ((['Efectivo Bolívar','Efectivo Dolar'].indexOf(params.row.titulo)!==-1) 
                 && ['fecha','bancoo','bancod'].indexOf(params.field)!==-1)
             ||  (params.field==='moneda' && params.row.titulo!=='Otro')

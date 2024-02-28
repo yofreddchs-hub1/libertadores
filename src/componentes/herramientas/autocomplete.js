@@ -24,15 +24,23 @@ export default function Listados(props) {
 
     (async () => {
       // await sleep(1e3); // For demo purposes.
-        
       if (valor.lista && typeof valor.lista!=='string'){
-        setOptions([...valor.lista]);
+        let lista =[...valor.lista];
+        if (valor.ordenar){
+          let ordenar = eval(valor.ordenar);
+          lista = ordenar(lista);
+        }
+        setOptions([...lista]);
       }else if(valor.lista.indexOf('lista_')!==-1){
         let lista = Config.Listas[valor.lista];
         if(valor.filtar){
           // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', valor.filtar)
           let filtar = eval(valor.filtar)
           lista= filtar(Ver_Valores().User, lista);
+        }
+        if (valor.ordenar){
+          let ordenar = eval(valor.ordenar);
+          lista = ordenar(lista);
         }
         if (lista===undefined) lista=[]
         setOptions([...valor.antes ? valor.antes : [], ...lista, ...valor.despues ? valor.despues : []]);
@@ -43,6 +51,10 @@ export default function Listados(props) {
           let lista= listado.datos[valor.lista].map( v=>{
             return {...v.valores ? {_id:v._id, ...v.valores, key:v._id} : v}
           })
+          if (valor.ordenar){
+            let ordenar = eval(valor.ordenar);
+            lista = ordenar(lista);
+          }
           if (active) {
             setOptions([...valor.antes ? valor.antes : [], ...lista, ...valor.despues ? valor.despues : []]);
           }

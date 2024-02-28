@@ -10,14 +10,24 @@ import { read, utils, writeFile, writeFileXLSX } from 'xlsx';
 
 let categoria_usuario;
 
-export const Moneda = (valor, moneda='Bs', mostrar=true)=>{
+export const Moneda = (valor, moneda='Bs', mostrar=true, digitos=2)=>{
   
   if (moneda==='Bs'){
-    let resultado = formatoBolivar.format(valor);
+    const fBolivar = new Intl.NumberFormat('es-VE', {
+      style: 'currency',
+      currency: 'VED',
+      minimumFractionDigits: digitos
+    })
+    let resultado = fBolivar.format(valor);
     resultado = resultado.replace('VED',mostrar ? 'Bs.' : '')
     return resultado
   }else{
-    let resultado = formatoDolar.format(valor);
+    const fDolar = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: digitos
+    })
+    let resultado = fDolar.format(valor);
     resultado = resultado.replace('$', mostrar ? '$' : '');
     return resultado
   }
@@ -70,13 +80,11 @@ export const Inicio=async()=>{
     return {}
   } );
   let dir = window.location.protocol;
-  console.log('>>>>>>>>>>', dir)
   if (dir==='http:'){
     valores.http = valores.http;
   }else{
     valores.http = valores.https
   }
-  console.log('>>>>>>>>>>....', valores.http)
   // valores.http = process.env.REACT_APP_HTTP ? process.env.REACT_APP_HTTP : valores.http;
   let config = await fetch(`utilidad/json/Api_${valores.app}.json`)
       .then(response => response.json())
@@ -137,7 +145,6 @@ export const Usuario = async(props)=>{
       let User = await localStorage.getItem(const_procesos.dir_user+api);
       if (User!==null) 
         User = await encriptado.desencriptado(User);
-        
       User = JSON.parse(User);
       conexiones.Inicio(User);
       nuevo_Valores({User});
@@ -589,7 +596,7 @@ const item_form = async(val, valores, _id)=>{
     tipo: val.tipo ? val.tipo : '',
     placeholder: val.placeholder ? val.placeholder : val.label ? val.label : '',
     label: val.label ? val.label : val.placeholder ? val.placeholder : '',
-    value: valores[val.name] && val.no_mostrar!==true ? valores[val.name] : val.value ? val.value : '', 
+    value: valores[val.name] && val.no_mostrar!==true ? valores[val.name] : val.value ? val.value : val.default ? val.default : '', 
     required: val.required,
     mensaje_error: val.mensaje_error ? val.mensaje_error : val.error,
     disabled: val.disabled
@@ -598,6 +605,7 @@ const item_form = async(val, valores, _id)=>{
               ? true
               : false
   }
+  // console.log(',,,,,',resultado )
   if (val.tipo==='Lista'){
     // console.log('En lista',val, valores[val.name], typeof valores[val.name], val.lista[valores[val.name]])
 
@@ -655,10 +663,14 @@ const item_form = async(val, valores, _id)=>{
       }else {
         lista= val.lista
       };
+      
+      if (val.ordenar){
+        let ordenar = eval(val.ordenar);
+        lista = ordenar(lista);
+      }
     }else{
       lista= val.lista
     }
-    
     resultado={
       ...resultado,
       lista,
