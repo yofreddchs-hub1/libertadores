@@ -115,7 +115,8 @@ const ResponsiveAppBar = (props) => {
         return valor
       })
     }
-    return !User ? null : menus.map((page,i) => {
+    
+    return !User || !categoria ? null : menus.map((page,i) => {
       let mostrar = false;
       
       if( //Libres
