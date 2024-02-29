@@ -207,7 +207,7 @@ function Solvencia (props) {
         <div>
             {/* <div style={{width:'100%', overflowX:'auto', backgroundColor:'#0f0',   }}> */}
                 <Tabla  Titulo={"Solvencias"}
-                        alto={Ver_Valores().tipo==='Web' ? window.innerHeight * 0.67 : window.innerHeight * 0.67}
+                        alto={Ver_Valores().tipo==='Web' ? window.innerHeight * 0.67 : window.innerHeight * 0.73}
                         Config={Config ? Config : Ver_Valores().config}
                         titulos={state.titulos}
                         table={'uecla_Mensualidad'}

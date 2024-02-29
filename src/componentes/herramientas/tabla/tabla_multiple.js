@@ -19,6 +19,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import DataExcel from '../../dataexcel';
 import { conexiones, genera_formulario, crear_campos, 
           Ver_Valores} from '../../../constantes';
+import Cargando from '../../esperar/cargar';
 
 function Tabla_multiple (props) {
     
@@ -117,6 +118,15 @@ function Tabla_multiple (props) {
         //                 : await genera_fromulario({valores:{}, campos },Columnas)
         
         // Verfificar con clama el caso anterio verifica los campos guardados para mostrar esos campos ahora solo se muestra lo indicado en Form_origen
+        setDialogo({
+            ...dialogo, 
+            open: !dialogo.open,
+            Titulo:'Cargando...',
+            Cuerpo:<div style={{height:window.innerHeight * 0.4}}><Cargando Fondo={"#fff"} open={true} config={Ver_Valores().config}/></div>,
+            Cerrar: ()=>{
+                setDialogo({...dialogo,open:false});
+            },
+        })
         if (valores.valores===undefined){
             valores={_id:valores._id, valores};
         }

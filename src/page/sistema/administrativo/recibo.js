@@ -131,13 +131,13 @@ function Recibo (props) {
                     alignItems="flex-end"
                 >
                     <Typography variant="h5" gutterBottom component="div">
-                        Total : Bs. {`${subtotalvalor.total.toFixed(3) }`}
+                        Total : {`${Moneda(subtotalvalor.total) }`}
                     </Typography>
                     <Typography variant="h5" gutterBottom component="div">
-                        Total Cancelado: Bs. {`${totales.total.toFixed(3)}`}
+                        Total Cancelado: {`${Moneda(totales.total)}`}
                     </Typography>
                     <Typography variant="h5" >
-                        Abono: {`Bs. ${totales.abono.toFixed(3)}`}
+                        Abono: {`${Moneda(totales.abono)}`}
                     </Typography>
                 
                     

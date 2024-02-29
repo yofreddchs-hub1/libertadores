@@ -140,7 +140,6 @@ export const Usuario = async(props)=>{
   let {status,dato, api} = props ? props : {}
   status = status===undefined ? 'Leer' : status;
   api = api===undefined ? '' : `_${api}`;
-  console.log('>>>>>>>>>>>>>>>>>>',const_procesos.dir_user+api)
   if (status==='Leer'){
     try{
       let User = await localStorage.getItem(const_procesos.dir_user+api);

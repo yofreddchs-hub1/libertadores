@@ -89,9 +89,6 @@ function Representante (props) {
                     {texto}
                     { dato._id && !dato.password
                     ?   <Box>
-                            <IconButton size="large" color="inherit" title={'Resumen'} onClick={()=>Resumen(dato)}>
-                                <Icon >assignment</Icon>
-                            </IconButton>
                             <Alert severity="error">
                                 {`No a creado contraseña`}
                             </Alert>

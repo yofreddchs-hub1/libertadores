@@ -9,7 +9,7 @@ import Alert from '@mui/material/Alert';
 import Tabla from '../../../componentes/herramientas/tabla';
 
 // import {Condicion_Estudiante, Condicion_Representante} from '../funciones';
-import { Ver_Valores, conexiones, Form_todos, Titulos_todos } from '../../../constantes';
+import { Ver_Valores, conexiones, Form_todos, Titulos_todos, Moneda } from '../../../constantes';
 import Reporte from '../../../componentes/reporte';
 import Constanciapdf from '../../reportes/constancia';
 import Cargando from '../../../componentes/esperar/cargar';
@@ -173,13 +173,13 @@ function RecibosR (props) {
                     alignItems="flex-end"
                 >
                     <Typography variant="h5" gutterBottom component="div">
-                        Total : Bs. {`${subtotalvalor.total.toFixed(3) }`}
+                        Total : {`${Moneda(subtotalvalor.total) }`}
                     </Typography>
                     <Typography variant="h5" gutterBottom component="div">
-                        Total Cancelado: Bs. {`${totales.total.toFixed(3)}`}
+                        Total Cancelado: {`${Moneda(totales.total)}`}
                     </Typography>
                     <Typography variant="h5" >
-                        Abono: {`Bs. ${totales.abono.toFixed(3)}`}
+                        Abono: {`${Moneda(totales.abono)}`}
                     </Typography>
                 
                     

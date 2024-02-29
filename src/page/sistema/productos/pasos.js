@@ -92,7 +92,7 @@ export default function Pasos(props) {
       <MobileStepper
         variant="text"
         steps={maxSteps}
-        position="static"
+        position="bottom"
         activeStep={activeStep}
         nextButton={
           <Button
