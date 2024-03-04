@@ -195,7 +195,7 @@ function Recibo (props) {
             if ([4,'4'].indexOf(User.categoria)!==-1){
                 datos= datos.filter(f=> String(f.valores.representante._id).toLowerCase()===String(User.valores._id).toLowerCase() || f.valores.representante.cedula===User.valores.cedula)
             }
-            let totales = {total:0, pagomovil:0, transferencia:0, efectivo:0, dolar:0, debito:0, zelle:0};
+            let totales = {total:0, pagomovil:0, transferencia:0, efectivo:0, dolar:0, debito:0, credito:0, zelle:0};
             datos.map(val=>{
                 totales.total+=val.valores.totales.total;
                 val.valores.Formas_pago.map(pa=>{
@@ -203,6 +203,8 @@ function Recibo (props) {
                         totales.transferencia+=Number(pa.monto)
                     }else if (pa.value==='debito'){
                         totales.debito+=Number(pa.monto)
+                    }else if (pa.value==='credito'){
+                        totales.credito+=Number(pa.monto)
                     }else if (pa.value==='pagomovil'){
                         totales.pagomovil+=Number(pa.monto)
                     }else if (pa.value==='efectivobolivar'){
@@ -339,6 +341,7 @@ function Recibo (props) {
                                 <Item title={`Total obtenido por efectivo en dolar en fecha indicada`}>zelle: $ {state.totales ? Moneda(state.totales.zelle,'$',false) : 0 }</Item>
                                 <Item title={`Total obtenido por efectivo en Bolivares en fecha indicada`}>Efectivo: Bs. {state.totales ? Moneda(state.totales.efectivo,'Bs', false) : 0 }</Item>
                                 <Item title={`Total obtenido por debito en fecha indicada`}>Debito: Bs. {state.totales ? Moneda(state.totales.debito,'Bs',false) : 0 } </Item>
+                                <Item title={`Total obtenido por credito en fecha indicada`}>Credito: Bs. {state.totales ? Moneda(state.totales.credito,'Bs',false) : 0 } </Item>
                                 <Item title={`Total obtenido por transferencia en fecha indicada`}>Transferencia: Bs. {state.totales ? Moneda(state.totales.transferencia,'Bs',false) : 0 }</Item>
                                 <Item title={`Total obtenido por pago movil en fecha indicada`}>Pago Movil: Bs. {state.totales ? Moneda(state.totales.pagomovil,'Bs',false) : 0 }</Item>
                                 <Item title={`Total facturado en fecha indicada`}>Facturado: Bs. {state.totales ? Moneda(state.totales.total,'Bs',false) : 0 }</Item>
