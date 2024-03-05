@@ -20,7 +20,9 @@ export default function Recibo(props) {
     const {totales} = datos.valores;
     const Condicion = Ver_Valores().datos_reporte;
     const valores = datos ? datos.valores : undefined;
-    const mensualidades = valores && valores.mensualidades && valores.mensualidades.meses ? valores.mensualidades.meses: [];
+    const mensualidades = valores && valores.mensualidades && valores.mensualidades.meses 
+        ? valores.mensualidades.meses.map(val=>{return {...val, valorcambio:valores.valorcambio}})
+        : [];
     const formapago = valores && valores.Formas_pago ? valores.Formas_pago : [];
     React.useEffect(()=>{
         const Iniciar = async()=>{

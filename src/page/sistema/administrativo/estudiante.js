@@ -2,22 +2,28 @@ import React, {useState, useEffect} from 'react';
 import Stack from '@mui/material/Stack';
 import { Box } from '@mui/material';
 import Dialogo from '../../../componentes/herramientas/dialogo';
+import DialogoR from '../../../componentes/herramientas/dialogo';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import Alert from '@mui/material/Alert';
 import TablaMultiple from '../../../componentes/herramientas/tabla/tabla_multiple';
 import Tabla from '../../../componentes/herramientas/tabla';
 import Cuerpo from '../../../componentes/herramientas/cuerpo'
 import {Condicion_Estudiante, Condicion_Representante} from '../funciones';
-import { Ver_Valores, conexiones, Form_todos, Titulos_todos } from '../../../constantes';
+import { Abrir_Recibo } from '../funciones';
+import { Ver_Valores, conexiones, Form_todos, Titulos_todos, Moneda, genera_formulario } from '../../../constantes';
+import moment from 'moment';
 import Reporte from '../../../componentes/reporte';
+import Recibopdf from '../pagar/pdf/recibonuevo';
 import Constanciapdf from '../../reportes/constancia';
+import Formulario from '../../../componentes/herramientas/formulario';
 import Cargando from '../../../componentes/esperar/cargar';
 
 function Estudiante (props) {
     
-    const [state, setState]= useState({esperar:true, Dialogo:{open:false}});
-    
+    const [state, setState]= useState({esperar:true, Dialogo:{open:false}, Dialogo1:{open:false}});
+    let DialogoA ={open:false};
     const cambiarState = (nuevostate)=>{
         setState({...state, ...nuevostate, cambio:true})
     }
@@ -61,6 +67,39 @@ function Estudiante (props) {
         })
 
     }
+    const Abrir_recibo = async(valores)=>{
+        if (state.Dialogo.open===true){
+            DialogoA={...state.Dialogo}
+        }
+        const {recibo}=valores.valores;
+        // const resultado = Recibopdf(valores);
+        // let Cuerpo= <embed src={`${resultado}#view=Fit&toolbar=1&navpanes=1&scrollbar=1`} type="application/pdf" width="100%" height={window.innerHeight * 0.75} />
+        cambiarState({
+            Dialogo:{...DialogoA},
+            Dialogo1:{
+                open: !state.Dialogo1.open,
+                Titulo: `Recibo: ${recibo}`,
+                Cuerpo: <Reporte  datos={valores} reporte={Recibopdf} sizePagina= {{width:612, height:396}} />,
+                Cerrar: ()=>cambiarState({Dialogo1: {open:false}, Dialogo:{...DialogoA}}),
+            }
+        })
+        
+    }
+    const Abrir = async(valores) =>{
+        if (state.Dialogo.open===true){
+            DialogoA={...state.Dialogo}
+        }
+        const resulta = await Abrir_Recibo(valores, Abrir_recibo);
+        cambiarState({
+            Dialogo:{...DialogoA},
+            Dialogo1:{
+                open: !state.Dialogo1.open,
+                Titulo: resulta.Titulo,
+                Cuerpo: resulta.Cuerpo,
+                Cerrar: ()=>cambiarState({Dialogo1: {open:false}, Dialogo:{...DialogoA}}),
+            }
+        })
+    }
     const Resumen = async(dato)=>{
         const resultado = await conexiones.Resumen(dato);
         let {recibos, mensualidad} = resultado;
@@ -84,13 +123,19 @@ function Estudiante (props) {
                             table={'uecla_Recibo'}
                             cantidad={recibos ? recibos.length : 0}
                             datos={recibos ? recibos : []}
-                            // Accion={Abrir}
+                            Accion={Abrir}
                             cargaporparte={false}
                             sinpaginacion
                             alto={window.innerHeight * 0.58}         
                         />
         }
-        
+        DialogoA={
+            open: !state.Dialogo.open,
+            tam:'xl',
+            Titulo: `Resumen: ${dato.nombres} ${dato.apellidos}`,
+            Cuerpo: <Cuerpo Bloques={Bloques} Config={Config}/>,
+            Cerrar: ()=>cambiarState({Dialogo: {open:false}}),
+        };
         cambiarState({
             Dialogo:{
                 open: !state.Dialogo.open,
@@ -156,6 +201,7 @@ function Estudiante (props) {
                 
             />
             <Dialogo {...state.Dialogo} config={Config}/>
+            <DialogoR {...state.Dialogo1} config={Config}/>
         </Box>
     )
 }

@@ -205,9 +205,8 @@ class Tabla extends Component {
     // Clear out previously-loaded data (so we don't render stale stuff).
     if (props !== state.props && !state.actualizando) {
       
-      let {Titulo,datos, titulos, items, cantidad, table, condicion, cargacompleta, ordenar, cargaporparte}= props;
-      
-      items= items===undefined ? itemsF : items;
+      let {Titulo,datos, titulos, items, cantidad, table, condicion, cargacompleta, ordenar, cargaporparte, sinpaginacion}= props;
+      items= sinpaginacion ? datos.length : items===undefined ? itemsF : items;
       if (cantidad ===-1){
         state.Iniciar_descarga(table,Titulo, ordenar, items, cargacompleta, cargaporparte, condicion)
       }

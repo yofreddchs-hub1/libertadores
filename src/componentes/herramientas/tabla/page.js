@@ -108,7 +108,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Tabla(props) {
   
   const {titulos, datos, Config, Titulo, acciones, acciones1, actualizando, Accion, paginacion, Cambio} = props;//progreso,
-  
   // const alto= props.sinpaginacion ? window.innerHeight* 0.77 : window.innerHeight* 0.73;
   // const [page, setPage] = React.useState(0);
   // const [rowsPerPage, setRowsPerPage] = React.useState(10);

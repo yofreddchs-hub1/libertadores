@@ -527,6 +527,7 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
     const tasa = dato.valores.valorcambio;
     const tmensualidad = Number(dato.valores.subtotalvalor.total).toFixed(2);
     let meses=[];
+    let formapago = {divisa:0, efectivobolivar:0, transferencia:0, debito:0,credito:0,pagomovil:0,efectivodolar:0,zelle:0, referencia:''};
     let abono = 0.00;
     let abono_anterior=0.00;
     let mensualidad = 0.00;
@@ -540,6 +541,17 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
         }
         return mes
     })
+    dato.valores.Formas_pago.map(forma=>{
+
+      formapago[forma.value] = forma.monto;
+      if (forma.moneda==='$'){
+        formapago.divisa+= Number(forma.monto);
+      }
+      if(forma.referencia && forma.referencia!==''){
+        formapago.referencia=`Referencia:${forma.referencia} Fecha:"${forma.fecha} ${forma.bancoo ? "Banco Origen:"+forma.bancoo : ""} ${forma.bancod ?"Banco Destino:" +forma.bancod:"" }"`
+      }
+      return
+    })
     dato.valores.mensualidades.meses.map(mes=>{
       let pos = meses.findIndex(f=>f.cedula===mes.cedula);
       if (pos===-1 && mes.value!=='abono_anterior' && mes.value!=='abono'){
@@ -547,7 +559,7 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
               cedula:mes.cedula, nombres: `${mes.nombres} ${mes.apellidos}`,
               inscripcion:'', septiembre:'',octubre:'',noviembre:'',
               diciembre:'',enero:'',febrero:'',marzo:'', abril:'',
-              mayo:'',junio:'', julio:'',agosto:'',
+              mayo:'',junio:'', julio:'',agosto:'',...formapago
           }];
           
           meses[meses.length-1][mes.value]=mes.monto;
@@ -557,9 +569,10 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
           mensualidad+=mes.monto;
       }
     })
+    console.log('<<<<<<',meses)
     meses.map(val=>{
       datos=[...datos,{
-          No:datos[datos.length -1].No === '' ? 1 : datos[datos.length -1].No+1 , fecha, representante, cedular, recibo, total,
+          No:datos[datos.length -1].No === 'No.' ? 1 : Number(datos[datos.length -1].No)+1  , fecha, representante, cedular, recibo, total,
           mensualidad:mensualidad.toFixed(2),anterior:abono_anterior, abono:abono, diferido:'??',tmensualidad,otro:'??',
           ...val, tasa
       }]
@@ -579,10 +592,12 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
     ["",moment().format("DD/MM/YYYY"),"REPORTE"],
     ["","",`DESDE: ${moment(Inicio).format('DD/MM/YYYY')} HASTA: ${moment(Fin).format('DD/MM/YYYY')}`],
     ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
-    ["","","","Cédula ó","No.","Monto Bs.","","Mensualidad","Mensualidad","","Total por","","Cédula","","","","","","","","","","","","","","","Factor","Total en",""],
-    ["No.","Fecha","Representante","R.I.F.","Recibo","Factura","Mensualidad","Abono Aterior","Abono","Diferido","Mensualidad","","Estudiante","Nombres y Apellidos","Inscip.","Sep","Oct","Nov","Dic","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Bs/$","Divisa",""],
+    ["","","","Cédula ó","No.","Monto Bs.","","Mensualidad","Mensualidad","","Total por","","Cédula","","","","","","","","","","","","","","Factor","Total en","","Formas", "de" ,"Pago"],
+    ["No.","Fecha","Representante","R.I.F.","Recibo","Factura","Mensualidad","Abono Aterior","Abono","Diferido","Mensualidad","","Estudiante","Nombres y Apellidos","Inscip.","Sep","Oct","Nov","Dic","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Bs/$","Divisa","Bs","TRF","TJD","TJC","PM","$","ZLL","Referencia" ],
   ], { origin: "A1" });
-  let tamano = Object.keys(datos[0]).map((key,i)=>{  
+  const pos = -1;// datos.findIndex(f=>f.No===1);
+  let tamano = Object.keys(datos[pos!==-1 ? pos : 0]).map((key,i)=>{  
+    console.log(key)
     const max_width1 = datos.reduce((w, r) => Math.max(w, String(r[key]).length), 5);
     return {wch: max_width1}
   })
@@ -905,6 +920,7 @@ export const Filtrar_campos = (lista, campos)=>{
   return resultado
 
 }
+
 export var numeroALetras = (function() {
   // Código basado en el comentario de @sapienman
   // Código basado en https://gist.github.com/alfchee/e563340276f89b22042a

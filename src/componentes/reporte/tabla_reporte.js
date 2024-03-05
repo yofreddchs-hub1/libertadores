@@ -46,7 +46,7 @@ export default function TablaReporte(props) {
         )
     }
     const Datos = ()=>{
-
+        
         return data.map(dat=>
 
             <Grid key={Generar_id()} container xs={12} spacing={0}>
@@ -57,7 +57,7 @@ export default function TablaReporte(props) {
                                 && Condicion.moneda 
                                 && Condicion.moneda._id===1 
                                 ? Moneda(Number(dat[val.field]),'$',false)
-                                : Moneda(Number(dat[val.field]),'Bs', false)
+                                : Moneda(Number(dat[val.field])===0 ? Number(dat[val.field+'d']) * Number(dat.valorcambio) : Number(dat[val.field]),'Bs', false)
                     }
                     return(
                         <Grid key={Generar_id()} xs={val.flex ? val.flex : 12/cabezera.length}>

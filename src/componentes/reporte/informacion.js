@@ -12,7 +12,7 @@ export function InformacionCHS(props) {
     const valores = datos ? datos.valores : undefined;
     const Tletra = 8;
     const color = color_letra ? color_letra : '#000000';
-    const totalL = numeroALetras(valores.subtotalvalor.total,{
+    const totalL = numeroALetras(valores.totales.total,{ //anteriro =>valores.subtotalvalor.total
         plural: "BOLIVARES",
         singular: "BOLIVAR",
         centPlural: "CENTIMOS",

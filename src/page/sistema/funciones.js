@@ -1,6 +1,13 @@
 // Funciones utilizadas para el sistema de colegio
 
-import { conexiones,  nuevo_Valores, Ver_Valores } from "../../constantes";
+import { conexiones,  nuevo_Valores, Ver_Valores, Moneda, Form_todos, genera_formulario } from "../../constantes";
+import Formulario from "../../componentes/herramientas/formulario";
+import moment from "moment";
+import Icon from '@mui/material/Icon';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import { Box } from '@mui/material';
 
 const Mayuscula = (datos)=>{
     Object.keys(datos).map(valor=>{
@@ -186,3 +193,73 @@ export const Condicion_Representante = async(data) =>{
     return {finalizado_condicion:true, ...nuevos}
 
 }
+
+export const Abrir_Recibo = async (valores, Abrir_recibo)=>{
+    const {mensualidades, Formas_pago, recibo, subtotalvalor, totales}=valores.valores
+    let Fmensualidad = await genera_formulario({valores:mensualidades, campos: Form_todos('Form_Mensualidades') })
+    Fmensualidad.titulos.meses.noeliminar=true;
+    Fmensualidad.titulos.meses.nopaginar=true;
+    Fmensualidad.titulos.meses.label='Pagos a Realizados';
+    Fmensualidad.titulos.meses.style={height:320};
+    let nuevos = Formas_pago.map((val, i)=>{
+        return {...val,
+            id:i+1, 
+            formapago: val.titulo, bancoorigen: val.bancoorigen ? val.bancoorigen : '', 
+            bancodestino: val.bancodestino ? val.bancodestino : '',
+            fecha: val.fecha===null ? '' : typeof val.fecha==='string' ? val.fecha : moment(val.fecha).format('DD/MM/YYYY')
+        }
+    })
+
+    let Formapago = await genera_formulario({valores:{formapago:nuevos}, campos: Form_todos('Form_FormasPago') })
+    Formapago.titulos.formapago.noeliminar=true;
+    Formapago.titulos.formapago.nopaginar=true;
+    Formapago.titulos.formapago.Form=undefined;
+    Formapago.titulos.formapago.Subtotal=undefined;
+    Formapago.titulos.formapago.editables='no';
+    Formapago.titulos.formapago.style={height:250}; 
+
+    let Cuerpo =
+    <Box sx={{ textAlign:'left' }}>
+        <div style={{marginTop:-30}}/>
+        
+        <Formulario {...Fmensualidad}/>
+        <div style={{marginTop:-30}}/>
+        
+        <Formulario {...Formapago}/>
+            
+        <div style={{ paddingRight:10}}>
+            <Stack
+                direction={ 'column' }
+                spacing={1}
+                justifyContent="center"
+                alignItems="flex-end"
+            >
+                <Typography variant="h5" gutterBottom component="div">
+                    Total : {`${Moneda(subtotalvalor.total) }`}
+                </Typography>
+                <Typography variant="h5" gutterBottom component="div">
+                    Total Cancelado: {`${Moneda(totales.total)}`}
+                </Typography>
+                <Typography variant="h5" >
+                    Abono: {`${Moneda(totales.abono)}`}
+                </Typography>
+            
+                
+            </Stack>
+        </div>
+    </Box>
+
+    let Titulo = 
+            <Stack
+                direction={ 'row' }
+                spacing={1}
+                justifyContent="center" alignItems="center"
+            >
+                Recibo: {recibo}
+                <IconButton size="large" color="inherit" title={'Mostra recibo'} onClick={()=>Abrir_recibo(valores)}>
+                    <Icon >text_snippet</Icon>
+                </IconButton>
+            </Stack>
+    
+    return {Titulo, Cuerpo}
+  }
