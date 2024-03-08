@@ -215,55 +215,84 @@ export default function Formapago(props) {
                         : null
                     }
                 </Grid>
-                {[4,'4'].indexOf(User.categoria)!==-1 &&state && state.bancos ?
+                {[4,'4'].indexOf(User.categoria)!==-1 &&state && state.bancos && window.innerWidth > 750 ?
                     <Grid container spacing={0.5} >
                         <Grid item xs={2}>
-                            <Item sx={{bgcolor:'grey'}}><Typography color={'#fff'} variant="subtitle1" >{'BANCO'}</Typography> </Item>
+                            <Item sx={{bgcolor:'grey'}}><Typography color={'#fff'} variant={window.innerWidth > 750 ? "subtitle1": "caption"} >{'BANCO'}</Typography> </Item>
                         </Grid>
                         <Grid item xs={3}>
-                            <Item sx={{bgcolor:'grey'}}><Typography color={'#fff'} variant="subtitle1" >{'NUMERO DE CUENTA'}</Typography> </Item>
+                            <Item sx={{bgcolor:'grey'}}><Typography color={'#fff'} variant={window.innerWidth > 750 ? "subtitle1": "caption"} >{'NUMERO DE CUENTA'}</Typography> </Item>
                         </Grid>
                         <Grid item xs={3}>
-                            <Item sx={{bgcolor:'grey'}}><Typography color={'#fff'} variant="subtitle1" >{'TITULAR'}</Typography> </Item>
+                            <Item sx={{bgcolor:'grey'}}><Typography color={'#fff'} variant={window.innerWidth > 750 ? "subtitle1": "caption"} >{'TITULAR'}</Typography> </Item>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item sx={{bgcolor:'grey'}} ><Typography color={'#fff'} variant="subtitle1" >{'RIF'}</Typography> </Item>
+                            <Item sx={{bgcolor:'grey'}} ><Typography color={'#fff'} variant={window.innerWidth > 750 ? "subtitle1": "caption"} >{'RIF'}</Typography> </Item>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item sx={{bgcolor:'grey'}}><Typography color={'#fff'} variant="subtitle1" >{'TIPO'}</Typography> </Item>
+                            <Item sx={{bgcolor:'grey'}}><Typography color={'#fff'} variant={window.innerWidth > 750 ? "subtitle1": "caption"} >{'TIPO'}</Typography> </Item>
                         </Grid>
                         
                     </Grid>
                     : null
                 }
                 
-                {[4,'4'].indexOf(User.categoria)!==-1 &&state && state.bancos ? state.bancos.map(banco=>
-                    <Grid container spacing={0.5} key={banco._id}>
-                        <Grid item xs={2}>
-                            <Item title={banco.valores.banco.titulo}><Typography noWrap variant="subtitle2" >{banco.valores.banco.titulo}</Typography> </Item>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Item title={banco.valores.numero} ><Typography noWrap variant="subtitle2" >{banco.valores.numero}</Typography> </Item>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Item title={banco.valores.titular}><Typography noWrap variant="subtitle2" >{banco.valores.titular}</Typography> </Item>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Item title={banco.valores.rif}><Typography noWrap variant="subtitle2" >{banco.valores.rif}</Typography> </Item>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Item title={banco.valores.tipo}><Typography noWrap variant="subtitle2" >{banco.valores.tipo}</Typography> </Item>
-                        </Grid>
-                    </Grid>
+                {[4,'4'].indexOf(User.categoria)!==-1 &&state && state.bancos 
+                    ? window.innerWidth > 750 
+                        ?   state.bancos.map(banco=>
+                            <Grid container spacing={0.5} key={banco._id}>
+                                <Grid item xs={2}>
+                                    <Item title={banco.valores.banco.titulo}><Typography noWrap variant="subtitle2" >{banco.valores.banco.titulo}</Typography> </Item>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Item title={banco.valores.numero} ><Typography noWrap variant="subtitle2" >{banco.valores.numero}</Typography> </Item>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Item title={banco.valores.titular}><Typography noWrap variant="subtitle2" >{banco.valores.titular}</Typography> </Item>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Item title={banco.valores.rif}><Typography noWrap variant="subtitle2" >{banco.valores.rif}</Typography> </Item>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Item title={banco.valores.tipo}><Typography noWrap variant="subtitle2" >{banco.valores.tipo}</Typography> </Item>
+                                </Grid>
+                            </Grid>
+                        ):   state.bancos.map(banco=>
+                            <Grid container spacing={0.5} key={banco._id}>
+                                <Grid item xs={12} >
+                                    <Item sx={{textAlign:'left'}}>
+                                        <Typography variant="caption" gutterBottom>
+                                            {banco.valores.banco.titulo}
+                                        </Typography> 
+                                        <br/>
+                                        <Typography variant="caption" gutterBottom>
+                                            {banco.valores.numero}
+                                        </Typography>
+                                        <br/>
+                                        <Typography variant="caption" gutterBottom>
+                                            {banco.valores.titular}
+                                        </Typography> 
+                                        <br/>
+                                        <Typography variant="caption" >
+                                            {banco.valores.rif}
+                                        </Typography> 
+                                        <br/>
+                                        <Typography variant="caption" >
+                                            {banco.valores.tipo}
+                                        </Typography> 
+                                    </Item>
+                                </Grid>
+                                
+                            </Grid>
                 ): null}
                 
                 {[4,'4'].indexOf(User.categoria)!==-1  ?
                     <Grid container spacing={0.5} >
                         <Grid item xs={12} >
                             <Item >
-                                <Typography variant="subtitle1" > PARA INGRESAR CAPTURE</Typography>
+                                <Typography variant={window.innerWidth > 750 ? "subtitle1": "caption"} > PARA INGRESAR CAPTURE</Typography>
                                 <IconButton title={'Agregar Capture'} component="label" style={{backgroundColor:'green'}}>
-                                    <Icon sx={{color:'#fff'}}>add_circle</Icon>
+                                    <Icon sx={{color:'#fff', fontSize: window.innerWidth > 750 ? 25 : 20}} >add_circle</Icon>
                                     <VisuallyHiddenInput type="file" accept="image/*" name={'files'} multiple onChange={Imagen_modificar}/> 
                                 </IconButton>
                             </Item>

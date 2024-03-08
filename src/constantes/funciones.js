@@ -489,6 +489,13 @@ export const AExcell = async(data, pagina='Hoja 1', archivo='uecla.xlsx')=>{
   ws["!cols"] = tamano;
   writeFile(wb,archivo,{ compression: true }); 
 }
+
+const MontoExcel = (valor)=>{
+  let resulta = String(Number(valor).toFixed(2)).trim().replace('.',',')
+  // resulta = resulta;
+  return resulta
+}
+
 export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='reporte.xlsx')=>{
 
   let datos =[
@@ -515,6 +522,8 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
       inscripcion:"Inscip.", septiembre:"Sep",octubre:"Oct",noviembre:"Nov",
       diciembre:"Dic",enero:"Ene",febrero:"Feb",marzo:"Mar", abril:"Abr",
       mayo:"May",junio:'Jun', julio:'Jul',agosto:'Ago', tasa:'Bs/$',
+      // divisa:"Divisa",efectivobolivar:"Bs",transferencia:"TRF",debito:"TJD",credito:"TJC",
+      // pagomovil:"PM",efectivodolar:"$",zelle:"ZLL",referencia:"Referencia"
     }
   ]
   
@@ -523,27 +532,26 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
     const recibo = dato.valores.recibo;
     const cedular = dato.valores.representante.cedula;
     const representante = `${dato.valores.representante.nombres} ${dato.valores.representante.apellidos}`;
-    const total = Number(dato.valores.totales.total).toFixed(2);
-    const tasa = dato.valores.valorcambio;
-    const tmensualidad = Number(dato.valores.subtotalvalor.total).toFixed(2);
+    const total = MontoExcel(dato.valores.totales.total);//Number(dato.valores.totales.total).toFixed(2);
+    const tasa = MontoExcel(dato.valores.valorcambio);//dato.valores.valorcambio;
+    const tmensualidad = MontoExcel(dato.valores.subtotalvalor.total);//Number(dato.valores.subtotalvalor.total).toFixed(2);
     let meses=[];
     let formapago = {divisa:0, efectivobolivar:0, transferencia:0, debito:0,credito:0,pagomovil:0,efectivodolar:0,zelle:0, referencia:''};
-    let abono = 0.00;
-    let abono_anterior=0.00;
-    let mensualidad = 0.00;
+    let abono = 0;
+    let abono_anterior=0;
+    let mensualidad = 0;
     dato.valores.mensualidades.meses.map(mes=>{
         if (mes.value==='abono_anterior'){
-            abono_anterior=Number(mes.monto).toFixed(2);
+            abono_anterior=MontoExcel(mes.monto)//Moneda(Number(mes.monto).toFixed(2), 'Bs', false).trim();
         }
         if(mes.value==='abono'){
-            console.log(recibo, mes.value, mes.monto)
-            abono=Number(mes.monto).toFixed(2);
+            abono=MontoExcel(mes.monto)//Moneda(Number(mes.monto).toFixed(2), 'Bs', false).trim();
         }
         return mes
     })
     dato.valores.Formas_pago.map(forma=>{
 
-      formapago[forma.value] = forma.monto;
+      formapago[forma.value] = MontoExcel(forma.monto);//Moneda(forma.monto, 'Bs', false);
       if (forma.moneda==='$'){
         formapago.divisa+= Number(forma.monto);
       }
@@ -552,6 +560,7 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
       }
       return
     })
+    formapago.divisa = MontoExcel(formapago.divisa);//Moneda(formapago.divisa,'Bs', false).trim()
     dato.valores.mensualidades.meses.map(mes=>{
       let pos = meses.findIndex(f=>f.cedula===mes.cedula);
       if (pos===-1 && mes.value!=='abono_anterior' && mes.value!=='abono'){
@@ -562,7 +571,7 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
               mayo:'',junio:'', julio:'',agosto:'',...formapago
           }];
           
-          meses[meses.length-1][mes.value]=mes.monto;
+          meses[meses.length-1][mes.value]=MontoExcel(mes.monto);//mes.monto;
           mensualidad+=mes.monto;
       }else if (pos!==-1){
           meses[pos][mes.value]= Number(mes.monto).toFixed(2);
@@ -573,7 +582,8 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
     meses.map(val=>{
       datos=[...datos,{
           No:datos[datos.length -1].No === 'No.' ? 1 : Number(datos[datos.length -1].No)+1  , fecha, representante, cedular, recibo, total,
-          mensualidad:mensualidad.toFixed(2),anterior:abono_anterior, abono:abono, diferido:'??',tmensualidad,otro:'??',
+          mensualidad:MontoExcel(mensualidad),//mensualidad.toFixed(2),
+          anterior:abono_anterior, abono:abono, diferido:'??',tmensualidad,otro:'??',
           ...val, tasa
       }]
       return
@@ -586,17 +596,17 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
   const wb = utils.book_new();
   utils.book_append_sheet(wb, ws, pagina);
   console.log('.........')
-  
-  utils.sheet_add_aoa(ws, [
-    ["","Fecha:", "U.E. COLEGIO LIBERTADORES DE AMERICA","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
+  const Titulos = [
+    ["","Fecha:", "U.E. COLEGIO LIBERTADORES DE AMERICA","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
     ["",moment().format("DD/MM/YYYY"),"REPORTE"],
     ["","",`DESDE: ${moment(Inicio).format('DD/MM/YYYY')} HASTA: ${moment(Fin).format('DD/MM/YYYY')}`],
     ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],
     ["","","","Cédula ó","No.","Monto Bs.","","Mensualidad","Mensualidad","","Total por","","Cédula","","","","","","","","","","","","","","Factor","Total en","","Formas", "de" ,"Pago"],
     ["No.","Fecha","Representante","R.I.F.","Recibo","Factura","Mensualidad","Abono Aterior","Abono","Diferido","Mensualidad","","Estudiante","Nombres y Apellidos","Inscip.","Sep","Oct","Nov","Dic","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Bs/$","Divisa","Bs","TRF","TJD","TJC","PM","$","ZLL","Referencia" ],
-  ], { origin: "A1" });
-  const pos = -1;// datos.findIndex(f=>f.No===1);
-  let tamano = Object.keys(datos[pos!==-1 ? pos : 0]).map((key,i)=>{  
+  ];
+  utils.sheet_add_aoa(ws, Titulos, { origin: "A1" });
+  const pos = datos.findIndex(f=>f.No===1);
+  let tamano = Object.keys(datos[pos===-1 ? 0 : pos]).map((key,i)=>{  
     console.log(key)
     const max_width1 = datos.reduce((w, r) => Math.max(w, String(r[key]).length), 5);
     return {wch: max_width1}

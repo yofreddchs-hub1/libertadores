@@ -81,7 +81,7 @@ function CarruselNuevo(props) {
               <Box
                 component="img"
                 sx={{
-                  height: window.innerHeight * 0.75,
+                  height: window.innerHeight > 750 ? window.innerHeight * 0.75 : window.innerHeight * 0.50,
                   
                 //   maxWidth: '100%',
                   overflow: 'hidden',

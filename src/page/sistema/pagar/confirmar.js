@@ -94,11 +94,11 @@ export default function Confirmar(props) {
                 : null
             }
             <div style={{ paddingRight:10}}>
-                <Stack direction={'row'}>
+                <Stack direction={window.innerWidth > 750 ? 'row' : 'column'}>
                     <Stack
                         justifyContent="center"
                         alignItems="center"
-                        sx={{ width:'50%'}}
+                        sx={{ width:window.innerWidth > 750 ? '50%' : '100%'}}
                     >
                         {props.Pendiente 
                             ?   <Box component={'div'} sx={{width:'90%'}}>
@@ -147,15 +147,15 @@ export default function Confirmar(props) {
                         spacing={1}
                         justifyContent="center"
                         alignItems="flex-end"
-                        sx={{width:'50%'}}
+                        sx={{width:window.innerWidth > 750 ? '50%' : '100%'}}
                     >
-                        <Typography variant="h5"  component="div" sx={{...Config ? {color:Config.Estilos.Input_label}: {}}}>
+                        <Typography variant={window.innerWidth > 750 ? "h5" : "subtitle1"}  component="div" sx={{...Config ? {color:Config.Estilos.Input_label}: {}}}>
                             Total : Bs. {`${props.Subtotalvalor && props.Subtotalvalor.total ? props.Subtotalvalor.total.toFixed(2): '0.00' }`}
                         </Typography>
-                        <Typography variant="h5"  component="div" sx={{...Config ? {color:Config.Estilos.Input_label}: {}}}>
+                        <Typography variant={window.innerWidth > 750 ? "h5" : "subtitle1"}  component="div" sx={{...Config ? {color:Config.Estilos.Input_label}: {}}}>
                             Total Cancelado: Bs. {`${props.Totales && props.Totales.total ? props.Totales.total.toFixed(2): '0.00' }`}
                         </Typography>
-                        <Typography variant="h5" component="div" sx={{...Config ? {color:Config.Estilos.Input_label}: {}}}>
+                        <Typography variant={window.innerWidth > 750 ? "h5" : "subtitle1"} component="div" sx={{...Config ? {color:Config.Estilos.Input_label}: {}}}>
                             Abono: {`Bs. ${props.Totales && props.Totales.abono ? props.Totales.abono>=0 ? props.Totales.abono.toFixed(2) : 0 : '0.00'}`}
                         </Typography>
                     
