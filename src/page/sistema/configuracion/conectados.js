@@ -189,8 +189,9 @@ function Conectados (props) {
                 }
                 return val
             })
+
             const result= await conexiones.Leer_C(['uecla_Representante','uecla_User_api'],{
-                uecla_Representante: condicionR,
+                uecla_Representante: condicionR['$or'].length===0 ? {} : condicionR,
                 uecla_User_api:condicionU
             })
             
@@ -210,7 +211,7 @@ function Conectados (props) {
                     return val
                 })
             }
-
+            
             let titulos = [...await Titulos_todos(`Titulos_User_api`, Ver_Valores().config)];
             titulos = titulos.filter(f=>f.field!=='foto')
             titulos[0].formato= (dato)=>{return dato.username}

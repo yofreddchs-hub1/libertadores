@@ -105,7 +105,7 @@ const ResponsiveAppBar = (props) => {
   const Menus = (menus, reducido)=>{
     const {tipo, User, categoria_usuario} = Ver_Valores();
     // User && User!==null && 
-    let categoria = !User ? undefined:User.categoria._id ? categoria_usuario[User.categoria._id] : categoria_usuario[User.categoria];
+    let categoria = !User ? null:User.categoria._id!==undefined ? categoria_usuario[User.categoria._id] : categoria_usuario[User.categoria];
     if (User && User.permisos){
       // categoria.permisos=[...categoria.permisos, ...User.permisos.split(',')];
       User.permisos.split(',').map(valor=>{
