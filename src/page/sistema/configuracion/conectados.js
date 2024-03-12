@@ -216,6 +216,11 @@ function Conectados (props) {
             titulos = titulos.filter(f=>f.field!=='foto')
             titulos[0].formato= (dato)=>{return dato.username}
             titulos[2].formato= (dato)=>{return dato.nombres}
+            titulos =[...titulos,{
+                title:'Tipo', field:'tipo',default:'',
+                formato:(dato)=>dato.tipo
+            }]
+            console.log(titulos)
             
             cambiarState({ titulos, datos:nuevo, esperar:false})
         })

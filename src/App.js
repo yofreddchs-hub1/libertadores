@@ -175,16 +175,18 @@ class InicioPrincipal extends Component {
         if (val._id===User._id) cantidad+=1;
         return val
       })
-      if (cantidad>1 && User.userID!==userID){
-        // const esp= await this.Sincronizar();
-        const resp = await conexiones.Leer_C([`${valores.app}_User_api`],{[`${valores.app}_User_api`]:{_id:User._id}})
-        if (resp.Respuesta==='Ok'){
-          if(resp.datos[`${valores.app}_User_api`].length!==0 && resp.datos[`${valores.app}_User_api`][0].valores.token!==User.token){
-            console.log('>>>>>>>', 'Cerrar sesion')
-            this.Salir();
-          }
-        }
-      }
+      //Para mantener una sola conexion por usuario
+
+      // if (cantidad>1 && User.userID!==userID){
+      //   // const esp= await this.Sincronizar();
+      //   const resp = await conexiones.Leer_C([`${valores.app}_User_api`],{[`${valores.app}_User_api`]:{_id:User._id}})
+      //   if (resp.Respuesta==='Ok'){
+      //     if(resp.datos[`${valores.app}_User_api`].length!==0 && resp.datos[`${valores.app}_User_api`][0].valores.token!==User.token){
+      //       console.log('>>>>>>>', 'Cerrar sesion')
+      //       this.Salir();
+      //     }
+      //   }
+      // }
     })
     socket.on("Actualizar_tasa", datos =>{
       //  console.log('Actualizar tasa',datos);
