@@ -159,6 +159,10 @@ export default function Formapago(props) {
                             return typeof props.files[ur]==='string' && props.files[ur].indexOf('http')!==-1 ? props.files[ur] :  URL.createObjectURL(props.files[ur])
                         }) : [];
             
+            console.log(Formas)
+            Formas.titulos.formapago.style={
+                height:window.innerWidth > 750 ? window.innerHeight * 0.47 : window.innerHeight * 0.3
+            }
             setState({...state, Formas, Formas_pago, bancos, url, cargando:false })
         }
         Inicio();

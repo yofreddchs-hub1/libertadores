@@ -83,7 +83,7 @@ export default function Verificar(props) {
         let nuevos = await genera_formulario({valores:datos.valores, campos: Form_todos('Form_Representados', Config) })
         nuevos.titulos.representados.nopaginar=true;
         nuevos.titulos.representados.noeliminar=true;
-        nuevos.titulos.representados.style={height:220};
+        nuevos.titulos.representados.style={height:window.innerWidth > 750 ? window.innerHeight * 0.35 : window.innerHeight * 0.3};//220};
         setFormulario(nuevos)
     }
     const Cancelar = async(id)=>{

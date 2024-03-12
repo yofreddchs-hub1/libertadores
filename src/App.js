@@ -139,8 +139,16 @@ class InicioPrincipal extends Component {
     });
 
     const socket=manager.socket("/");
-    
-    socket.auth={_id:User._id, username:User.username, tipo, api:User.api}
+    console.log('>>>>', User, valores)
+    socket.auth={_id:User._id, username:User.username, tipo, api:valores.app, 
+                  categoria: User.categoria, 
+                  ...User.categoria==='4' || User.categoria===4 
+                    ? {
+                        nombre:`${User.valores.nombres} ${User.valores.apellidos}`, 
+                        representados:User.valores.representados
+                      } 
+                    :{}
+                }
     socket.on("conectado", async data => {
       const {api}= Ver_Valores();
       console.log('>>>>>>>>>>>>>>>>>>>>>Conectado',data, api);
@@ -169,9 +177,9 @@ class InicioPrincipal extends Component {
       })
       if (cantidad>1 && User.userID!==userID){
         // const esp= await this.Sincronizar();
-        const resp = await conexiones.Leer_C([`${User.api}_User_api`],{[`${User.api}_User_api`]:{_id:User._id}})
+        const resp = await conexiones.Leer_C([`${valores.app}_User_api`],{[`${valores.app}_User_api`]:{_id:User._id}})
         if (resp.Respuesta==='Ok'){
-          if(resp.datos[`${User.api}_User_api`].length!==0 && resp.datos[`${User.api}_User_api`][0].valores.token!==User.token){
+          if(resp.datos[`${valores.app}_User_api`].length!==0 && resp.datos[`${valores.app}_User_api`][0].valores.token!==User.token){
             console.log('>>>>>>>', 'Cerrar sesion')
             this.Salir();
           }

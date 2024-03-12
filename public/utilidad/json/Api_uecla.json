@@ -207,6 +207,11 @@
                 "value": "Direcciones",
                 "primary": "Direcciones de estudiantes",
                 "icon": "menu"
+            },
+            {
+                "value": "Conectados",
+                "primary": "Usuarios Conectados",
+                "icon": "supervisor_account"
             }
         ]
       },
