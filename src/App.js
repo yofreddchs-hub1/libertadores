@@ -144,7 +144,7 @@ class InicioPrincipal extends Component {
                   categoria: User.categoria, 
                   ...User.categoria==='4' || User.categoria===4 
                     ? {
-                        nombre:`${User.valores.nombres} ${User.valores.apellidos}`, 
+                        nombres:`${User.valores.nombres} ${User.valores.apellidos}`, 
                         representados:User.valores.representados
                       } 
                     :{}

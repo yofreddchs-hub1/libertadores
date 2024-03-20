@@ -198,6 +198,7 @@ function Estudiante (props) {
                 Titulos_tabla = {state.titulos}
                 cargaporparte = {true}
                 sinpaginacion = {false}
+                Tam_dialogo={'lg'}
                 
             />
             <Dialogo {...state.Dialogo} config={Config}/>

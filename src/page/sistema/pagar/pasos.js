@@ -88,7 +88,7 @@ export default function Pasos(props) {
       >
         <Typography>{steps[activeStep] && steps[activeStep].label ? steps[activeStep].label : activeStep}</Typography>
       </Paper>
-      <Box sx={{ height: Ver_Valores().tipo==='Web' ? window.innerWidth > 750 ? '73vh' : '66vh' :'77vh', p: 2, overflowY:'auto', overflowX:'hidden' }}>
+      <Box sx={{  p: 2, overflowY:'auto', overflowX:'hidden' }}>
         {steps[activeStep].description(props)}
       </Box>
       <MobileStepper

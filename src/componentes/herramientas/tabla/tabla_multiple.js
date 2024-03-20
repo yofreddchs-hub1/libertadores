@@ -26,7 +26,7 @@ function Tabla_multiple (props) {
     const {Form_origen,Table,Titulo_dialogo,Titulo_tabla,Titulos_tabla, Agregar_mas, //Columnas, 
             Acciones1, Seleccion, Nuevo, cargaporparte,Config, multiples_valores,
             Condiciones, Acciones, sinpaginacion, AgregarExcel ,Eliminar_props,
-            Actualizar_valores
+            Actualizar_valores, Tam_dialogo
           }=props
     
     // const classes= Estilos(estilos);
@@ -121,6 +121,7 @@ function Tabla_multiple (props) {
         setDialogo({
             ...dialogo, 
             open: !dialogo.open,
+            // tam:'lg',
             Titulo:'Cargando...',
             Cuerpo:<div style={{height:window.innerHeight * 0.4}}><Cargando Fondo={"#fff"} open={true} config={Ver_Valores().config}/></div>,
             Cerrar: ()=>{
@@ -175,6 +176,7 @@ function Tabla_multiple (props) {
         setDialogo({
             ...dialogo, 
             open: !dialogo.open,
+            tam:Tam_dialogo ? Tam_dialogo : 'md',
             Titulo:Titulo_dialogo(dato),
             Cuerpo:<Formulario {...formulario} Agregar={Agregar_mas} config={props.Config}/>,
             Cerrar: ()=>{

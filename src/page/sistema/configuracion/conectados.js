@@ -196,20 +196,35 @@ function Conectados (props) {
             })
             
             if (result.Respuesta==='Ok'){
-                result.datos.uecla_Representante.map(val=>{
-                    const pos = nuevo.findIndex(f=>f._id===val._id);
+                const Representantes = result.datos.uecla_Representante;
+                const Usuarios = result.datos.uecla_User_api;
+                nuevo = nuevo.map(val=>{
+                    let valor = {...val};
+                    let pos = Representantes.findIndex(f=>f._id===val._id);
                     if (pos!==-1){
-                        nuevo[pos]={...nuevo[pos], nombres:`${val.valores.nombres} ${val.valores.apellidos}`}
+                        valor={...valor, nombres:`${Representantes[pos].valores.nombres} ${Representantes[pos].valores.apellidos}`}
+                    }else{
+                        pos = Usuarios.findIndex(f=>f._id===val._id);
+                        if (pos!==-1){
+                            valor={...valor, nombres:`${Usuarios[pos].valores.nombre}`}    
+                        }
                     }
-                    return val
+                    return valor
                 })
-                result.datos.uecla_User_api.map(val=>{
-                    const pos = nuevo.findIndex(f=>f._id===val._id);
-                    if (pos!==-1){
-                        nuevo[pos]={...nuevo[pos], nombres:`${val.valores.nombre}`}
-                    }
-                    return val
-                })
+                // result.datos.uecla_Representante.map(val=>{
+                //     const pos = nuevo.findIndex(f=>f._id===val._id);
+                //     if (pos!==-1){
+                //         nuevo[pos]={...nuevo[pos], nombres:`${val.valores.nombres} ${val.valores.apellidos}`}
+                //     }
+                //     return val
+                // })
+                // result.datos.uecla_User_api.map(val=>{
+                //     const pos = nuevo.findIndex(f=>f._id===val._id);
+                //     if (pos!==-1){
+                //         nuevo[pos]={...nuevo[pos], nombres:`${val.valores.nombre}`}
+                //     }
+                //     return val
+                // })
             }
             
             let titulos = [...await Titulos_todos(`Titulos_User_api`, Ver_Valores().config)];

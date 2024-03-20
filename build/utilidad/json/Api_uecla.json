@@ -648,6 +648,24 @@
                 "Subtotal": "",
                 "name": "descripcion",
                 "multiline": false
+              },
+              {
+                "nombre": "descripcion1",
+                "label": "Descripción1",
+                "placeholder": "Descripción1",
+                "title": "Descripción",
+                "required": false,
+                "disabled": false,
+                "lista": "",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": "false",
+                "form": "",
+                "titulos": "",
+                "Subtotal": "",
+                "name": "descripcion1",
+                "multiline": false
               }
           ]
       },

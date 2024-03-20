@@ -161,12 +161,27 @@ export default function Listados(props) {
       
       loading={loading}
       loadingText={'Cargando...'}
-      renderInput={(params) => (
+      renderInput={(params) => {
+        return(
         <TextField
           {...params}
           label={valor.label ? valor.label : valor.placeholder}
           margin="normal"
-          style= {{ margin: 8}}
+          variant="outlined"
+          sx= {{ margin: 1, color:'#fff',
+            ".MuiInputLabel-formControl":{
+              color:Config.Estilos.Input_input ? Config.Estilos.Input_input.color : '#000',
+              
+            },
+            ".MuiInputLabel-outlined":{
+              color:Config.Estilos.Input_input ? Config.Estilos.Input_input.color : '#000',
+            },
+            ".MuiOutlinedInput-root":{
+              
+              borderColor:"#fff"
+            }
+          }}
+          
           name={valor.name}
           InputProps={{
             ...params.InputProps,
@@ -178,7 +193,7 @@ export default function Listados(props) {
             ),
           }}
         />
-      )}
+      )}}
     />
   );
 }

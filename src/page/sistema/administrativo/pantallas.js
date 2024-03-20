@@ -18,5 +18,5 @@ export const colegio_administrativo_pantallas={
     Recibos:Recibo,
     Solvencias:Solvencia,
     Referencias: Referencia,
-    // Horario:Horarios
+    Horario:Horarios
 }

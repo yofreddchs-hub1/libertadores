@@ -491,11 +491,27 @@ export const AExcell = async(data, pagina='Hoja 1', archivo='uecla.xlsx')=>{
 }
 
 const MontoExcel = (valor)=>{
-  let resulta = String(Number(valor).toFixed(2)).trim().replace('.',',')
+  let resulta = {"t":"n", "v":valor, z: "0.00"}//`=${String(Number(valor).toFixed(2)).trim().replace('.',',')}`
   // resulta = resulta;
   return resulta
 }
+//reporte con macro
+export const ReporteExcellM =async(data, Inicio, Fin, pagina='Reporte', archivo='reporte.xlsx')=>{
+  let file = await (await fetch("utilidad/formato.xlsm")).arrayBuffer();
+  const blob = read(file, {bookVBA: true}).vbaraw;
 
+  var ws = utils.aoa_to_sheet([
+    ["A", "B", "C"],
+    // [{t:"n", v:1}, 2, { t: "n", f: "SUM(A2:B2)" }],
+    // [3, 4, { t: "n", f: "A3+B3" },{t:"n",f:"SUM(A2:A3*B2:B3)"}],
+    // [3, 4, { t: "n", f: "A3+B3" },{t:"n",f:"SUM(A2:A3*B2:B3)"}]
+  ]);
+  const wb = utils.book_new();
+  utils.book_append_sheet(wb, ws, pagina);
+  wb.vbaraw = blob;
+  writeFile(wb, archivo,{cellStyles:true, bookVBA:true});
+
+}
 export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='reporte.xlsx')=>{
 
   let datos =[
@@ -556,7 +572,7 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
         formapago.divisa+= Number(forma.monto);
       }
       if(forma.referencia && forma.referencia!==''){
-        formapago.referencia=`Referencia:${forma.referencia} Fecha:"${forma.fecha} ${forma.bancoo ? "Banco Origen:"+forma.bancoo : ""} ${forma.bancod ?"Banco Destino:" +forma.bancod:"" }"`
+        formapago.referencia=`Referencia:${forma.referencia} ${forma.bancod ?"\nBanco Destino:" +forma.bancod:"" }"`
       }
       return
     })
@@ -574,7 +590,7 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
           meses[meses.length-1][mes.value]=MontoExcel(mes.monto);//mes.monto;
           mensualidad+=mes.monto;
       }else if (pos!==-1){
-          meses[pos][mes.value]= Number(mes.monto).toFixed(2);
+          meses[pos][mes.value]= MontoExcel(mes.monto)//Number(mes.monto).toFixed(2);
           mensualidad+=mes.monto;
       }
     })
@@ -592,6 +608,8 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
     return 
   })
   console.log(datos, archivo, pagina)
+  let file = await (await fetch("utilidad/formato.xlsm")).arrayBuffer();
+  const blob = read(file, {bookVBA: true}).vbaraw;
   const ws = utils.json_to_sheet(datos);
   const wb = utils.book_new();
   utils.book_append_sheet(wb, ws, pagina);
@@ -607,12 +625,14 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
   utils.sheet_add_aoa(ws, Titulos, { origin: "A1" });
   const pos = datos.findIndex(f=>f.No===1);
   let tamano = Object.keys(datos[pos===-1 ? 0 : pos]).map((key,i)=>{  
-    console.log(key)
+    // console.log(key)
     const max_width1 = datos.reduce((w, r) => Math.max(w, String(r[key]).length), 5);
     return {wch: max_width1}
   })
-  ws["!cols"] = tamano;
-  writeFile(wb,archivo,{ compression: true });
+  // ws["!cols"] = tamano;
+  wb.vbaraw = blob;
+  writeFile(wb,archivo,{ bookVBA:true });
+  
   // writeFileXLSX(wb, "SheetJSReactAoO11.xlsx");
 }
 const item_form = async(val, valores, _id)=>{

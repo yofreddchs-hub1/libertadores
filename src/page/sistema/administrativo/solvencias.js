@@ -142,6 +142,7 @@ function Solvencia (props) {
         formulario.titulos[0].value.periodo.onChange= Cambio_dato;
         let grados =  Ver_Valores().config.Listas.lista_colegio_grado;
         let seccion = Ver_Valores().config.Listas.lista_colegio_seccion;
+
         let ngrados=[{titulo:`Sin grado`, grado:undefined, seccion: undefined}];
         grados.map(val=>{
             let dato= seccion.map(sec=>{
@@ -228,7 +229,17 @@ function Solvencia (props) {
                                     <Icon style={color}>assignment</Icon>
                                 </IconButton>
                                 <div style={{width:window.innerWidth * 0.35}}>
-                                    {state.formulario ? <Formulario {...state.formulario} /> : null}
+                                    {state.formulario   ?   <Formulario {...state.formulario} 
+                                                                    config={{
+                                                                            Estilos:{
+                                                                                Input_label:{color:'#fff'},
+                                                                                Input_fondo:'#fff',
+                                                                                Input_input:{color:'#fff'}
+                                                                            }
+                                                                    }}
+                                                            /> 
+                                                        : null
+                                    }
                                 </div>
                             </Stack>
                             : null

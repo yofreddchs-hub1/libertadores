@@ -290,27 +290,25 @@ export default function Formapago(props) {
                             </Grid>
                 ): null}
                 
-                {[4,'4'].indexOf(User.categoria)!==-1  ?
-                    <Grid container spacing={0.5} >
-                        <Grid item xs={12} >
+                
+                <Grid container spacing={0.5} >
+                    {[4,'4'].indexOf(User.categoria)!==-1  ?
+                        <Grid item xs={2} >
                             <Item >
-                                <Typography variant={window.innerWidth > 750 ? "subtitle1": "caption"} > PARA INGRESAR CAPTURE</Typography>
-                                <IconButton title={'Agregar Capture'} component="label" style={{backgroundColor:'green'}}>
-                                    <Icon sx={{color:'#fff', fontSize: window.innerWidth > 750 ? 25 : 20}} >add_circle</Icon>
+                                <Typography variant={window.innerWidth > 750 ? "subtitle1": "caption"} >CAPTURE</Typography>
+                                <IconButton title={'Agregar Capture, seleccione todas la imagenes que desea cargar'} component="label" style={{backgroundColor:'green'}}>
+                                    <Icon sx={{color:'#fff', fontSize: window.innerWidth > 750 ? 20 : 25}} >add_circle</Icon>
                                     <VisuallyHiddenInput type="file" accept="image/*" name={'files'} multiple onChange={Imagen_modificar}/> 
                                 </IconButton>
                             </Item>
                         </Grid>
-                        
-                    </Grid>
-                    : null
-                }
-                <Grid container spacing={0.5} >
+                        : null
+                    }
                     {state && state.url ? 
                         state.url.map((val,i)=>
                             <Grid item xs={2} key={i}>
                                 <Item style={{cursor:'pointer'}} onClick={()=>Mostrar(val)}>
-                                    <img src={val} style={{width:'90%'}}/>
+                                    <img src={val} style={{height:65}}/>
                                 </Item>
                             </Grid>
                         )

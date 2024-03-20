@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Tabla from '../../../componentes/herramientas/tabla';
-import {Ver_Valores, conexiones, genera_formulario, Moneda, Form_todos, Titulos_todos, ReporteExcell} from '../../../constantes';
+import {Ver_Valores, conexiones, genera_formulario, Moneda, Form_todos, Titulos_todos, ReporteExcell, ReporteExcellM} from '../../../constantes';
 import Dialogo from '../../../componentes/herramientas/dialogo';
 import IconButton from '@mui/material/IconButton';
 import Esperar from '../../../componentes/esperar/cargar';
@@ -22,7 +22,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Formulario from '../../../componentes/herramientas/formulario';
 import Cargando from '../../../componentes/esperar/cargar';
 import Scrollbars from '../../../componentes/herramientas/scrolbars';
-// import Prueba from '../../pruebas';
+import Prueba from '../../pruebas/puevaexc';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -76,7 +76,7 @@ function Recibo (props) {
     }
 
     const ReporteM = () =>{
-        ReporteExcell(state.datos,state.inicio, state.fin, `${moment(state.inicio).format('DD-MM-YYYY')} al ${moment(state.fin).format('DD-MM-YYYY')}`,`Reporte${moment(state.inicio).format('DD-MM-YYYY')}al${moment(state.fin).format('DD-MM-YYYY')}.xlsx`)
+        ReporteExcell(state.datos,state.inicio, state.fin, `${moment(state.inicio).format('DD-MM-YYYY')} al ${moment(state.fin).format('DD-MM-YYYY')}`,`Reporte${moment(state.inicio).format('DD-MM-YYYY')}al${moment(state.fin).format('DD-MM-YYYY')}.xlsm`)
         // let formulario = state.formulario ? state.formulario : Formularios;
         // FInicio= formulario.titulos[0].value.inicio.value;
         // FFin = formulario.titulos[0].value.fin.value;
@@ -91,6 +91,20 @@ function Recibo (props) {
         // })
     }
 
+    const ReporteP = () =>{
+        let formulario = state.formulario ? state.formulario : Formularios;
+        FInicio= formulario.titulos[0].value.inicio.value;
+        FFin = formulario.titulos[0].value.fin.value;
+        console.log(FInicio, FFin)
+        setDialogo({
+            ...dialogo, 
+            open: !dialogo.open,
+            Titulo: `Reporte ${moment(FInicio).format('DD/MM/YYYY')} - ${moment(FFin).format('DD/MM/YYYY')}`,
+            tam:'xl',
+            Cuerpo: <Prueba Datos={state.datos} Inicio={FInicio} Fin={FFin}/>,
+            Cerrar: ()=>setDialogo({...dialogo,open:false}),
+        })
+    }
     const Abrir = async(valores) =>{
         const resultado= await Abrir_Recibo(valores, Abrir_recibo);
         // const {mensualidades, Formas_pago, recibo, subtotalvalor, totales}=valores.valores
@@ -314,6 +328,9 @@ function Recibo (props) {
                             <IconButton color={'primary'} title={'Reporte'} onClick={ReporteM}>
                             <Icon style={color}>assignment</Icon>
                             </IconButton>
+                            {/* <IconButton color={'primary'} title={'Reporte'} onClick={ReporteP}>
+                            <Icon style={color}>assignment</Icon>
+                            </IconButton> */}
                             {state.formulario 
                                 ?   <Box sx={{width:window.innerWidth * 0.5}}>
                                         <Scrollbars sx={{ flexGrow: 1, width:window.innerWidth * 0.4, overflow:'auto' ,display: { xs: 'flex', md: 'flex' } }}>
