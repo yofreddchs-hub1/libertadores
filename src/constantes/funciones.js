@@ -567,16 +567,30 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
     })
     dato.valores.Formas_pago.map(forma=>{
 
-      formapago[forma.value] = MontoExcel(forma.monto);//Moneda(forma.monto, 'Bs', false);
+      formapago[forma.value] += Number(forma.monto); //MontoExcel(forma.monto);//Moneda(forma.monto, 'Bs', false);
       if (forma.moneda==='$'){
         formapago.divisa+= Number(forma.monto);
       }
       if(forma.referencia && forma.referencia!==''){
-        formapago.referencia=`Referencia:${forma.referencia} ${forma.bancod ?"\nBanco Destino:" +forma.bancod:"" }"`
+        formapago.referencia=
+          formapago.referencia===''
+            ? `Referencia:${forma.referencia} ${forma.bancod ?"\nBanco Destino:" +forma.bancod:"" }`
+            : formapago.referencia + `, ${forma.referencia} ${forma.bancod ?"\nBanco Destino:" +forma.bancod:"" }`
       }
       return
     })
-    formapago.divisa = MontoExcel(formapago.divisa);//Moneda(formapago.divisa,'Bs', false).trim()
+    // formapago.divisa = MontoExcel(formapago.divisa);//Moneda(formapago.divisa,'Bs', false).trim()
+    formapago = {
+      ...formapago,
+      divisa:MontoExcel(formapago.divisa), 
+      efectivobolivar:MontoExcel(formapago.efectivobolivar),
+      transferencia:MontoExcel(formapago.transferencia), 
+      debito:MontoExcel(formapago.debito),
+      credito:MontoExcel(formapago.credito),
+      pagomovil:MontoExcel(formapago.pagomovil),
+      efectivodolar:MontoExcel(formapago.efectivodolar),
+      zelle:MontoExcel(formapago.zelle)
+    };
     dato.valores.mensualidades.meses.map(mes=>{
       let pos = meses.findIndex(f=>f.cedula===mes.cedula);
       if (pos===-1 && mes.value!=='abono_anterior' && mes.value!=='abono'){
@@ -594,12 +608,12 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
           mensualidad+=mes.monto;
       }
     })
-    console.log('<<<<<<',meses)
+    // console.log('<<<<<<',meses)
     meses.map(val=>{
       datos=[...datos,{
           No:datos[datos.length -1].No === 'No.' ? 1 : Number(datos[datos.length -1].No)+1  , fecha, representante, cedular, recibo, total,
           mensualidad:MontoExcel(mensualidad),//mensualidad.toFixed(2),
-          anterior:abono_anterior, abono:abono, diferido:'??',tmensualidad,otro:'??',
+          anterior:abono_anterior, abono:abono, diferido:'',tmensualidad,otro:'',
           ...val, tasa
       }]
       return
@@ -607,7 +621,7 @@ export const ReporteExcell =async(data, Inicio, Fin, pagina='Reporte', archivo='
     
     return 
   })
-  console.log(datos, archivo, pagina)
+  // console.log(datos, archivo, pagina)
   let file = await (await fetch("utilidad/formato.xlsm")).arrayBuffer();
   const blob = read(file, {bookVBA: true}).vbaraw;
   const ws = utils.json_to_sheet(datos);
