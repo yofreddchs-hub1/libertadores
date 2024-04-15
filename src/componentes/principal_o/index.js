@@ -9,6 +9,7 @@ import Fade from '@mui/material/Fade';
 import Menu from './menu';
 import Enconstruccion from '../herramientas/pantallas/enconstruccion';
 import Scrollbars from '../herramientas/scrolbars';
+import { Ver_Valores } from '../../constantes';
 
 
 function ScrollTop(props) {
@@ -65,6 +66,7 @@ export default function BackToTop(props) {
       Seleccion: props.Seleccion ? props.Seleccion : props.pantallas ? 'Inicio' : undefined
     }
   });
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handlePopoverOpen = (event) => {
@@ -107,6 +109,19 @@ export default function BackToTop(props) {
     setState({...state, Pantalla:seleccion, Seleccion:pantalla})
 
   }
+  React.useEffect(()=>{
+    if(props.Seleccion!==undefined && state.Seleccion!==props.Seleccion){
+      const menus = Ver_Valores().config.Menu;
+      const pos = menus.findIndex(f=> f.value===props.Seleccion);
+      if (pos!==-1){
+        console.log(state.Seleccion, props.Seleccion, props)
+        Seleccion_pantalla(menus[pos]);
+        props.Cambiar(undefined)
+      }
+      
+      // Seleccion_pantalla({pantalla:props.Seleccion, })
+    }
+  },[props])
   return (
     <React.Fragment>
       <CssBaseline />

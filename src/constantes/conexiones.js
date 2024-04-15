@@ -5,7 +5,7 @@ import { uploadImagen } from './api_cloundinary';
 let User; 
 let Api;
 const Inicio = async(user)=>{
-  User= user
+  User= user===null ? {username:'Anonimo'} : user;
 }
 
 export const conexiones = {
@@ -235,8 +235,9 @@ async function Guardar(dato, tabla, user=undefined, mensaje='Guardando datos...'
     files=undefined;
   }
   const Api = Ver_Valores().valores.app;
+  // const usuario = user ? user : User ? User : 
   const resultados= await Enviar({
-                            datos:{User: user ? user : User , Api, datos:JSON.stringify(dato), tabla},
+                            datos:{User: user ? user : User ? User : {username:'Anonimo'} , Api, datos:JSON.stringify(dato), tabla},
                             http_destino:'/api/setall',
                             method:'POST',
                             destino:'imagenes',

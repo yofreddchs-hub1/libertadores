@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 import Dialogo from '../../../componentes/herramientas/dialogo';
 import DialogoR from '../../../componentes/herramientas/dialogo';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import Alert from '@mui/material/Alert';
 import TablaMultiple from '../../../componentes/herramientas/tabla/tabla_multiple';
@@ -12,12 +11,10 @@ import Tabla from '../../../componentes/herramientas/tabla';
 import Cuerpo from '../../../componentes/herramientas/cuerpo'
 import {Condicion_Estudiante, Condicion_Representante} from '../funciones';
 import { Abrir_Recibo } from '../funciones';
-import { Ver_Valores, conexiones, Form_todos, Titulos_todos, Moneda, genera_formulario } from '../../../constantes';
-import moment from 'moment';
+import { Ver_Valores, conexiones, Form_todos, Titulos_todos } from '../../../constantes';
 import Reporte from '../../../componentes/reporte';
 import Recibopdf from '../pagar/pdf/recibonuevo';
 import Constanciapdf from '../../reportes/constancia';
-import Formulario from '../../../componentes/herramientas/formulario';
 import Cargando from '../../../componentes/esperar/cargar';
 
 function Estudiante (props) {

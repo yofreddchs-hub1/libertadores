@@ -226,7 +226,7 @@ export default function Mensualidad(props) {
         let Fmensualidad = {... await genera_formulario({valores:mensualidades, campos: Form_todos('Form_Mensualidades', Config) })}
         Fmensualidad.titulos.meses.noeliminar=true;
         Fmensualidad.titulos.meses.nopaginar=true;
-        Fmensualidad.titulos.meses.style={height:window.innerWidth > 750 ? window.innerHeight * 0.40 : window.innerHeight * 0.3};//height:280};
+        Fmensualidad.titulos.meses.style={height:window.innerWidth > 750 ? window.innerHeight * 0.40 : window.innerHeight * 0.4};//height:280};
         Fmensualidad.titulos.meses.Subtotalvalor= props.Subtotalvalor;
         Fmensualidad.titulos.meses.Subtotal[0][1].default= props.Subtotalvalor.abonod ? props.Subtotalvalor.abonod : 0;
         Fmensualidad.titulos.meses.Subtotal[0][2].default= props.Subtotalvalor.abono ? props.Subtotalvalor.abono : 0;
@@ -245,9 +245,10 @@ export default function Mensualidad(props) {
     },[props])
     
     const {Config}=props;
+    const height = cargando ? window.innerHeight * 0.7 :'100%';
     return (
-        <div style={{width:'100%', height:'100%',position: "relative"}}>
-            <Box sx={{ textAlign:'left' }}>
+        <div style={{width:'100%', height,position: "relative"}}>
+            <Box sx={{ textAlign:'left', pb:9}}>
                 <Grid container spacing={0.5}>
                     <Grid item xs={window.innerWidth > 750 ? 3: 12}> 
                     {formulario

@@ -92,7 +92,8 @@ const Iniciar_transmision = async(data)=>{
   Ver_Valores().socket.emit('Sincronizar',{tabla:data, datos:datosl, fecha:ultimo, fechaa:ultimoa, Api});
 }
 const Refrescar_data=async(nuevo, peticion)=>{
-  const User = await Usuario();
+  let User = await Usuario();
+  User = User === null ? {username:'Anonimo'} : User;
   if (peticion==='/api/colegio/recibo'){
     for(let i=0;i<nuevo.length;i++){
       await Guardar_data(User,'uecla_Recibo',nuevo[i],false)
@@ -967,7 +968,6 @@ const PeticionSerial = async(props)=>{
 
 //Funciones generales
 const Guardar_data=async(User, tabla,newdatos, local=true)=>{
-  
     const fecha = new Date();
     if (tabla==='uecla_Recibo'){
       newdatos.valores.subtotalvalor.abono = newdatos.valores.subtotalvalor.abono['$numberDecimal'] 
@@ -1014,14 +1014,14 @@ const Guardar_data=async(User, tabla,newdatos, local=true)=>{
         const hash_chs = await Hash_chs({...newdatos});
         ultimo={_id:newdatos._id, ...newdatos, hash_chs, actualizado:User.username, updatedAt:String(fecha), local};
         // console.log(tabla, newdatos._id, local, newdatos.valores.nombres)
-       const resul= await DB.update({_id:newdatos._id},{...newdatos, eliminado:newdatos.eliminado,  hash_chs, actualizado:User.username, updatedAt:String(fecha), local},{ upsert: true });
+       const resul= await DB.update({_id:newdatos._id},{...newdatos, eliminado:newdatos.eliminado,  hash_chs, actualizado:User ? User.username : 'Anonimo', updatedAt:String(fecha), local},{ upsert: true });
        if (tabla==='uecla_Pago')
         console.log('Despues de guardar>>>>>',resul, tabla, newdatos.valores.estatus)
     } else {
         const _id = ObjectID(fecha.getTime()).toHexString();
         let cod_chs = await Codigo_chs({...newdatos['multiples_valores'] ? newdatos.valores : newdatos});
         const hash_chs = await Hash_chs({...newdatos, cod_chs})
-        ultimo={_id,...newdatos, cod_chs, hash_chs, actualizado:User.username,fecha: String(fecha),createdAt: String(fecha), updatedAt:String(fecha), local}
+        ultimo={_id,...newdatos, cod_chs, hash_chs, actualizado:User.username, fecha: String(fecha),createdAt: String(fecha), updatedAt:String(fecha), local}
         await DB.insert({_id, ...newdatos, cod_chs, hash_chs, actualizado:User.username,fecha: moment(fecha).format('YYYY-MM-DD'),createdAt: String(fecha), updatedAt:String(fecha), local});
     }
     let resultado = await DB.find({eliminado:false});

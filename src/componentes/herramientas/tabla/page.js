@@ -139,6 +139,15 @@ export default function Tabla(props) {
     seleccion()
   }
   
+  const RepresentadosM = (column, row) =>{
+    
+    return column.formato((row)).map(val=>
+      <Typography key={Generar_id()} variant="body1" gutterBottom>
+        {val.cedula + ' ' + val.nombres + ' ' + val.apellidos}
+      </Typography>  
+                                            
+    )
+  }
   const colorlocal = Config.Estilos && Config.Estilos.Tabla_row_colorlocal ? Config.Estilos.Tabla_row_colorlocal.backgroundColor : '#F8AE1A';
   const coloreliminado = Config.Estilos && Config.Estilos.Tabla_row_coloreliminado ? Config.Estilos.Tabla_row_coloreliminado.backgroundColor : '#871F08';
   return (
@@ -229,7 +238,7 @@ export default function Tabla(props) {
                   return(
                     <TableCell
                       {...ncolumn}
-                      key={column.key ? column.key : column.title}
+                      key={Generar_id()}
                       align={column.align ? column.align : "center"}
                       style={{ minWidth: column.minWidth, fontSize:16, fontWeight:'bold',
                                 ...Config.Estilos.Tabla_titulos ? Config.Estilos.Tabla_titulos : {} 
@@ -313,12 +322,9 @@ export default function Tabla(props) {
                                       </div>
                                     : column.tipo && column.tipo==='representados' && typeof column.formato(row) ==='object'
                                       ? <div style={{ }}>
-                                          {column.formato(row).map(val=>
-                                            <Typography key={val.cedula} variant="body1" gutterBottom>
-                                            {val.cedula + ' ' + val.nombres + ' ' + val.apellidos}
-                                            </Typography>  
-                                            
-                                          )}
+                                          {
+                                           RepresentadosM(column, row)
+                                          }
                                         </div>
                                       : column.tipo && column.tipo==='fecha' && column.formato
                                         ? moment(column.formato(row)).format('DD/MM/YYYY')

@@ -362,7 +362,7 @@ class InicioPrincipal extends Component {
   
   render(){
     const {esperar, seleccion, pantalla, Config}=this.state;
-    const Pantalla = seleccion ? seleccion : <Home {...this.state} />
+    const Pantalla = seleccion ? seleccion : <Home {...this.state} Cambiar={()=>{this.setState({pantalla:'Censo'})}}/>
     if (['Electron', null].indexOf(Ver_Valores().tipo)===-1 && !esperar){
       console.log('es web')
       // let dir = window.location.pathname.split('/');
@@ -386,6 +386,7 @@ class InicioPrincipal extends Component {
               Seleccion_pantalla= {this.Seleccion_pantalla}
               Seleccion={pantalla}
               pantallas={pantallas}
+              Cambiar={(valor)=>this.setState({pantalla:valor})}
             />
           :
             <Principal 

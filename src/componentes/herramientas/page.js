@@ -273,7 +273,7 @@ const Entrada = (props)=>{
                         : {},
                       ...permitidos.style ? permitidos.style : {}
                     }}
-                    endAdornment={props.tipo==='password' ?
+                    endAdornment={props.tipo==='password' || props.modificar ?
                         props.endAdornment : null
                     }
                 >
@@ -680,6 +680,16 @@ export default function Page(props) {
       
     ): ['Qrimagen','QRimagen'].indexOf(valor.tipo)!==-1 ? (
       <QRCode value={valor.value ? valor.value : 'CHS hola'} />
+    ):['subtitulo'].indexOf(valor.tipo)!==-1 ? (
+      <Typography variant="h5" gutterBottom>
+        {valor.label}
+      </Typography>
+    ):['label'].indexOf(valor.tipo)!==-1 ? (
+      <div style={{padding: '5% 0'}}>
+        <Typography variant="h6" sx={{textAlign:'left'}}>
+          {valor.label} : {valor.value}
+        </Typography>
+      </div>
     ):(
         // <TextField
         //   {...valor}
@@ -699,7 +709,21 @@ export default function Page(props) {
 
         // ):null}
         // </TextField>
-        <Entrada {...valor} config={Config}/>
+        <Entrada 
+          {...valor} 
+          config={Config}
+          endAdornment={
+            <div style={{ marginRight:-3}}>
+              {valor.buscando 
+                ? <CircularProgress  size={20}
+                    thickness={5}
+                  />
+                : <Icon sx={{...Config.Estilos.Input_icono ? Config.Estilos.Input_icono : {}}}>
+                    manage_search
+                  </Icon> }
+            </div>
+          }  
+        />
     )
 
   }

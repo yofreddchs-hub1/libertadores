@@ -8,6 +8,8 @@ import { colegio_administrativo_pantallas } from './sistema/administrativo/panta
 import { colegio_configuracion_pantallas } from './sistema/configuracion/pantallas';
 import MisDatos from './sistema/representante';
 import RecibosR from './sistema/representante/recibos';
+import Censo from './sistema/Censo';
+import Pruebas from './pruebas';
 export const pantallas={
     Home,
     Inicio:Home,
@@ -19,5 +21,7 @@ export const pantallas={
     Registros,
     Configuracion:{...colegio_configuracion_pantallas},
     MisDatos,
-    RecibosR
+    RecibosR,
+    Censo,
+    Pruebas
 }

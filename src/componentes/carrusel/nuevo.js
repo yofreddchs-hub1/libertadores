@@ -52,7 +52,7 @@ function CarruselNuevo(props) {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
-
+  
   return (
     <Box sx={{ maxWidth: '100%', flexGrow: 1 }}>
       <Paper
@@ -81,14 +81,23 @@ function CarruselNuevo(props) {
               <Box
                 component="img"
                 sx={{
-                  height: window.innerHeight > 750 ? window.innerHeight * 0.75 : window.innerHeight * 0.50,
+                  height: window.innerHeight > 720 ? window.innerHeight * 0.75 : window.innerHeight * 0.50,
+                  cursor: step.url && step.url!=='' ? 'pointer' : '',
                   
                 //   maxWidth: '100%',
                   overflow: 'hidden',
                 //   width: '100%',
+                '&:hover': {
+                  bgcolor: step.url && step.url!=='' ? 'primary.dark' : '',
+                },
                 }}
-                src={step.imgPath}
+                src={step.filename ? step.filename :step.imgPath}
                 alt={step.label}
+                onClick={()=>{
+                  if(step.url && step.url!==''){
+                    props.Cambiar(step.url)
+                  }
+                }}
               />
             ) : null}
           </div>

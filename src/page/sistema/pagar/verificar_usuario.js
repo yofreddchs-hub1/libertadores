@@ -139,7 +139,7 @@ export default function Verificar(props) {
         }
     },[])
     return (
-        <Box sx={{ textAlign:'left' }}>
+        <Box sx={{ textAlign:'left', pb:9 }}>
             {pendiente && pendiente.length!==0
                 ?   <Alert severity="warning">Pagos pendientes: 
                     {

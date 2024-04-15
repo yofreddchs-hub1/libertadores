@@ -756,8 +756,16 @@ const item_form = async(val, valores, _id)=>{
         return mostrar;
       },
     }
-  }else if (val.tipo==='lista_representados'){
-    let listado = await conexiones.Leer_C([val.lista],{[val.lista]:{}})
+  }else if (val.tipo==='lista_representados' && val.activar){
+    // console.log(val);
+    // let listado = await conexiones.Leer_C([val.lista],{
+    //   [val.lista]:{$or:[{"valores.representante":undefined},{"valores.representante":null},{"valores.representante":"null"}]}})
+    let listado = await conexiones.Leer_C(['uecla_Estudiante'],{
+      uecla_Estudiante:{
+                        $or:[{"valores.representante":null},{"valores.representante":""},{"valores.representante":null}]
+                      }
+    })
+    // console.log(listado.datos['uecla_Estudiante'])
     const table=val.lista;
     const lista = listado.datos[val.lista].map( v=>{
       return {...v.valores}
@@ -768,6 +776,7 @@ const item_form = async(val, valores, _id)=>{
       const filtrado =eval(val.filtro)
       result=filtrado(lista) 
     }
+    // console.log(result)
     resultado={
       ...resultado,
       lista:result, 
@@ -829,13 +838,14 @@ export const genera_formulario = async (datos, columnas=1)=>{
   for (var i=0; i<filas; i++){
     titulos[i]={ multiples:true, listo:false, value:{}}
   }
+  
   for (var j=0; j<campos.length; j++){
       const val = campos[j];
       // delete val.numberOfLines
       if (columnas===1){
         titulos[val.name]= await item_form(val, valores, _id)
       }else{
-        if (val.multiline || ['lista_representados', 'Avatar', 'avatar', 'Tabla'].indexOf(val.tipo)!==-1){
+        if (window.innerWidth<650 || val.multiline || val.solo || ['lista_representados', 'Avatar', 'avatar', 'Tabla','subtitulo'].indexOf(val.tipo)!==-1){
           // col=1;
           // fila=fila+1;
           // titulos[val.name]= await item_form(val, valores, _id);
@@ -847,6 +857,8 @@ export const genera_formulario = async (datos, columnas=1)=>{
           titulos[pos].value[val.name]= await item_form(val, valores, _id);
           
           titulos[pos].listo=true ;
+          if (pos!==0)
+            titulos[pos-1].listo=true ;
         }else{
           let pos= Object.keys(titulos).findIndex(f=> !titulos[f].listo && Object.keys(titulos[f].value).length<columnas);
           if (pos===-1) {

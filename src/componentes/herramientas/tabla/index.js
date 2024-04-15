@@ -146,7 +146,6 @@ class Tabla extends Component {
 
   componentDidMount(){
     let {Titulo,titulos, datos, items, cantidad, table, condicion, cargacompleta, ordenar, cargaporparte, sinpaginacion, Noactualizar}= this.state.props;
-    
     items= sinpaginacion ? datos.length :items===undefined ? itemsF : items;
     
     if (cantidad ===-1){
@@ -167,7 +166,7 @@ class Tabla extends Component {
     if (titulos===undefined && datos.length!==0){
       titulos= Titulo_default(datos[0]);
     }
-    if(Ver_Valores().tipo==='Electron'){
+    if(Ver_Valores().tipo==='Electron' && Ver_Valores().socket){
       Ver_Valores().socket.on('Sincronizado',data=>{
         // if (data.tabla===table){
           console.log('Sincronizado, actualizar...', data);
@@ -175,21 +174,22 @@ class Tabla extends Component {
         // }  
       })
     }
-    Ver_Valores().socket.on('Actualizar',data=>{
-      // if (data.tabla===table){
-        console.log('Actualizar en tabla...', data, Noactualizar);
-        // if(Ver_Valores().tipo==='Electron'){
-        //   const {sincronizando, Sincronizar} = Ver_Valores();
-        //   if (!sincronizando){
-        //     Sincronizar();
-        //   }
-        // }else{
-          if (!Noactualizar && data && ((data.tabla && data.tabla===table) || (data.tablas && data.tablas.indexOf(table)!==-1))){
-            this.Iniciar_descarga(table,Titulo, ordenar, items, cargacompleta, cargaporparte, condicion)
-          }
-        // }
-      // }  
-    })
+    if (Ver_Valores().socket)
+      Ver_Valores().socket.on('Actualizar',data=>{
+        // if (data.tabla===table){
+          console.log('Actualizar en tabla...', data, Noactualizar);
+          // if(Ver_Valores().tipo==='Electron'){
+          //   const {sincronizando, Sincronizar} = Ver_Valores();
+          //   if (!sincronizando){
+          //     Sincronizar();
+          //   }
+          // }else{
+            if (!Noactualizar && data && ((data.tabla && data.tabla===table) || (data.tablas && data.tablas.indexOf(table)!==-1))){
+              this.Iniciar_descarga(table,Titulo, ordenar, items, cargacompleta, cargaporparte, condicion)
+            }
+          // }
+        // }  
+      })
     
     this.setState({
                     ordenar, titulos, datos, paginacion, table,

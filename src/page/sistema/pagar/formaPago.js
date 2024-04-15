@@ -161,7 +161,7 @@ export default function Formapago(props) {
             
             console.log(Formas)
             Formas.titulos.formapago.style={
-                height:window.innerWidth > 750 ? window.innerHeight * 0.47 : window.innerHeight * 0.3
+                height:window.innerWidth > 750 ? window.innerHeight * 0.47 : window.innerHeight * 0.47
             }
             setState({...state, Formas, Formas_pago, bancos, url, cargando:false })
         }
@@ -171,13 +171,13 @@ export default function Formapago(props) {
 
     const {Config}=props;
     const {User}=Ver_Valores()
-    
+    const height = state.cargando ? window.innerHeight * 0.7 :'100%';
     return (
-        <Box sx={{ textAlign:'left' }}>
+        <Box sx={{ textAlign:'left', height, pb:9}}>
             <Grid container spacing={0.5} alignItems="center">
                 <Grid item xs={window.innerWidth > 750 ? 6 : 12}>
                     <Typography variant={window.innerWidth > 750 ? "h5" : "subtitle1"} gutterBottom component="div" sx={{...Config ? {color:Config.Estilos.Input_label.color} : {} }}>
-                        Total a Cancelar: {`$ ${props.Subtotalvalor.totald.toFixed(2)}  Bs. ${props.Subtotalvalor.total.toFixed(2)}`}
+                        Total a Cancelar: {`$ ${Number(props.Subtotalvalor.totald).toFixed(2)}  Bs. ${Number(props.Subtotalvalor.total).toFixed(2)}`}
                     </Typography>
                 </Grid>
                 <Grid item xs={window.innerWidth > 750 ? 6 : 12}>
@@ -329,7 +329,7 @@ export default function Formapago(props) {
                 : null
             }
             <Dialogo  {...state.Dialogo} config={props.Config}/>
-            <Cargando open={state.cargando} Config={Config}/>
+            <Cargando open={state.cargando} Config={Config} />
         </Box>
     );
 }

@@ -1,15 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import TablaMultiple from '../../../componentes/herramientas/tabla/tabla_multiple';
-import Tabla from '../../../componentes/herramientas/tabla';
+// import Tabla from '../../../componentes/herramientas/tabla';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Box } from '@mui/material';
-import Dialogo from '../../../componentes/herramientas/dialogo';
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
-import { Ver_Valores, conexiones, Form_todos, Titulos_todos } from '../../../constantes';
+import { Ver_Valores, Form_todos, Titulos_todos } from '../../../constantes';
 import {Condicion_Estudiante, Condicion_Representante} from '../funciones'
 import Cargando from '../../../componentes/esperar/cargar';
+import Dialogo from '../../../componentes/herramientas/dialogo';
+import Estadistica from '../../../componentes/herramientas/estadistica';
 
 function Representante (props) {
     
@@ -40,33 +41,8 @@ function Representante (props) {
         cambiarState({esperar:false, titulos})
     }
     const Resumen = async(dato)=>{
-        const resultado = await conexiones.Resumen(dato);
-        let {recibos, mensualidad} = resultado;
-        const Cuerpo= 
-            <div>
-                <Tabla  Titulo={"Solvencias"}
-                        Config={Ver_Valores().config}
-                        titulos={Titulos_todos(`Titulos_Solvencias`)}
-                        table={'uecla_Mensualidad'}
-                        cantidad={mensualidad ? mensualidad.length : 0}
-                        datos={mensualidad ? mensualidad : []}
-                        cargaporparte={true }
-                        sinpaginacion
-                        alto={window.innerHeight * 0.25}
-                        
-                />
-                <Tabla  Titulo={"Recibos"}
-                    Config={Ver_Valores().config}
-                    titulos={Titulos_todos(`Titulos_Recibo`)}
-                    table={'uecla_Recibo'}
-                    cantidad={recibos ? recibos.length : 0}
-                    datos={recibos ? recibos : []}
-                    // Accion={Abrir}
-                    cargaporparte={true}
-                    sinpaginacion
-                    alto={window.innerHeight * 0.40}         
-                />
-            </div>
+        // console.log(dato)
+        const Cuerpo= <Estadistica representante={dato}/>
         cambiarState({
             Dialogo:{
                 open: !state.Dialogo.open,
@@ -87,8 +63,13 @@ function Representante (props) {
                     justifyContent="center" alignItems="center"
                 >
                     {texto}
+                    <Box sx={{ml:2}}>
+                        <IconButton size="large" color="inherit" title={'Resumen de pagos'} onClick={()=>Resumen(dato)}>
+                            <Icon >incomplete_circle</Icon>
+                        </IconButton>
+                    </Box>
                     { dato._id && !dato.password
-                    ?   <Box>
+                    ?   <Box sx={{ml:2, direction:'revert-layer'}}>
                             <Alert severity="error">
                                 {`No a creado contraseña`}
                             </Alert>
@@ -120,8 +101,9 @@ function Representante (props) {
                 Titulo_dialogo ={Titulo}
                 Titulos_tabla = {state.titulos}
                 cargaporparte = {true}
+                Tam_dialogo={'lg'}
             />
-            {/* <Dialogo {...state.Dialogo} config={Config}/> */}
+            <Dialogo {...state.Dialogo} config={Config}/>
         </Box>
     )
 }

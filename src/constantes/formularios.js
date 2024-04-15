@@ -108,7 +108,7 @@ export const Funciones_Especiales = (funcion) =>{
     try{
         formato = eval(funcion);
     }catch(e){
-        // console.log(e)
+        console.log(e)
         // console.log('No es funcion')
     }
     

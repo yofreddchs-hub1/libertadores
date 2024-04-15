@@ -8,6 +8,7 @@ import RInscripcion from './inscripcion';
 import RAranceles from './arancel';
 import Referencia from './referencia';
 import Horarios from './horarios';
+import RCensos from './censos';
 export const colegio_administrativo_pantallas={
     Administrativo: Inicio,
     Inscripciones: RInscripcion,
@@ -18,5 +19,6 @@ export const colegio_administrativo_pantallas={
     Recibos:Recibo,
     Solvencias:Solvencia,
     Referencias: Referencia,
-    Horario:Horarios
+    Horario:Horarios,
+    Censos:RCensos
 }

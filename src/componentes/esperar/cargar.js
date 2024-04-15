@@ -30,12 +30,12 @@ LinearProgressWithLabel.propTypes = {
 
 
 export default function Cargando(props) {
-  let {open, Fondo, Config, progreso} = props;
+  let {open, Fondo, Config, progreso, height} = props;
   //Agregado para uecla
   // Fondo = Fondo ? Fondo : '#FFF'
   return open ? (
     <div style={{
-        height:'99.5%', width:'99.5%', 
+        height:height ? height :'99.5%', width:'99.5%', 
         position: 'absolute', top:1,
         display:'flex', alignItems:'center', justifyContent:'center',
         zIndex:100,

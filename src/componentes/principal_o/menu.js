@@ -116,20 +116,28 @@ const ResponsiveAppBar = (props) => {
       })
     }
     
-    return !User || !categoria ? null : menus.map((page,i) => {
-      let mostrar = false;
-      
+  
+    return  menus.map((page,i) => { //!User || !categoria ? null :
+      let mostrar = page.libre ? page.libre : false;
+      mostrar = mostrar==='true' || mostrar===true ? true : false
+      // console.log(page.value,mostrar)
       if( //Libres
-          page.libre==='true'
+          // page.libre==='true'
           // Representante
-          || (page.libre==='false' && ([4,'4'].indexOf(User.categoria)!==-1 && page.representante))
-          //Configuracion solo web
-          || (page.libre==='false' && [0,'0'].indexOf(User.categoria)!==-1 && (tipo==='Web' && page.web))
-          //Administracion 
-          || (page.libre==='false' && ([0,'0', 1, '1'].indexOf(User.categoria)!==-1 && !page.representante && !page.web))
-          //Los demas
-          || (page.libre==='false' && (categoria.permisos.indexOf('*')!==-1 && !page.representante && !page.web))
-          || (page.libre==='false' && (categoria.permisos.indexOf(page.value)!==-1 && !page.representante && !page.web))
+          (User && categoria) &&
+          (
+            // page.libre==='false' &&
+            //Representante
+            (!page.desarrollo && [4,'4'].indexOf(User.categoria)!==-1 && page.representante)
+            //Configuracion solo web, page.libre==='false' && 
+            || (!page.desarrollo && [0,'0'].indexOf(User.categoria)!==-1 && (tipo==='Web' && page.web))
+            //Administracion, page.libre==='false' &&  
+            || (!page.desarrollo && ([0,'0', 1, '1'].indexOf(User.categoria)!==-1 && !page.representante && !page.web))
+            //Los demas, page.libre==='false' && 
+            || (!page.desarrollo && (categoria.permisos.indexOf('*')!==-1 && !page.representante && !page.web))
+            || (!page.desarrollo && (categoria.permisos.indexOf(page.value)!==-1 && !page.representante && !page.web))
+            || (page.desarrollo && categoria.permisos.indexOf('*')!==-1)
+          )
         ){
         mostrar = true;
       }//else if (page.libre==='false' &&(tipo==='Web' && page.web)){//Adminstrativo
@@ -140,7 +148,8 @@ const ResponsiveAppBar = (props) => {
           
       //   mostrar=falstrue
       // }
-      return mostrar ? (
+      
+      return mostrar===true ? (
       <div key={page.value+i}>
         <Button
           id={page.value}

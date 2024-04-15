@@ -82,7 +82,7 @@ export default function Confirmar(props) {
     const {Config} = props;
     
     return (
-        <Box sx={{ textAlign:'left' }}>
+        <Box sx={{ textAlign:'left', pb:9}}>
             <div style={{marginTop:-30}}/>
             {formulario && formulario.Mensualidad
                 ? <Formulario {...formulario.Mensualidad} config={props.Config}/>

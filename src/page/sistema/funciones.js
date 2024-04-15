@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { Box } from '@mui/material';
 
-const Mayuscula = (datos)=>{
+export const Mayuscula = (datos)=>{
     Object.keys(datos).map(valor=>{
 
         if (['_id'].indexOf(valor)===-1 && typeof datos[valor]==='string' ){
@@ -262,4 +262,30 @@ export const Abrir_Recibo = async (valores, Abrir_recibo)=>{
             </Stack>
     
     return {Titulo, Cuerpo}
-  }
+}
+export const Estadisticas = async(representante)=>{
+    console.log(representante)
+    let dato = {
+        ...representante.representados[0], 
+        representante:{
+            _id: representante._id,
+            cedula: representante.cedula,
+            nombres:representante.nombres,
+            apellidos:representante.apellidos,
+        }
+    }
+    let respuesta= await conexiones.Resumen(dato);
+    let recibos = []
+    if(respuesta.Respuesta==='Ok'){
+        recibos = respuesta.recibos.map(val=>{
+            return {
+                recibo: val.valores.recibo, 
+                fecha: val.valores.fecha, 
+                mensualidades: val.valores.mensualidades, 
+                sistema_viejo: val.valores.sistema_viejo, 
+            }
+        });
+        console.log(recibos);
+    }
+
+}

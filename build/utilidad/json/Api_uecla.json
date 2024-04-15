@@ -102,6 +102,12 @@
           "libre": "true"
       },
       {
+        "value": "Censo",
+        "primary": "Censo",
+        "icon": "assignment",
+        "libre": "true"
+      },
+      {
           "value": "Inscripcion",
           "primary": "Inscripción",
           "icon": "drive_file_rename_outline"
@@ -132,6 +138,11 @@
                   "value": "Inscripciones",
                   "primary": "Inscripciones",
                   "icon": "drive_file_rename_outline"
+              },
+              {
+                "value": "Censos",
+                "primary": "Censos",
+                "icon": "assignment"
               },
               {
                   "value": "Aranceles",
@@ -214,6 +225,12 @@
                 "icon": "supervisor_account"
             }
         ]
+      },
+      {
+        "value": "Pruebas",
+        "primary": "Pruebas",
+        "icon": "developer_mode",
+        "desarrollo":"true"
       },
       {
         "value": "Representante",
@@ -731,6 +748,88 @@
               }
           ]
       },
+      "Form_Censo": {
+        "columna": 3,
+        "value": [
+            {
+                "nombre": "periodo",
+                "tipo": "input",
+                "label": "Periodo",
+                "placeholder": "Periodo Académico",
+                "title": "Periodo Academico",
+                "required": true,
+                "mensaje_error": "Debe indicar el periodo académico",
+                "disabled": false,
+                "lista": "",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "form": "",
+                "titulos": "",
+                "Subtotal": "",
+                "name": "periodo"
+            },
+            {
+                "nombre": "titulo",
+                "tipo": "input",
+                "label": "Titulo de Censo",
+                "placeholder": "Titulo de Censo",
+                "title": "Titulo de Cenco",
+                "required": true,
+                "mensaje_error": "Debe indicar titulo del censo",
+                "disabled": false,
+                "lista": "",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "form": "",
+                "titulos": "",
+                "Subtotal": "",
+                "name": "titulo"
+            },
+            {
+                "nombre": "estatus",
+                "tipo": "Checkbox",
+                "label": "Activo/No activo",
+                "placeholder": "Activo/No activo",
+                "title": "",
+                "required": "false",
+                "disabled": false,
+                "lista": "",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": "false",
+                "form": "",
+                "titulos": "",
+                "Subtotal": "",
+                "name": "estatus",
+                "multiline": false
+            },
+            {
+                "nombre": "publicar",
+                "tipo": "Checkbox",
+                "label": "Publicar/No Publicar",
+                "placeholder": "Publicar/No Publicar",
+                "title": "",
+                "required": "false",
+                "disabled": false,
+                "lista": "",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": "false",
+                "form": "",
+                "titulos": "",
+                "Subtotal": "",
+                "name": "publicar",
+                "multiline": false
+            }
+
+        ]
+      },
       "Form_Cuenta": {
           "columna": 2,
           "value": [
@@ -931,9 +1030,9 @@
               {
                   "nombre": "cedula_estudiantil",
                   "tipo": "input",
-                  "label": "Cedula Estudiantil",
-                  "placeholder": "Cedula Estudiantil",
-                  "title": "Cedula Estudiantil",
+                  "label": "Cedula Escolar",
+                  "placeholder": "Cedula Escolar",
+                  "title": "Cedula Escolar",
                   "required": false,
                   "disabled": false,
                   "getOptionLabel": [
@@ -1474,6 +1573,23 @@
                 "name": "descripcion",
                 "multiline": true,
                 "maxRows": "2"
+            },
+            {
+                "nombre": "url",
+                "tipo": "input",
+                "label": "Url",
+                "placeholder": "Url",
+                "title": "Url a donde quiere direccionar ",
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "key": "url",
+                "name": "url",
+                "multiline": false
             },
             {
                 "nombre": "filename",
@@ -2205,6 +2321,29 @@
               }
           ]
       },
+      "Form_filtro_censos": {
+        "columna": 3,
+        "value": [
+            {
+                "nombre": "periodo",
+                "tipo": "lista_multiuso",
+                "label": "Periodo",
+                "placeholder": "Periodo",
+                "title": "Periodo",
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "uecla_Censo",
+                "getOptionLabel": [
+                    "periodo"
+                ],
+                "key": "periodo",
+                "name": "periodo",
+                "multiline": false,
+                "cargar":true
+            }
+        ]
+      },
       "Form_Cambio": {
           "columna": 1,
           "value": [
@@ -2497,7 +2636,7 @@
                 "multiple": true
             }
         ]
-    },
+      },
       "Form_Forma_Pago": {
           "columna": 4,
           "value": [
@@ -2698,7 +2837,7 @@
                 "cargar":true
             }
         ]
-    },
+      },
       "Form_User_api": {
         "columna": 2,
         "value": [
@@ -2777,7 +2916,761 @@
             "required": true
           }
         ]
-      }
+      },
+      "Form_Censar": {
+        "columna": 4,
+        "value": [
+            {
+                "nombre": "titulo1",
+                "tipo": "subtitulo",
+                "label": "DATOS DEL ESTUDIANTE",
+                "title": "Cedula de identidad",
+                "name": "titulo1"
+            },
+            {
+                "nombre": "cedula_estu",
+                "tipo": "input",
+                "label": "Cedula",
+                "placeholder": "Cedula",
+                "title": "Cedula de identidad",
+                "required": false,
+                "mensaje_error": "Indique cedula de identidad",
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "cedula_estu",
+                "modificar": "Censo_buscar_cedula"
+            },
+            {
+                "nombre": "cedula_estudiantil",
+                "tipo": "input",
+                "label": "Cedula Escolar",
+                "placeholder": "Cedula Escolar",
+                "title": "Cedula Escolar",
+                "required": false,
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "cedula_estudiantil",
+                "modificar":"Censo_buscar_cedula_estudiantil"
+            },
+            {
+                "nombre": "nombres_estu",
+                "tipo": "input",
+                "label": "Nombres",
+                "placeholder": "Nombres",
+                "title": "Nombres del estudiante",
+                "required": true,
+                "mensaje_error": "Debe indicar nombre del estudiante",
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "nombres_estu"
+            },
+            {
+                "nombre": "apellidos_estu",
+                "tipo": "input",
+                "label": "Apellidos",
+                "placeholder": "Apellidos",
+                "title": "Apellidos del estudiante",
+                "mensaje_error": "Debe indicar apellido del estudiante",
+                "required": true,
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "apellidos_estu"
+            },
+            {
+                "nombre": "sexo_estu",
+                "tipo": "lista_multiuso",
+                "label": "Sexo",
+                "placeholder": "Sexo",
+                "title": "Sexo del estudiante",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_colegio_sexo",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "key": "sexo_estu",
+                "name": "sexo_estu"
+            },
+            {
+                "nombre": "fecha_nacimiento_estu",
+                "tipo": "Fecha",
+                "label": "Fecha de Nacimiento",
+                "placeholder": "Fecha de Nacimiento",
+                "title": "Fecha de Nacimiento",
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "fecha_nacimiento_estu",
+                "type": "date"
+            },
+            {
+                "nombre": "procedencia",
+                "tipo": "input",
+                "label": "Colegio de Procedencia",
+                "placeholder": "Colegio de Procedencia",
+                "title": "Colegio de Procedencia",
+                "required": true,
+                "disabled": false,
+                "mensaje_error": "Debe indicar colegio del cual procede",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "procedencia"
+            },                   
+            {
+                "nombre": "gradoc_estu",
+                "tipo": "lista_multiuso",
+                "label": "Años Cursados",
+                "placeholder": "Años Cursados",
+                "title": "Años Cursados en institución",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_grados",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": true,
+                "key": "gradoc_estu",
+                "name": "gradoc_estu",
+                "solo": true
+            },
+            {
+                "nombre": "grado_estu",
+                "tipo": "lista_multiuso",
+                "label": "Grado a Cursar",
+                "placeholder": "Grado a Cursar",
+                "title": "Grado a Cursar",
+                "required": true,
+                "mensaje_error": "Debe especificar el grado a cursar",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_colegio_grado",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": false,
+                "key": "grado_estu",
+                "name": "grado_estu"
+            },
+            {
+                "nombre": "posee_condicion",
+                "tipo": "lista_multiuso",
+                "label": "¿Posee alguna condición?",
+                "placeholder": "¿Posee alguna condición?",
+                "title": "¿Posee alguna condición?",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_colegio_sino",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": false,
+                "key": "posee_condicion",
+                "name": "posee_condicion",
+                "modificar": "Cambio_condicion"
+            },
+            {
+                "nombre": "condicion",
+                "tipo": "lista_multiuso",
+                "label": "Condición",
+                "placeholder": "Condición",
+                "title": "Condición",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_colegio_condicion",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": false,
+                "key": "condicion",
+                "name": "condicion",
+                "modificar": "Condicion_especial"
+            },
+            {
+                "nombre": "condicione",
+                "tipo": "lista_multiuso",
+                "label": "Condición",
+                "placeholder": "Condición",
+                "title": "Condición",
+                "required": false,
+                "mensaje_error": "Indique la neurodiversidad",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_colegio_condicion_neurodiversidad",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": false,
+                "key": "condicione",
+                "name": "condicione"
+            },
+            {
+                "nombre": "direccion_estu",
+                "tipo": "multiline",
+                "label": "Dirección",
+                "placeholder": "Dirección",
+                "title": "Dirección",
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "direccion_estu",
+                "multiline": true,
+                "maxRows": "3"
+            },
+            {
+                "nombre": "titulo2",
+                "tipo": "subtitulo",
+                "label": "DATOS DEL REPRESENTANTE",
+                "title": "Cedula de identidad",
+                "name": "titulo2"
+            },
+            {
+                "nombre": "cedula",
+                "tipo": "input",
+                "label": "Cedula",
+                "placeholder": "Cedula",
+                "title": "Cedula de identidad",
+                "required": true,
+                "mensaje_error": "Indique cedula de identidad",
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "cedula",
+                "modificar" : "Censo_buscar_cedula_representante"
+            },
+            
+            {
+                "nombre": "nombres",
+                "tipo": "input",
+                "label": "Nombres",
+                "placeholder": "Nombres",
+                "title": "Nombres del estudiante",
+                "required": true,
+                "mensaje_error": "indique nombre del representante",
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "nombres"
+            },
+            {
+                "nombre": "apellidos",
+                "tipo": "input",
+                "label": "Apellidos",
+                "placeholder": "Apellidos",
+                "title": "Apellidos del estudiante",
+                "mensaje_error": "indique apellido del representate",
+                "required": true,
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "apellidos"
+            },
+            {
+                "nombre": "telefono_movil",
+                "tipo": "input",
+                "label": "Telefono Movil",
+                "placeholder": "Telefono Movil",
+                "title": "Telefono Movil",
+                "required": false,
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "name": "telefono_movil",
+                "multiline": false
+            },
+            {
+                "nombre": "telefono_fijo",
+                "tipo": "input",
+                "label": "Teléfono Fijo",
+                "placeholder": "Teléfono Fijo",
+                "title": "Teléfono Fijo",
+                "required": false,
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "name": "telefono_fijo",
+                "multiline": false
+            },
+            {
+                "nombre": "correo",
+                "tipo": "input",
+                "label": "Correo",
+                "placeholder": "Correo",
+                "title": "Correo",
+                "required": false,
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "name": "correo",
+                "multiline": false
+            },
+            {
+                "nombre": "parentesco",
+                "tipo": "lista_multiuso",
+                "label": "Parentesco",
+                "placeholder": "Parentesco",
+                "title": "Parentesco ",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_colegio_parentesco",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "key": "parentesco",
+                "name": "parentesco",
+                "multiline": false
+            },
+            {
+                "nombre": "profesion",
+                "tipo": "input",
+                "label": "Profesión/Ocupación",
+                "placeholder": "Profesión/Ocupación",
+                "title": "Profesión/Ocupación",
+                "required": false,
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "name": "profesion",
+                "multiline": false
+            }
+        ]
+      },
+      "Form_Censado": {
+        "columna": 4,
+        "value": [
+            {
+                "nombre": "titulo1",
+                "tipo": "subtitulo",
+                "label": "DATOS DEL ESTUDIANTE",
+                "title": "Cedula de identidad",
+                "name": "titulo1"
+            },
+            {
+                "nombre": "cedula_estu",
+                "tipo": "input",
+                "label": "Cedula",
+                "placeholder": "Cedula",
+                "title": "Cedula de identidad",
+                "required": false,
+                "mensaje_error": "Indique cedula de identidad",
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "cedula_estu"
+            },
+            {
+                "nombre": "cedula_estudiantil",
+                "tipo": "input",
+                "label": "Cedula Escolar",
+                "placeholder": "Cedula Escolar",
+                "title": "Cedula Escolar",
+                "required": false,
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "cedula_estudiantil"
+            },
+            {
+                "nombre": "nombres_estu",
+                "tipo": "input",
+                "label": "Nombres",
+                "placeholder": "Nombres",
+                "title": "Nombres del estudiante",
+                "required": true,
+                "mensaje_error": "indique nombre del estudiante",
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "nombres_estu"
+            },
+            {
+                "nombre": "apellidos_estu",
+                "tipo": "input",
+                "label": "Apellidos",
+                "placeholder": "Apellidos",
+                "title": "Apellidos del estudiante",
+                "mensaje_error": "indique apellido del estudiante",
+                "required": true,
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "apellidos_estu"
+            },
+            {
+                "nombre": "sexo_estu",
+                "tipo": "lista_multiuso",
+                "label": "Sexo",
+                "placeholder": "Sexo",
+                "title": "Sexo del estudiante",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_colegio_sexo",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "key": "sexo_estu",
+                "name": "sexo_estu"
+            },
+            {
+                "nombre": "fecha_nacimiento_estu",
+                "tipo": "Fecha",
+                "label": "Fecha de Nacimiento",
+                "placeholder": "Fecha de Nacimiento",
+                "title": "Fecha de Nacimiento",
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "fecha_nacimiento_estu",
+                "type": "date"
+            },
+            {
+                "nombre": "procedencia",
+                "tipo": "input",
+                "label": "Colegio de Procedencia",
+                "placeholder": "Colegio de Procedencia",
+                "title": "Colegio de Procedencia",
+                "required": true,
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "procedencia"
+            },                   
+            {
+                "nombre": "gradoc_estu",
+                "tipo": "lista_multiuso",
+                "label": "Años Cursados",
+                "placeholder": "Años Cursados",
+                "title": "Años Cursados en institución",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_grados",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": true,
+                "key": "gradoc_estu",
+                "name": "gradoc_estu"
+            },
+            {
+                "nombre": "grado_estu",
+                "tipo": "lista_multiuso",
+                "label": "Grado a Cursar",
+                "placeholder": "Grado a Cursar",
+                "title": "Grado a Cursar",
+                "required": true,
+                "mensaje_error": "",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_colegio_grado",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": false,
+                "key": "grado_estu",
+                "name": "grado_estu"
+            },
+            {
+                "nombre": "posee_condicion",
+                "tipo": "lista_multiuso",
+                "label": "¿Posee alguna condición?",
+                "placeholder": "¿Posee alguna condición?",
+                "title": "¿Posee alguna condición?",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_colegio_sino",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": false,
+                "key": "posee_condicion",
+                "name": "posee_condicion"
+            },
+            {
+                "nombre": "condicion",
+                "tipo": "lista_multiuso",
+                "label": "Condición",
+                "placeholder": "Condición",
+                "title": "Condición",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_colegio_condicion",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": false,
+                "key": "condicion",
+                "name": "condicion"
+            },
+            {
+                "nombre": "direccion_estu",
+                "tipo": "multiline",
+                "label": "Dirección",
+                "placeholder": "Dirección",
+                "title": "Dirección",
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "direccion_estu",
+                "multiline": true,
+                "maxRows": "3"
+            },
+            {
+                "nombre": "titulo2",
+                "tipo": "subtitulo",
+                "label": "DATOS DEL REPRESENTANTE",
+                "title": "Cedula de identidad",
+                "name": "titulo2"
+            },
+            {
+                "nombre": "cedula",
+                "tipo": "input",
+                "label": "Cedula",
+                "placeholder": "Cedula",
+                "title": "Cedula de identidad",
+                "required": true,
+                "mensaje_error": "Indique cedula de identidad",
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "cedula"
+            },
+            
+            {
+                "nombre": "nombres",
+                "tipo": "input",
+                "label": "Nombres",
+                "placeholder": "Nombres",
+                "title": "Nombres del estudiante",
+                "required": true,
+                "mensaje_error": "indique nombre del representante",
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "nombres"
+            },
+            {
+                "nombre": "apellidos",
+                "tipo": "input",
+                "label": "Apellidos",
+                "placeholder": "Apellidos",
+                "title": "Apellidos del estudiante",
+                "mensaje_error": "indique apellido del representate",
+                "required": true,
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "name": "apellidos"
+            },
+            {
+                "nombre": "telefono_movil",
+                "tipo": "input",
+                "label": "Telefono Movil",
+                "placeholder": "Telefono Movil",
+                "title": "Telefono Movil",
+                "required": false,
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "name": "telefono_movil",
+                "multiline": false
+            },
+            {
+                "nombre": "telefono_fijo",
+                "tipo": "input",
+                "label": "Teléfono Fijo",
+                "placeholder": "Teléfono Fijo",
+                "title": "Teléfono Fijo",
+                "required": false,
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "name": "telefono_fijo",
+                "multiline": false
+            },
+            {
+                "nombre": "correo",
+                "tipo": "input",
+                "label": "Correo",
+                "placeholder": "Correo",
+                "title": "Correo",
+                "required": false,
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "name": "correo",
+                "multiline": false
+            },
+            {
+                "nombre": "parentesco",
+                "tipo": "lista_multiuso",
+                "label": "Parentesco",
+                "placeholder": "Parentesco",
+                "title": "Parentesco ",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_colegio_parentesco",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "key": "parentesco",
+                "name": "parentesco",
+                "multiline": false
+            },
+            {
+                "nombre": "profesion",
+                "tipo": "input",
+                "label": "Profesión/Ocupación",
+                "placeholder": "Profesión/Ocupación",
+                "title": "Profesión/Ocupación",
+                "required": false,
+                "disabled": true,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "name": "profesion",
+                "multiline": false
+            },
+            {
+                "nombre": "existe",
+                "tipo": "lista_multiuso",
+                "label": "¿Es representante en el Sistema?",
+                "placeholder": "¿Es representante en el Sistema?",
+                "title": "¿Es representante en el Sistema? ",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_colegio_sino",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "key": "existe",
+                "name": "existe",
+                "multiline": false
+            },
+            {
+                "nombre": "representados",
+                "tipo": "lista_representados",
+                "activar": false,
+                "lista": "uecla_Estudiante",
+                "filtro": "(datos)=>datos.filter(f=>{return !f.representante || f.representante===null || f.representante==='null' || f.representante===''})",
+                "label": "Representado(s)",
+                "placeholder": "Representado(s)",
+                "title": "Representado(s)",
+                "disabled": true,
+                "name": "representados",
+                "multiline": false,
+                "getOptionLabel": [
+                    "cedula",
+                    "nombres",
+                    "apellidos"
+                ]
+            },
+            {
+                "nombre": "aceptar",
+                "tipo": "lista_multiuso",
+                "label": "Admitido",
+                "placeholder": "Admitido",
+                "title": "Admitido",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_colegio_sino",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "key": "admitido",
+                "name": "admitido",
+                "multiline": false
+            }
+        ]
+     }
   },
   "Listas": {
     "lista_categoria": [
@@ -2852,79 +3745,92 @@
             "_id": 0,
             "titulo": "Inscripción",
             "value": "inscripcion",
-            "permisos": ""
+            "permisos": "",
+            "mes":9
         },
         {
             "_id": 1,
             "titulo": "Septiembre",
             "value": "septiembre",
-            "permisos": ""
+            "permisos": "",
+            "mes":9
         },
         {
             "_id": 2,
             "titulo": "Octubre",
             "value": "octubre",
-            "permisos": ""
+            "permisos": "",
+            "mes":10
         },
         {
             "_id": 3,
             "titulo": "Noviembre",
             "value": "noviembre",
-            "permisos": ""
+            "permisos": "",
+            "mes":11
         },
         {
             "_id": 4,
             "titulo": "Diciembre",
             "value": "diciembre",
-            "permisos": ""
+            "permisos": "",
+            "mes":12
         },
         {
             "_id": 5,
             "titulo": "Enero",
             "value": "enero",
-            "permisos": ""
+            "permisos": "",
+            "mes":1
         },
         {
             "_id": 6,
             "titulo": "Febrero",
             "value": "febrero",
-            "permisos": ""
+            "permisos": "",
+            "mes":2
         },
         {
             "_id": 7,
             "titulo": "Marzo",
             "value": "marzo",
-            "permisos": ""
+            "permisos": "",
+            "mes":3
         },
         {
             "_id": 8,
             "titulo": "Abril",
             "value": "abril",
-            "permisos": ""
+            "permisos": "",
+            "mes":4
         },
         {
             "_id": 9,
             "titulo": "Mayo",
             "value": "mayo",
-            "permisos": ""
+            "permisos": "",
+            "mes":5
         },
         {
             "_id": 10,
             "titulo": "Junio",
             "value": "junio",
-            "permisos": ""
+            "permisos": "",
+            "mes":6
         },
         {
             "_id": 11,
             "titulo": "Julio",
             "value": "julio",
-            "permisos": ""
+            "permisos": "",
+            "mes":7
         },
         {
             "_id": 12,
             "titulo": "Agosto",
             "value": "agosto",
-            "permisos": ""
+            "permisos": "",
+            "mes":8
         }
     ],
     "lista_colegio_status_estudiante": [
@@ -2972,6 +3878,68 @@
             "_id": 1,
             "titulo": "Femenino",
             "value": "femenino",
+            "permisos": ""
+        }
+    ],
+    "lista_grados": [
+        {
+            "_id": 3,
+            "titulo": "1er grado",
+            "value": "1erg",
+            "permisos": ""
+        },
+        {
+            "_id": 4,
+            "titulo": "2do grado",
+            "value": "2dog",
+            "permisos": ""
+        },
+        {
+            "_id": 5,
+            "titulo": "3er grado",
+            "value": "3erg",
+            "permisos": ""
+        },
+        {
+            "_id": 6,
+            "titulo": "4to grado",
+            "value": "4tog",
+            "permisos": ""
+        },
+        {
+            "_id": 7,
+            "titulo": "5to grado",
+            "value": "5tog",
+            "permisos": ""
+        },
+        {
+            "_id": 8,
+            "titulo": "6to grado",
+            "value": "6tog",
+            "permisos": ""
+        },
+        {
+            "_id": 9,
+            "titulo": "1er año",
+            "value": "1er",
+            "permisos": ""
+        },
+        {
+            "_id": 10,
+            "titulo": "2do año",
+            "value": "2do",
+            "permisos": ""
+        },
+        {
+            "_id": 11,
+            "titulo": "3er año",
+            "value": "3er",
+            "permisos": ""
+        },
+        {
+            "_id": 12,
+            "titulo": "4to año",
+            "value": "4to",
             "permisos": ""
         }
     ],
@@ -3287,6 +4255,66 @@
             "value": true,
             "permisos": ""
         }
+    ],
+    "lista_colegio_sino": [
+        {
+            "_id": 0,
+            "titulo": "SI",
+            "value": "si",
+            "permisos": ""
+        },
+        {
+            "_id": 1,
+            "titulo": "NO",
+            "value": "no",
+            "permisos": ""
+        }
+    ],
+    "lista_colegio_condicion": [
+        {
+            "_id": 0,
+            "titulo": "Cognitiva",
+            "value": "cognitiva",
+            "permisos": ""
+        },
+        {
+            "_id": 1,
+            "titulo": "Visual",
+            "value": "visual",
+            "permisos": ""
+        },
+        {
+            "_id": 2,
+            "titulo": "Motora",
+            "value": "motora",
+            "permisos": ""
+        },
+        {
+            "_id": 3,
+            "titulo": "Neurodiversidad",
+            "value": "neurodiversidad",
+            "permisos": ""
+        }
+    ],
+    "lista_colegio_condicion_neurodiversidad": [
+        {
+            "_id": 0,
+            "titulo": "Dislexia",
+            "value": "dislexia",
+            "permisos": ""
+        },
+        {
+            "_id": 1,
+            "titulo": "TDAH",
+            "value": "tdah",
+            "permisos": ""
+        },
+        {
+            "_id": 2,
+            "titulo": "Espectro Autismo",
+            "value": "espectro",
+            "permisos": ""
+        }
     ]
   },
   "Titulos": {
@@ -3316,6 +4344,40 @@
               "type": ""
           }
       ],
+      "Titulos_Censo": [
+        {
+            "title": "Periodo",
+            "field": "periodo",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.periodo}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Titulo",
+            "field": "titulo",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.titulo}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Activo",
+            "field": "activo",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.estatus ? 'SI' : 'NO'}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Publicado",
+            "field": "publicar",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.publicar ? 'SI' : 'NO'}`",
+            "default": "",
+            "type": ""
+        }
+    ],
       "Titulos_Arancel": [
           {
               "title": "Periodo",
@@ -3565,7 +4627,7 @@
               "title": "Representado(s)",
               "field": "representados",
               "tipo": "representados",
-              "formato": "(dato)=> dato.valores.representados",
+              "formato": "(dato)=> dato.valores.representados ? dato.valores.representados : []",
               "default": "",
               "type": ""
           }
@@ -4371,7 +5433,115 @@
           "default": "",
           "type": ""
         }
-      ]
+      ],
+      "Titulos_Censados": [
+        {
+            "title": "Cedula",
+            "field": "cedula_estu",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.cedula_estu}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Nombres",
+            "field": "nombres_estu",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.nombres_estu}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Apellidos",
+            "field": "apellidos_estu",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.apellidos_estu}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Grado",
+            "field": "grado_estu",
+            "tipo": "",
+            "formato": "(dato)=> `${ typeof dato.valores.grado_estu === 'object' ? dato.valores.grado_estu.titulo : dato.valores.grado_estu ? dato.valores.grado_estu : ''}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Cedula",
+            "field": "cedula",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.cedula}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Nombres Representante",
+            "field": "nombres",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.nombres}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Apellidos Representante",
+            "field": "apellidos",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.apellidos}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "¿Es representante en el Sistema?",
+            "field": "existe",
+            "tipo": "",
+            "formato": "(dato)=> `${ typeof dato.valores.existe === 'object' ? dato.valores.existe.titulo : dato.valores.existe ? dato.valores.existe : ''}`",
+            "default": "",
+            "type": ""
+        }
+      ],
+      "Titulos_CensadosA": [
+        {
+            "title": "Cedula",
+            "field": "cedula_estu",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.cedula_estu}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Nombres",
+            "field": "nombres_estu",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.nombres_estu}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Apellidos",
+            "field": "apellidos_estu",
+            "tipo": "",
+            "formato": "(dato)=> `${dato.valores.apellidos_estu}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Grado",
+            "field": "grado_estu",
+            "tipo": "",
+            "formato": "(dato)=> `${ typeof dato.valores.grado_estu === 'object' ? dato.valores.grado_estu.titulo : dato.valores.grado_estu ? dato.valores.grado_estu : ''}`",
+            "default": "",
+            "type": ""
+        },
+        {
+            "title": "Aceptado",
+            "field": "admitido",
+            "tipo": "",
+            "formato": "(dato)=> `${ typeof dato.valores.admitido === 'object' ? dato.valores.admitido.titulo : dato.valores.admitido ? dato.valores.admitido : ''}`",
+            "default": "",
+            "type": ""
+        }
+    ]
   },
   "Funciones": {},
   "Subtotales": {

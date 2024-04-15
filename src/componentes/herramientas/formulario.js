@@ -8,7 +8,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Dialogo from './dialogo';
 import Page from './page';
 import { Titulo_default,Form_todos, Ver_Valores, genera_formulario, crear_campos, Permiso, conexiones, nuevo_Valores } from '../../constantes';
-
+import funcionesespeciales from '../../constantes/fespeciales';
 //Utilizado para la creacion de formulacios con distintos datos
 //formato de los datos
 // formulario= {
@@ -28,6 +28,8 @@ import { Titulo_default,Form_todos, Ver_Valores, genera_formulario, crear_campos
 // }
 // formato de los datos segun el tipo
 //Avatar:
+
+let timeout;
 class Formulario extends Component {
   constructor(props) {
       super(props);
@@ -151,10 +153,10 @@ class Formulario extends Component {
     this.setState({resultados});
   }
 
-  Cambio = (event) =>{
+  Cambio = async(event) =>{
     let {name, value} = event.target;
     // console.log(name,value)
-    const {form}=this.state;
+    let {form}=this.state;
     const objeto= this.Buscar_objeto(name,form);
     // console.log(name, objeto);
     let {resultados}=this.state;
@@ -182,11 +184,43 @@ class Formulario extends Component {
       if (objeto.onClick!== undefined){
         objeto.onClick(value)
       }
+      if (objeto.modificar){
+        // const modificar =  eval(objeto.modificar);
+        // modificar({name, value}, form)
+        const modificar = funcionesespeciales[objeto.modificar];
+        if (modificar!==undefined){
+          if (!this.state.modificando){
+            clearTimeout(timeout)
+            timeout=setTimeout(async() => {
+              const pos = this.Buscar_campo(name,form);
+              if (pos!==-1){
+                form[pos].value[name].buscando='true';
+                this.setState({form});  
+              }
+              let nuevo = await modificar({name, value, resultados}, form);
+              nuevo.form[pos].value[name].buscando=undefined;
+              this.setState({form:nuevo.form, resultados:nuevo.resultados});  
+              clearTimeout(timeout)
+            }, 900);
+            
+          }
+        }
+      }
     }catch(error) {
 
     }
   }
-
+  //Esta copiado dos veces aqui y en fespeciales
+  Buscar_campo = (name, form) =>{
+    let pos =-1;
+    Object.keys(form).map((valor,i)=>{
+      if(form[valor].value[name]){
+        pos=i;
+      }
+    });
+    // console.log(resultado);
+    return pos;
+  }
   Buscar_objeto = (name, form, result=undefined) =>{
     // const {form}=this.state;
     let resultado=result;

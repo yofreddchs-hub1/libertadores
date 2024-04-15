@@ -107,7 +107,6 @@ function RecibosR (props) {
                 apellidos:repres.valores.apellidos,
             }
         }
-        
         let respuesta= await conexiones.Resumen(dato);
         let recibos = []
         if(respuesta.Respuesta==='Ok'){
