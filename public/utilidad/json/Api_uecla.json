@@ -3411,7 +3411,8 @@
                 "agregar": false,
                 "multiple": true,
                 "key": "gradoc_estu",
-                "name": "gradoc_estu"
+                "name": "gradoc_estu",
+                "solo": true
             },
             {
                 "nombre": "grado_estu",
@@ -3469,6 +3470,25 @@
                 "multiple": false,
                 "key": "condicion",
                 "name": "condicion"
+            },
+            {
+                "nombre": "condicione",
+                "tipo": "lista_multiuso",
+                "label": "Condición",
+                "placeholder": "Condición",
+                "title": "Condición",
+                "required": false,
+                "mensaje_error": "Indique la neurodiversidad",
+                "disabled": true,
+                "numberOfLines": "",
+                "lista": "lista_colegio_condicion_neurodiversidad",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "multiple": false,
+                "key": "condicione",
+                "name": "condicione"
             },
             {
                 "nombre": "direccion_estu",
