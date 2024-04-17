@@ -2929,7 +2929,7 @@
             },
             {
                 "nombre": "cedula_estu",
-                "tipo": "input",
+                "tipo": "number",
                 "label": "Cedula",
                 "placeholder": "Cedula",
                 "title": "Cedula de identidad",
@@ -2945,7 +2945,7 @@
             },
             {
                 "nombre": "cedula_estudiantil",
-                "tipo": "input",
+                "tipo": "number",
                 "label": "Cedula Escolar",
                 "placeholder": "Cedula Escolar",
                 "title": "Cedula Escolar",
