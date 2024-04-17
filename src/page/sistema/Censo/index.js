@@ -94,13 +94,26 @@ export default function Censo(props) {
             },
             uecla_Censado:{
                 // 'valores.cedula_estu':valores.cedula_estu
-                $and:[{'valores.periodo':valores.periodo},{$or:[{'valores.cedula_estu':valores.cedula_estu},{'valores.cedula_estudiantil':valores.cedula_estudiantil}]}]
+                $and:[
+                    {'valores.periodo':valores.periodo},
+                    {$or:[
+                        {'valores.cedula_estu':valores.cedula_estu},{'valores.cedula_estudiantil':valores.cedula_estudiantil}
+                    ]}
+                ]
             }
         });
         let nuevos;
         if (resulta.Respuesta==='Ok'){
-            let estudiante = resulta.datos.uecla_Estudiante;
-            let censado = resulta.datos.uecla_Censado;
+            let estudiante = resulta.datos.uecla_Estudiante
+                .filter(f=> (valores.cedula_estu==='' && f.valores.cedula_estudiantil===valores.cedula_estudiantil)
+                            || (valores.cedula_estudiantil==='' && f.valores.cedula_estu===valores.cedula_estu)
+                            || (valores.cedula_estu===f.valores.cedula_estu && valores.cedula_estudiantil===f.valores.cedula_estudiantil)
+                        );
+            let censado = resulta.datos.uecla_Censado
+                .filter(f=> (valores.cedula_estu==='' && f.valores.cedula_estudiantil===valores.cedula_estudiantil)
+                            || (valores.cedula_estudiantil==='' && f.valores.cedula_estu===valores.cedula_estu)
+                            || (valores.cedula_estu===f.valores.cedula_estu && valores.cedula_estudiantil===f.valores.cedula_estudiantil)
+                        );
             if (estudiante.length===0 && censado.length===0){
                 // console.log('guardar...')
                 nuevos= await conexiones.Guardar({valores, multiples_valores:true},'uecla_Censado');

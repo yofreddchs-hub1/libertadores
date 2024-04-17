@@ -131,7 +131,9 @@ export default{
         return {resultados: data.resultados,form} 
     },
     Censo_buscar_cedula_estudiantil:async(data, form)=>{
-        
+        if (data.value===''){
+            return {resultados: data.resultados,form}
+        }
         let resulta= await conexiones.Leer_C(['uecla_Estudiante','uecla_Censado'],{
             uecla_Estudiante:{'valores.cedula_estudiantil':data.value},
             uecla_Censado:{'valores.cedula_estudiantil':data.value}
