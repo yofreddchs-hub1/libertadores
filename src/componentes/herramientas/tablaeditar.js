@@ -542,7 +542,8 @@ export default function AntDesignGrid(props) {
                 } = dato.colDef;
           
           let editable = true;
-          if ((['Debito','Credito'].indexOf(dato.row.titulo)!==-1 && ['bancod'].indexOf(field)!==-1) 
+          // quitado 'Debito',
+          if ((['Credito'].indexOf(dato.row.titulo)!==-1 && ['bancod'].indexOf(field)!==-1) 
               || ((['Efectivo Bolívar','Efectivo Dolar'].indexOf(dato.row.titulo)!==-1) 
                   && ['fecha','bancoo','bancod'].indexOf(field)!==-1)
               ||  (field==='moneda' && dato.row.titulo!=='Otro')

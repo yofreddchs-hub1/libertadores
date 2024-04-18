@@ -294,7 +294,7 @@ export default function Estadistica(props) {
                                                                                     }}
                                                                             >
                                                                                 <Stack >
-                                                                                    <Typography variant="h6">MES(ES) CANSELADOS</Typography>
+                                                                                    <Typography variant="h6">MES(ES) CANCELADOS</Typography>
                                                                                     <br/>
                                                                                     <Stack spacing={1}>
                                                                                     {state.detalles && state.detalles[val]

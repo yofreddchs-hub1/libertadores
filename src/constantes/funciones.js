@@ -63,7 +63,7 @@ export const Inicio_api=async(nombre)=>{
 export const Estadolinea = ()=>{
   const estado = navigator.onLine ? true : false;
   nuevo_Valores({online: estado});
-  console.log('Estado de linea', estado);
+  // console.log('Estado de linea', estado);
   return estado
 }
 export const Inicio=async()=>{
@@ -127,7 +127,7 @@ export const Tasa_cambio = async(props)=>{
         tasa =  tasa.tasa ? tasa.tasa : tasa;
         nuevo_Valores({tasa})
       }
-      console.log('>>>>>>>>Tasa de cambio',tasa)
+      // console.log('>>>>>>>>Tasa de cambio',tasa)
       return tasa
     }catch(error){
       return null

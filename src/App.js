@@ -139,7 +139,7 @@ class InicioPrincipal extends Component {
     });
 
     const socket=manager.socket("/");
-    console.log('>>>>', User, valores)
+    // console.log('>>>>', User, valores)
     socket.auth={_id:User._id, username:User.username, tipo, api:valores.app, 
                   categoria: User.categoria, 
                   ...User.categoria==='4' || User.categoria===4 
@@ -151,7 +151,7 @@ class InicioPrincipal extends Component {
                 }
     socket.on("conectado", async data => {
       const {api}= Ver_Valores();
-      console.log('>>>>>>>>>>>>>>>>>>>>>Conectado',data, api);
+      // console.log('>>>>>>>>>>>>>>>>>>>>>Conectado',data, api);
       this.setState({conectadoserver:true, User:{...User,userID:data.id }});
       nuevo_Valores({conectadoserver:true, User:{...User,userID:data.id }, tasa:data.tasa});
       if (!api || api._id===undefined){
@@ -167,7 +167,7 @@ class InicioPrincipal extends Component {
     })
     //informacion recibida cada vez que un usuario se conecta a socket
     socket.on("users", async (datos) =>{
-      console.log('Usuarios presentes', datos)
+      // console.log('Usuarios presentes', datos)
       const {User}= Ver_Valores();
       const {users, userID}=datos
       let cantidad=0;
