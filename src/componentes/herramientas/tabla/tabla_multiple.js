@@ -202,7 +202,7 @@ function Tabla_multiple (props) {
     // }
     const alto = Ver_Valores().tipo==='Web' 
                     ? window.innerWidth > 750 && window.innerHeight > 300  
-                        ? window.innerHeight* 0.84 
+                        ? window.innerHeight* 0.885 
                         : window.innerHeight > 300 
                             ? window.innerHeight* 0.73 
                             : window.innerHeight* 0.69

@@ -5271,7 +5271,8 @@
               "tipo": "",
               "formato": "",
               "default": "",
-              "type": ""
+              "type": "",
+              "orden":true
           },
           {
               "title": "Nombres",
@@ -5279,7 +5280,8 @@
               "tipo": "",
               "formato": "",
               "default": "",
-              "type": ""
+              "type": "",
+              "orden":true
           },
           {
               "title": "Apellidos",
@@ -5287,7 +5289,8 @@
               "tipo": "",
               "formato": "",
               "default": "",
-              "type": ""
+              "type": "",
+              "orden":true
           },
           {
               "title": "Periodo",
@@ -5301,105 +5304,118 @@
               "title": "Inscripción",
               "field": "mensaje-inscripcion",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'inscripcion'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'inscripcion'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Septiembre",
               "field": "mensaje-septiembre",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'septiembre'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'septiembre'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Octubre",
               "field": "mensaje-octubre",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'octubre'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'octubre'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Noviembre",
               "field": "mensaje-noviembre",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'noviembre'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'noviembre'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Diciembre",
               "field": "mensaje-diciembre",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'diciembre'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'diciembre'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Enero",
               "field": "mensaje-enero",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'enero'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'enero'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Febrero",
               "field": "mensaje-febrero",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'febrero'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'febrero'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Marzo",
               "field": "mensaje-marzo",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'marzo'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'marzo'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Abril",
               "field": "mensaje-abril",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'abril'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'abril'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Mayo",
               "field": "mensaje-mayo",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'mayo'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'mayo'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Junio",
               "field": "mensaje-junio",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'junio'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'junio'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Julio",
               "field": "mensaje-julio",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'julio'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'julio'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           },
           {
               "title": "Agosto",
               "field": "mensaje-agosto",
               "tipo": "",
-              "formato": "(dato)=> { const mes = 'agosto'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? dato['mensaje-'+mes] : dato[mes] ? 'CANCELADO':''}`}",
+              "formato": "(dato)=> { const mes = 'agosto'; return `${dato[mes] && dato['mensaje-'+mes] && ['',undefined,null].indexOf(dato['mensaje-'+mes])===-1  ? String(dato['mensaje-'+mes]).toUpperCase() : dato[mes] ? 'CANCELADO':''}`}",
               "default": "",
-              "type": ""
+              "type": "",
+              "filtro":true
           }
       ],
       "Titulos_Portada": [

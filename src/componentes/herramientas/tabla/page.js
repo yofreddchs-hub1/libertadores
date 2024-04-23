@@ -23,6 +23,18 @@ import Formulario from '../formulario';
 import Sindatos from '../pantallas/sindatos';
 import moment from 'moment';
 import { Stack } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
+import Popper from '@mui/material/Popper';
+import Fade from '@mui/material/Fade';
+
 
 function LinearProgressWithLabel(props) {
   return (
@@ -104,10 +116,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
+const ITEM_HEIGHT = 48;
+let options=[];
 export default function Tabla(props) {
-  
-  const {titulos, datos, Config, Titulo, acciones, acciones1, actualizando, Accion, paginacion, Cambio} = props;//progreso,
+  const [state,setState]=React.useState({});
+  let {titulos, datos, Config, Titulo, acciones, acciones1, actualizando, Accion, paginacion, Cambio} = props;//progreso,
   // const alto= props.sinpaginacion ? window.innerHeight* 0.77 : window.innerHeight* 0.73;
   // const [page, setPage] = React.useState(0);
   // const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -135,10 +148,36 @@ export default function Tabla(props) {
       </div>
     )
   }
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [filtro, setFiltro] = React.useState({});
+  // const open = Boolean(anchorEl);
+  const filtroClick = (event, column) => {
+    options=['TODOS'];
+    for (var i=0; i<datos.length;i++){
+      let valor= datos[i].valores ? datos[i].valores[column.field] : datos[i][column.field];
+      valor= [null,false,'', undefined].indexOf(valor)!==-1 ? 'NO CANCELADO' : valor;
+      valor= valor.toUpperCase();
+      const pos = options.indexOf(valor);
+      if (pos===-1){
+        options=[...options, valor];
+      }
+    }
+    setAnchorEl(event.currentTarget);
+    setFiltro({campo:column.field});
+  };
+  const filtroClose = (option) => {
+    
+    
+    setFiltro({...filtro, valor:typeof option==='string' ? option : undefined})
+    setAnchorEl(null);
+  };
   if (props.enformulario && Seleccion===null){
     seleccion()
   }
   
+  const cambiarState = (nuevo)=>{
+    setState({...state,...nuevo})
+  }
   const RepresentadosM = (column, row) =>{
     
     return column.formato((row)).map(val=>
@@ -150,6 +189,24 @@ export default function Tabla(props) {
   }
   const colorlocal = Config.Estilos && Config.Estilos.Tabla_row_colorlocal ? Config.Estilos.Tabla_row_colorlocal.backgroundColor : '#F8AE1A';
   const coloreliminado = Config.Estilos && Config.Estilos.Tabla_row_coloreliminado ? Config.Estilos.Tabla_row_coloreliminado.backgroundColor : '#871F08';
+  datos = datos.filter(f=> !filtro.valor || filtro.valor==='TODOS' 
+    ||(f.valores && String(f.valores[filtro.campo]).toUpperCase()===String(filtro.valor).toUpperCase()) 
+    ||(String(f[filtro.campo]).toUpperCase()===String(filtro.valor).toUpperCase())
+    ||(filtro.valor==='NO CANCELADO' && 
+        (
+          (f.valores && !f.valores[String(filtro.campo).replace('mensaje-','')])
+          || !f[String(filtro.campo).replace('mensaje-','')]
+        )
+      )
+    ||(filtro.valor==='CANCELADO' && 
+      (
+        (f.valores && f.valores[String(filtro.campo).replace('mensaje-','')])
+        || f[String(filtro.campo).replace('mensaje-','')]
+      )
+    )
+
+  );
+  
   return (
     <Paper sx={{ width: '100%', height:'100%' }}>
       <AppBar position="static" style={{padding:10, ...Config.Estilos.Tabla_cabezera ? Config.Estilos.Tabla_cabezera : {} }}>
@@ -191,6 +248,16 @@ export default function Tabla(props) {
         
           }
           <Grid item xs={12}>
+            {filtro.valor && filtro.valor!=='TODOS'
+              ? <div>
+                  <Typography variant={window.innerWidth > 750 ? "subtitle2" : "caption"} gutterBottom component="div" align={'left'} 
+                          style={{...Config.Estilos.Tabla_titulo ? Config.Estilos.Tabla_titulo : {}}}
+                  >
+                    {`${filtro.valor} EN ${filtro.campo.replace('mensaje-','').toUpperCase()} (Total:${datos.length})`}
+                  </Typography>
+                </div>
+              : null
+            }
             {
               // datos.length===0
               //   ? <Typography variant="h6" gutterBottom component="div" align={'center'} 
@@ -241,22 +308,97 @@ export default function Tabla(props) {
                       key={Generar_id()}
                       align={column.align ? column.align : "center"}
                       style={{ minWidth: column.minWidth, fontSize:16, fontWeight:'bold',
+                                borderColor:'#fff',borderWidth:0.5,
                                 ...Config.Estilos.Tabla_titulos ? Config.Estilos.Tabla_titulos : {} 
                             }}
                     >
                       {column.title}
+                      {column.orden
+                        ?
+                          <IconButton size="small" 
+                            onClick={()=>{
+                                if(state[column.field]===undefined || state[column.field]===true){
+                                  // cambiarState({[column.field]: state[column.field]===undefined ? true : state[column.field] ? false : undefined})
+                                  setState({[column.field]: state[column.field]===undefined ? true : state[column.field] ? false : undefined});
+                                }else{
+                                  if(props.Buscar){
+                                    props.Buscar({target:{name:'buscar',value:''}});
+                                  }
+                                  setState({filtrar:state.filtrar});
+                                }
+                                
+                              }
+                            }
+                          >
+                            { state[column.field]===undefined ? <Icon fontSize="small" sx={{color:'#fff'}}>unfold_more</Icon> : state[column.field] ? <Icon fontSize="small" sx={{color:'#fff'}}>expand_less</Icon> : <Icon fontSize="small" sx={{color:'#fff'}}>expand_more</Icon>}
+                          </IconButton>
+                        : null
+                      }
+                      {column.filtro
+                        ?
+                          <IconButton size="small" 
+                            key={column.field+'-boton'}
+                            id={column.field+'-boton'}
+                            aria-controls={'lista-menu'}
+                            
+                            aria-haspopup="true"
+                            onClick={(value)=>filtroClick(value, column)}
+                          >
+                            <Icon fontSize="small" sx={{color:'#fff'}}>filter_list</Icon> 
+                          </IconButton>
+                        : null
+                      }
+                      
+                      {/* <ListItemButton >
+                        <ListItemText primary={column.title} />
+                        { state[column.field] && state[column.field].open ? <ExpandLess /> : <ExpandMore />}
+                      </ListItemButton> */}
                     </TableCell>
                   )})
                 : null
               }
-              
+              <Menu
+                id={'lista-menu'}
+                
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={filtroClose}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: '25ch',
+                  },
+                }}
+              >
+                {options.map((option) => (
+                  <MenuItem key={option} selected={option === 'TODOS'} onClick={()=>filtroClose(option)}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Menu>
             </TableRow>
           </TableHead>
           {datos.length===0
             ? null
             :  <TableBody>
-                {datos
+                {datos.sort(function (a, b) {
+                            let campo= Object.keys(state)
+                            campo = campo.length!==0 ? campo[0] : '';
+                            if (campo===''){
+                              
+                              return 0;
+                            }
+                            if ((a[campo] > b[campo])||(a.valores && a.valores[campo] > b.valores[campo])) {
+                              return state[campo] ? -1 : 1;
+                            }
+                            if ((a[campo] < b[campo])|| (a.valores && a.valores[campo] < b.valores[campo])) {
+                              return state[campo] ? 1 : -1;
+                            }
+                            // a must be equal to b
+                            return 0;
+                        })
                   .map((row, j) => {
+                    
                     return (
                       <StyledTableRow 
                             hover role="checkbox" 
