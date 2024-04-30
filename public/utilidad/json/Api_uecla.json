@@ -223,6 +223,11 @@
                 "value": "Conectados",
                 "primary": "Usuarios Conectados",
                 "icon": "supervisor_account"
+            },
+            {
+                "value": "WhatsApp",
+                "primary": "WhatsApp",
+                "icon": "smart_toy"
             }
         ]
       },
@@ -3687,6 +3692,58 @@
                 "agregar": false,
                 "key": "admitido",
                 "name": "admitido",
+                "multiline": false
+            },
+            {
+                "nombre": "cancelo",
+                "tipo": "lista_multiuso",
+                "label": "Cancelo",
+                "placeholder": "Cancelo",
+                "title": "Cancelo Censo",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_colegio_sino",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "key": "cancelo",
+                "name": "cancelo",
+                "multiline": false
+            },
+            {
+                "nombre": "formapago",
+                "tipo": "lista_multiuso",
+                "label": "Metodo de Pago",
+                "placeholder": "Metodo de Pago",
+                "title": "Metodo de Pago",
+                "required": false,
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_Forma_Pago",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "agregar": false,
+                "key": "formapago",
+                "name": "formapago",
+                "multiline": false
+            },
+            {
+                "nombre": "referencia",
+                "tipo": "input",
+                "label": "Referencia",
+                "placeholder": "Referencia",
+                "title": "Referencia",
+                "required": false,
+                "disabled": false,
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "name": "referencia",
                 "multiline": false
             }
         ]

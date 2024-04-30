@@ -49,7 +49,8 @@ export const conexiones = {
   MisDatos,
   LeerHorario,
   GuardarHorario,
-  DisponibilidadHorario
+  DisponibilidadHorario,
+  WhatsappQR
 }
 
 async function Sincronizar(tablas, datos, timeout=50000,mensaje='Solicitando datos...'){
@@ -561,6 +562,17 @@ async function DisponibilidadHorario(dato, user, api, table='unefa_horario', men
                           });
   return resultados
 }
+//Whatsapp
+async function WhatsappQR(){
+  const Api = `whatsappqr-uecla`;//Ver_Valores().valores.app;
+  const resultados= await Enviar({
+                            datos:{Api},
+                            http_destino:'/api/whatsappqr',
+                            method:'POST',
+                          });
+  return resultados
+}
+
 async function Enviar(props){
   // console.log('Enviar ====>',props);
   //Datos de props necesarios
