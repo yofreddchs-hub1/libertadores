@@ -5,10 +5,16 @@ import Grid from '@mui/material/Grid';
 import Formulario from '../../../componentes/herramientas/formulario';
 import { conexiones, genera_formulario, Form_todos, Ver_Valores } from '../../../constantes';
 import Cargando from '../../../componentes/esperar/cargar';
+import Dialogo from '../../../componentes/herramientas/dialogo';
+import Alert from '@mui/material/Alert';
+import Link from '@mui/material/Link';
+import moment from 'moment';
+
 
 export default function Mensualidad(props) {
     const [formulario, setFormulario] = useState();
     const [state, setState] = useState({});
+    const [dialogo, setDialogo] = useState({open:false});
     const [cargando, setCargando] = useState(true);
     let Mensualidades={}
     let Rmensualidades=[]
@@ -201,7 +207,7 @@ export default function Mensualidad(props) {
                 }
                 
                 meses.titulos[`Meses-${val.nombres}-${val.apellidos}`].value= valor
-                const posl= meses.titulos[`Meses-${val.nombres}-${val.apellidos}`].lista.findIndex(f=> f.value==='inscripcion' && props.inscripcion);
+                // const posl= meses.titulos[`Meses-${val.nombres}-${val.apellidos}`].lista.findIndex(f=> f.value==='inscripcion' && props.inscripcion);
                 // if (!props.inscripcion || (props.inscripcion && posl!==-1) ){
                     resultados=[...resultados, {...val, label: `${val.nombres} ${val.apellidos}`, meses}]
                 // }
@@ -240,21 +246,49 @@ export default function Mensualidad(props) {
         setState({cambio, mensualidades})
         setCargando(false)
     }
+    const Mostrar = (dato)=>{
+        const image = dato.valores.media.data;
+        setDialogo({
+            open:true,
+            Titulo:'Captures enviados por WhatSapp',
+            Cuerpo: <Box component={'div'} sx={{textAlign:'center'}}>
+                        <img src={`data:image;base64,${image}`} />
+                    </Box>,
+            Cerrar: ()=>{
+                setDialogo({open:false});
+            },
+        })
+    }
     useEffect(()=>{
         Inicio();
     },[props])
     
     const {Config}=props;
     const height = cargando ? window.innerHeight * 0.7 :'100%';
+    
     return (
         <div style={{width:'100%', height,position: "relative"}}>
             <Box sx={{ textAlign:'left', pb:9}}>
                 <Grid container spacing={0.5}>
                     <Grid item xs={window.innerWidth > 750 ? 3: 12}> 
-                    {formulario
+                        {formulario
                             ? <Formulario {...formulario.Cambio} config={Config}/>
                             : null
                         } 
+                    </Grid>
+                    <Grid item xs={window.innerWidth > 750 ? 9: 12}> 
+                        {props.pendienteWhatsapp && props.pendienteWhatsapp.length!==0 
+                           ?   <Alert severity="warning">Captures enviados por WhatSapp:
+                           {
+                               props.pendienteWhatsapp.map((val, i)=>
+                               <Link href="#" key={val._id}
+                                   onClick={()=> Mostrar(val)}
+                               >
+                                   {` ${moment(val.createdAt).format('DD/MM/YYYY')} ${i < props.pendienteWhatsapp.length - 1 ? ',' : ''} `}
+                               </Link>
+                           )}</Alert>
+                       : null
+                        }
                     </Grid>
                     <Grid item xs={9}/>
                     {formulario && formulario.Meses
@@ -284,6 +318,7 @@ export default function Mensualidad(props) {
                 
             </Box>
             <Cargando open={cargando} Config={Config}/>
+            <Dialogo  {...dialogo} config={props.Config}/>
         </div>
     );
 }

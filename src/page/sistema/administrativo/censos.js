@@ -9,8 +9,8 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import Tabla from '../../../componentes/herramientas/tabla';
 import Formulario from '../../../componentes/herramientas/formulario';
 import TablaMultiple from '../../../componentes/herramientas/tabla/tabla_multiple';
-import { Ver_Valores, genera_formulario, conexiones} from '../../../constantes';
-import { Form_todos, Titulos_todos } from '../../../constantes/formularios';
+import { Ver_Valores, genera_formulario, conexiones, AExcell} from '../../../constantes';
+import { Form_todos, Titulos_todos,} from '../../../constantes/formularios';
 import Cuerpo from '../../../componentes/herramientas/cuerpo'
 import Cargando from '../../../componentes/esperar/cargar';
 import Dialogo from '../../../componentes/herramientas/dialogo';
@@ -97,25 +97,7 @@ export function Censados (props) {
         }
         return nuevos
     }
-    const Titulo = (dato)=>{
-      const texto = dato._id 
-                      ? `Representante ${dato.nombres} ${dato.apellidos}`
-                      : `Nuevo Registro`
-      return <Stack
-                  direction={ 'row' }
-                  spacing={1}
-                  justifyContent="center" alignItems="center"
-              >
-                  {texto}
-                  <Box sx={{ml:2}}>
-                      <IconButton size="large" color="inherit" title={'Resumen de pagos'} >
-                          <Icon >incomplete_circle</Icon>
-                      </IconButton>
-                  </Box>
-                  
-              </Stack>
-
-    }
+    
     const Resumen = async(dato)=>{
       // console.log(dato)
       const Cuerpo= <Estadistica representante={dato}/>
@@ -243,7 +225,32 @@ export function Censados (props) {
         
     //     // AExcell(nuevo,`${state.grado ? state.grado : 'seccion'} ${state.seccion ? state.seccion : ''}`, `${state.grado ? state.grado : 'uecla'} ${state.seccion ? state.seccion : ''}.xlsx`);
     // }
-   
+
+    const ReporteM = () =>{
+      const datos = state.datos.map(val=>{
+        const data = val.valores;
+        return {
+          CEDULA:data.cedula_estu,
+          'CEDULA ESCOLAR':data.cedula_estudiantil,
+          NOMBRES:data.nombres_estu,
+          APELLIDOS:data.apellidos_estu,
+          PROCEDENCIA:data.procedencia,
+          'GRADO CURSAR':data.grado_estu && data.grado_estu.titulo ? data.grado_estu.titulo : '',
+          //Representante
+          'CEDULA REPRESENTANTE': data.cedula,
+          'NOMBRES REPRESENTANTE': data.nombres,
+          'APELLIDOS REPRESENTANTE': data.apellidos,
+          TELEFONO: data.telefono_movil,
+          'REPRESENTANTE ANTIGUO': data.existe && data.existe.titulo ? data.existe.titulo : 'No',
+          
+          CANCELO: data.cancelo && data.cancelo.titulo ? data.cancelo.titulo : 'No'
+        }
+      })
+      console.log(state.datos[0].valores.periodo)
+      const nombre = state.datos.length!==0 ? `Censados-${state.datos[0].valores.periodo}.xlsx` : `Censados.xlsx`
+      AExcell(datos,'Censados', nombre)
+    }
+
     useEffect(()=>{
         
         Inicio();
@@ -273,9 +280,14 @@ export function Censados (props) {
                             <Stack direction="row" spacing={0.5}>
                               {mostrar 
                                 ? null
-                                : <IconButton color={'primary'} title={'Refrescar valores de Solvencias'} onClick={Refrescar}>
+                                : <Stack direction="row" spacing={1}>
+                                    <IconButton color={'primary'} title={'Refrescar valores de Solvencias'} onClick={Refrescar}>
                                       <AutorenewIcon style={color}/>
-                                  </IconButton>
+                                    </IconButton>
+                                    <IconButton color={'primary'} title={'Reporte'} onClick={ReporteM}>
+                                      <Icon style={color}>assignment</Icon>
+                                    </IconButton>
+                                  </Stack>
                               }
                                 {/* <IconButton color={'primary'} title={'Exportar a excell'} onClick={Exportar}>
                                     <Icon style={color}>assignment</Icon>

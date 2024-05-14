@@ -556,9 +556,27 @@ export default function AntDesignGrid(props) {
           const restan = dato.row.moneda==='$' ? props.Subtotalvalor.restan : props.Subtotalvalor.restanb;
           const titulo = tipo==='moneda' ? `${title}: (Restan ${dato.row.moneda} ${Number(restan).toFixed(2)})` : title;
           if (dato.colDef.modificar && editable){
+            // let texto='';
+            // if (dato.colDef.formato_mensaje_recomienda){
+            //   const formato = Funciones_Especiales(dato.colDef.formato_mensaje_recomienda);
+            //   if (formato){
+            //     texto = formato(dato.colDef);
+            //   }
+            // }
             const forma= {
               columna: 1,
               value: [
+                ...dato.colDef.mensaje_recomienda
+                  ? [{
+                      "nombre": `Label-${dato.colDef.field}`,
+                      "field":`${dato.colDef.field}`,
+                      "tipo": "mensaje",
+                      "label": dato.colDef.formato_mensaje_recomienda ? dato.colDef.formato_mensaje_recomienda : dato.colDef.label,//texto,
+                      "title": "Titulo",
+                      "name": `Label-${dato.colDef.field}`,
+                      "mensaje_recomienda":dato.colDef.mensaje_recomienda
+                    }]
+                  : [],
                 {
                   "nombre": field,
                   "autoFocus":true,

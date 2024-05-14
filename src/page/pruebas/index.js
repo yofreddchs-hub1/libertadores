@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { conexiones, Ver_Valores } from '../../constantes';
 
 const options = [
   'None',
@@ -25,6 +26,7 @@ const ITEM_HEIGHT = 48;
 
 export default function LongMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [datos,setDatos] = useState();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,7 +34,24 @@ export default function LongMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(anchorEl)
+  React.useEffect(()=>{
+    const Inicio = async() =>{
+      const resp= await conexiones.Leer_C(['uecla_Whatsapp_Capture'],{uecla_Whatsapp_Capture:{}});
+      if (resp.Respuesta==='Ok'){
+       let nuevo = resp.datos.uecla_Whatsapp_Capture.map(val=>{
+        // var buffer = Buffer.from(val.valores.media.data, 'base64');
+        // var buffer = btoa(val.valores.media.data);
+        return {...val.valores, img:val.valores.media.data}
+       })
+       console.log(nuevo);
+       setDatos(nuevo);
+      }
+      
+
+    }
+    Inicio()
+  },[])
+  
   return (
     <div>
       <IconButton
@@ -66,6 +85,15 @@ export default function LongMenu() {
           </MenuItem>
         ))}
       </Menu>
+      {datos 
+        ? datos.map(val=>
+            <img
+              src={`data:image;base64,${val.img}`}
+              
+            />
+          )
+        : null
+      }
     </div>
   );
 }

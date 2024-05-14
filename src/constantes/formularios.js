@@ -109,7 +109,7 @@ export const Funciones_Especiales = (funcion) =>{
         formato = eval(funcion);
     }catch(e){
         // console.log(e)
-        console.log('No es funcion', funcion)
+        // console.log('No es funcion', funcion)
     }
     
     if (typeof formato ==='function'){

@@ -41,7 +41,7 @@ export default function Pasos(props) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = steps.length;
-  const {Config}= props;
+  // const {Config}= props;
   const handleNext = async() => {
     if (activeStep === maxSteps - 1){
       if (props.Refrescar){

@@ -40,6 +40,7 @@ function Representante_pagar (props) {
     }
 
     const Pendiente = async(dato)=>{
+        
         let respu= await conexiones.Leer_C(['uecla_Representante'],{
             uecla_Representante:{_id:dato.valores.Representante}
         })
@@ -75,23 +76,36 @@ function Representante_pagar (props) {
     }
     const Inicio = async() =>{
         const titulos = await Titulos_todos(`Titulos_Representante`, Config)
-        let respu= await conexiones.Leer_C(['uecla_Pago'],{
-            uecla_Pago:{"valores.estatus":"0"}
+        let respu= await conexiones.Leer_C(['uecla_Pago','uecla_Whatsapp_Capture'],{
+            uecla_Pago:{"valores.estatus":"0"},
+            uecla_Whatsapp_Capture:{"valores.estatus":"0"}
         })
         let porPagar=[];
+        let pendienteWhatsapp=[];
         if(respu.Respuesta==='Ok'){
             porPagar = respu.datos.uecla_Pago.filter(f=> f.eliminado===false || f.eliminado===undefined);
-
+            pendienteWhatsapp = respu.datos.uecla_Whatsapp_Capture.filter(f=> f.eliminado===false || f.eliminado===undefined);
+            //// eliminar repetidos
+            let norepetido = [];
+            pendienteWhatsapp.map(val=>{
+                const pos = norepetido.findIndex(f=> f.valores.representante._id===val.valores.representante._id);
+                if (pos===-1){
+                    norepetido=[...norepetido, val];
+                }
+                return val
+            })
+            pendienteWhatsapp = norepetido;
         }
-        cambiarState({esperar:false, titulos, porPagar})
+        
+        cambiarState({esperar:false, titulos, porPagar, pendienteWhatsapp})
     }
-
+    
     useEffect(()=>{
         Ver_Valores().socket.on('ActualizarPago',data=>{
             Inicio();
         })
         Ver_Valores().socket.on('Actualizar',data=>{
-            if (data==='uecla_Pago'){
+            if (data==='uecla_Pago' || data==='uecla_Whatsapp_Capture'){
                 Inicio();
             }
         })
@@ -101,15 +115,28 @@ function Representante_pagar (props) {
     const {Config}= props;
     return state.esperar ? <Cargando open={state.esperar} Config={Config}/> : (
         <Box component={'div'}>
-            <Stack sx={{ width: '100%' }} spacing={2}>
+            <Stack sx={{ width: '100%' }} spacing={0.5}>
                 {state.porPagar && state.porPagar.length!==0
                     ? <Alert severity="warning">Pagos pendientes: 
                         {
                             state.porPagar.map((val, i)=>
-                            <Link href="#" key={val._id} 
+                            <Link  key={val._id} 
                                 onClick={()=>Pendiente(val)}
                             >
                                 {` ${val.valores.Data.nombres} ${val.valores.Data.apellidos}${i < state.porPagar.length - 1 ? ',' : ''} `}
+                            </Link>
+                        )}</Alert>
+                    : null
+                
+                }
+                {state.pendienteWhatsapp && state.pendienteWhatsapp.length!==0
+                    ? <Alert severity="warning">Captures enviados por WhatSapp: 
+                        {
+                            state.pendienteWhatsapp.map((val, i)=>
+                            <Link  key={val._id} 
+                                onClick={()=>Pendiente({...val, valores:{...val.valores, Representante:val.valores.representante._id}})}
+                            >
+                                {` ${val.valores.representante.nombres} ${val.valores.representante.apellidos}${i < state.pendienteWhatsapp.length - 1 ? ',' : ''} `}
                             </Link>
                         )}</Alert>
                     : null

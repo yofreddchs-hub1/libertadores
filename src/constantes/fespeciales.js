@@ -1,5 +1,7 @@
 import moment from "moment";
 import { conexiones } from "./conexiones";
+import { Ver_Valores } from "./valores";
+import Link from '@mui/material/Link';
 
 export default{
     Editores_formapago:(params)=>{
@@ -199,6 +201,34 @@ export default{
             
         }  
         return {resultados: data.resultados,form} 
+    },
+    Mensaje_recomienda:(props, cambiar)=>{
+        const {field, mensaje_recomienda}=props;
+        const pendiente = Ver_Valores().datosActuales.pendienteWhatsapp.map(v=>v.valores)
+        let mensaje=mensaje_recomienda + '\n';
+        pendiente.map(val=>{
+            if(val[field]){
+                mensaje+=`${val[field]}\n`;
+            }else if(val.datos[field]){
+                mensaje+=`${val.datos[field]}\n`;
+            }
+            return val
+        })
+        return <>
+        {mensaje_recomienda}
+        <br/>
+        {pendiente.map(val=>
+            <div key={val._id}>
+                <Link  sx={{cursor:'pointer'}} 
+                    onClick={()=> cambiar(val)}
+                >
+                    {` ${val.datos[field]} `}
+                </Link>
+                <br/>
+            </div>
+        )}
+        </>
+        // return mensaje;
     }
 }
 

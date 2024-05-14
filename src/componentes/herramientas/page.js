@@ -47,7 +47,7 @@ import ListaRepresentados from './lista_representados';
 import TipoJson from './tipojson';
 // import moment from "moment";
 import Video from './video';
-import { Ver_Valores, Titulos_todos, Filtrar_campos } from '../../constantes';
+import { Ver_Valores, Titulos_todos, Filtrar_campos, Funciones_Especiales } from '../../constantes';
 import Tabla from './tablaeditar';
 
 // import { delete } from 'request-promise';
@@ -413,6 +413,26 @@ export default function Page(props) {
     )
   }
 
+  const Mostrar_label_especial=(data)=>{
+    const cambiar = (dato)=>{
+      console.log(data.field, dato.datos);
+      values.Cambio({
+        target:{
+          name:data.field, 
+          value:data.field==='monto' 
+            ? Number(dato.datos[data.field].replace(',','.')).toFixed(2) 
+            : dato.datos[data.field]
+          }
+      })
+    }
+    const formato = Funciones_Especiales(data.label);
+    if (formato){
+      // console.log('Realizar por formato..')
+      return formato(data, cambiar);
+      
+    }
+    return data.label
+  }
   const renderForm =(valor)=>{
     let valorEstilo
     try{
@@ -683,6 +703,10 @@ export default function Page(props) {
     ):['subtitulo'].indexOf(valor.tipo)!==-1 ? (
       <Typography variant="h5" gutterBottom>
         {valor.label}
+      </Typography>
+    ):['mensaje'].indexOf(valor.tipo)!==-1 ? (
+      <Typography variant="subtitle2">
+        { Mostrar_label_especial(valor)}
       </Typography>
     ):['label'].indexOf(valor.tipo)!==-1 ? (
       <div style={{padding: '5% 0'}}>

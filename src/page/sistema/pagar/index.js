@@ -126,7 +126,6 @@ export default function Pagar(props) {
     }else{
       setState({...state, enviando:false})
     }
-    
     return resultado
   }
   const Inicio =async()=>{

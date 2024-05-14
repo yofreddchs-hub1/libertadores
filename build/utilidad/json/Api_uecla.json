@@ -5191,7 +5191,9 @@
             "campo_verificar":"valores.referencia",
             "mensaje_verificar":"Verifica si se encuentra registrada la referencia",
             "mensaje_verificar_error": "Referecia utilizada en recibo: ",
-            "mensaje_verificar_ok":"Referencia no se encuentra registrada"
+            "mensaje_verificar_ok":"Referencia no se encuentra registrada",
+            "mensaje_recomienda":"Enviado por WhatsApp",
+            "formato_mensaje_recomienda":"Mensaje_recomienda"
         },
         {
             "title": "Fecha",
@@ -5211,7 +5213,9 @@
             "default": "",
             "type": "number",
             "editable": true,
-            "modificar":true
+            "modificar":true,
+            "mensaje_recomienda":"Enviado por WhatsApp",
+            "formato_mensaje_recomienda":"Mensaje_recomienda"
         }
       ],
       "Titulos_Referencia": [

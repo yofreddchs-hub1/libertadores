@@ -111,12 +111,13 @@ export default function Formapago(props) {
     }
 
     const Mostrar = (image) =>{
+        
         setState({...state,
             Dialogo:{
                 open:true,
-                Titulo:'IMAGEN SUBIDA',
-                Cuerpo: <Box component={'div'}>
-                            <img src={image} />
+                Titulo:image.valores ?'IMAGEN SUBIDA POR WHATSAPP' : 'IMAGEN SUBIDA',
+                Cuerpo: <Box component={'div'} sx={{textAlign:'center'}}>
+                            <img src={image.valores ? `data:image;base64,${image.valores.media.data}` : image} />
                         </Box>,
                 Cerrar: ()=>{
                     setState({...state,Dialogo:{open:false}});
@@ -312,6 +313,16 @@ export default function Formapago(props) {
                                 </Item>
                             </Grid>
                         )
+                        : null
+                    }
+                    {props.pendienteWhatsapp && props.pendienteWhatsapp.length!==0
+                        ? props.pendienteWhatsapp.map((val,i)=>
+                            <Grid item xs={2} key={i}>
+                                <Item style={{cursor:'pointer'}} onClick={()=>Mostrar(val)}>
+                                    <img src={`data:image;base64,${val.valores.media.data}`} style={{height:65}}/>
+                                </Item>
+                            </Grid>
+                            )
                         : null
                     }
                 </Grid>

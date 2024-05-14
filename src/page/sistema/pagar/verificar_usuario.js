@@ -15,12 +15,15 @@ export default function Verificar(props) {
     const [formulario, setFormulario] = useState();
     const [pendiente, setPendiente] = useState();
     const [rechazado, setRechazado] = useState();
+    const [capture, setCapture] = useState();
     const [dialogo, setDialogo] = useState({open:false});
     const Inicio = async() =>{
         let {datos} = props
-        let respu= await conexiones.Leer_C(['uecla_Pago'],{
-            uecla_Pago:{ $and: [ { "valores.Representante":datos._id}]}
+        let respu= await conexiones.Leer_C(['uecla_Pago','uecla_Whatsapp_Capture'],{
+            uecla_Pago:{ $and: [ { "valores.Representante":datos._id}]},
+            uecla_Whatsapp_Capture:{$and: [{"valores.estatus":"0"}]}
         })
+        let pendienteWhatsapp=[];
         if (respu.Respuesta==='Ok'){
             let pend = [];
             let rech = [];
@@ -32,6 +35,8 @@ export default function Verificar(props) {
                 }
                 return val
             })
+            pendienteWhatsapp = respu.datos.uecla_Whatsapp_Capture.filter(f=> (f.eliminado===false || f.eliminado===undefined)&& f.valores.representante._id===datos._id);
+            setCapture(pendienteWhatsapp);
             setPendiente(pend);
             setRechazado(rech);
             if (pend.length!==0){
@@ -46,7 +51,8 @@ export default function Verificar(props) {
                         Totales: dato.valores.Totales,
                         Pendiente:true,
                         id_pago: dato._id,
-                        Recibo: Ver_Valores().datosActuales ? Ver_Valores().datosActuales.Recibo : undefined
+                        Recibo: Ver_Valores().datosActuales ? Ver_Valores().datosActuales.Recibo : undefined,
+                        pendienteWhatsapp
                     }
                 });
                 if (props.Cambio) 
@@ -63,10 +69,11 @@ export default function Verificar(props) {
                     files:dato.valores.files,
                     valorCambio:dato.valores.valorCambio,
                     Pendiente:true,
-                    id_pago: dato._id
+                    id_pago: dato._id,
+                    pendienteWhatsapp
                 })
             }else{
-                nuevo_Valores({datosActuales:{Recibo: Ver_Valores().datosActuales ? Ver_Valores().datosActuales.Recibo : undefined}});
+                nuevo_Valores({datosActuales:{Recibo: Ver_Valores().datosActuales ? Ver_Valores().datosActuales.Recibo : undefined, pendienteWhatsapp}});
                 if (props.Cambio) props.Cambio({
                     pantalla:'Pasos', datos, 
                     Meses:{}, 
@@ -75,7 +82,7 @@ export default function Verificar(props) {
                     Formas_pago:undefined, 
                     formas_pago:undefined, 
                     Subtotalvalor:{abono:datos.valores.abono, abonod:datos.valores.abonod},
-                    files:undefined, Pendiente:false, id_pago: undefined
+                    files:undefined, Pendiente:false, id_pago: undefined, pendienteWhatsapp
                 })
             }
         }
@@ -121,14 +128,26 @@ export default function Verificar(props) {
             },
         })
     }
+    const Mostrar1 = (dato)=>{
+        let {datos} = props;
+        const image = dato.valores.media.data;
+        setDialogo({
+            open:true,
+            Titulo:'Captures enviados por WhatSapp',
+            Cuerpo: <Box component={'div'} sx={{textAlign:'center'}}>
+                        <img src={`data:image;base64,${image}`} />
+                    </Box>,
+            Cerrar: ()=>{
+                setDialogo({open:false});
+            },
+        })
+    }
     const {Config}=props;
     useEffect(()=>{
         Ver_Valores().socket.on('ActualizarPago',data=>{
-            console.log(props.pantalla);
             Inicio();
         })
         Ver_Valores().socket.on('Actualizar',data=>{
-            console.log(props.pantalla);
             if (data==='uecla_Pago'){
                 Inicio();
             }
@@ -160,6 +179,18 @@ export default function Verificar(props) {
                             onClick={()=> Mostrar(val)}
                         >
                             {` ${moment(val.valores.fecha).format('DD/MM/YYYY')} ${i < rechazado.length - 1 ? ',' : ''} `}
+                        </Link>
+                    )}</Alert>
+                : null
+            }
+            {capture && capture.length!==0
+                ?   <Alert severity="warning">Captures enviados por WhatSapp:
+                    {
+                        capture.map((val, i)=>
+                        <Link href="#" key={val._id}
+                            onClick={()=> Mostrar1(val)}
+                        >
+                            {` ${moment(val.createdAt).format('DD/MM/YYYY')} ${i < capture.length - 1 ? ',' : ''} `}
                         </Link>
                     )}</Alert>
                 : null
