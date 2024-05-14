@@ -85,7 +85,7 @@ export default function LongMenu() {
           </MenuItem>
         ))}
       </Menu>
-      {datos 
+      {/* {datos 
         ? datos.map(val=>
             <img
               src={`data:image;base64,${val.img}`}
@@ -93,7 +93,7 @@ export default function LongMenu() {
             />
           )
         : null
-      }
+      } */}
     </div>
   );
 }

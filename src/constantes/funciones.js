@@ -5,8 +5,8 @@ import moment from 'moment';
 // localStorage.setItem(const_procesos.dir_config,null);
 import {conexiones} from './conexiones';
 import {encriptado} from './encriptado';
-import {ExcelRenderer} from 'react-excel-renderer';
-import { read, utils, writeFile, writeFileXLSX } from 'xlsx';
+// import {ExcelRenderer} from 'react-excel-renderer';
+import { read, utils, writeFile } from 'xlsx';//writeFileXLSX
 
 let categoria_usuario;
 

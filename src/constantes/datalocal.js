@@ -698,6 +698,7 @@ const EnviarPago = async (props) =>{
   const Representante = Database(`uecla_Representante`);
   const Recibo = Database('uecla_Recibo');
   const Pago = Database('uecla_Pago');
+  const capture = Database('uecla_Whatsapp_Capture')
   datos= JSON.parse(datos);
   let representante = await Representante.findOne({_id: datos.Representante});
   if (representante===null){

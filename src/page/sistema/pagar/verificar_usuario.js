@@ -6,10 +6,14 @@ import Alert from '@mui/material/Alert';
 import Link from '@mui/material/Link';
 import Formulario from '../../../componentes/herramientas/formulario';
 import Dialogo from '../../../componentes/herramientas/dialogo';
-
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
 import { genera_formulario, conexiones, Form_todos, nuevo_Valores, Ver_Valores } from '../../../constantes';
 import moment from 'moment';
 import Confirmar from './confirmar';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 
 export default function Verificar(props) {
     const [formulario, setFormulario] = useState();
@@ -128,12 +132,32 @@ export default function Verificar(props) {
             },
         })
     }
+    const EliminarCap = (dato)=>{
+        setDialogo({open:false});
+        confirmAlert({
+            title: `Eliminar`,
+            message:`Desea eliminar referencia: ${dato.valores.referencia}`,
+            buttons: [
+                {label: 'SI', onClick: async()=>{
+                    const resp= await conexiones.Eliminar({_id:dato._id},['uecla_Whatsapp_Capture']);
+                    if (resp.Respuesta==='Ok'){
+                        Inicio();
+                    }
+                }},
+                {label: 'NO'}
+            ]
+        });
+    }
+    
     const Mostrar1 = (dato)=>{
-        let {datos} = props;
         const image = dato.valores.media.data;
         setDialogo({
             open:true,
-            Titulo:'Captures enviados por WhatSapp',
+            Titulo: <Box>Captures enviados por WhatSapp
+                        <IconButton color={'primary'} title={'Eliminar Capture'} onClick={()=>EliminarCap(dato)} >
+                            <Icon style={{color:'red'}}>delete_outline</Icon>
+                        </IconButton>
+                    </Box>,
             Cuerpo: <Box component={'div'} sx={{textAlign:'center'}}>
                         <img src={`data:image;base64,${image}`} />
                     </Box>,

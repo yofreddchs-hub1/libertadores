@@ -228,15 +228,16 @@
                 "value": "WhatsApp",
                 "primary": "WhatsApp",
                 "icon": "smart_toy"
+            },
+            {
+                "value": "Pruebas",
+                "primary": "Pruebas",
+                "icon": "developer_mode",
+                "desarrollo":"true"
             }
         ]
       },
-      {
-        "value": "Pruebas",
-        "primary": "Pruebas",
-        "icon": "developer_mode",
-        "desarrollo":"true"
-      },
+      
       {
         "value": "Representante",
         "primary": "Representante",
@@ -3302,7 +3303,7 @@
                 "title": "Cedula de identidad",
                 "required": false,
                 "mensaje_error": "Indique cedula de identidad",
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3316,7 +3317,7 @@
                 "placeholder": "Cedula Escolar",
                 "title": "Cedula Escolar",
                 "required": false,
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3331,7 +3332,7 @@
                 "title": "Nombres del estudiante",
                 "required": true,
                 "mensaje_error": "indique nombre del estudiante",
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3346,7 +3347,7 @@
                 "title": "Apellidos del estudiante",
                 "mensaje_error": "indique apellido del estudiante",
                 "required": true,
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3361,7 +3362,7 @@
                 "title": "Sexo del estudiante",
                 "required": false,
                 "mensaje_error": "",
-                "disabled": true,
+                "disabled": false,
                 "numberOfLines": "",
                 "lista": "lista_colegio_sexo",
                 "getOptionLabel": [
@@ -3377,7 +3378,7 @@
                 "label": "Fecha de Nacimiento",
                 "placeholder": "Fecha de Nacimiento",
                 "title": "Fecha de Nacimiento",
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3392,7 +3393,7 @@
                 "placeholder": "Colegio de Procedencia",
                 "title": "Colegio de Procedencia",
                 "required": true,
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3407,7 +3408,7 @@
                 "title": "Años Cursados en institución",
                 "required": false,
                 "mensaje_error": "",
-                "disabled": true,
+                "disabled": false,
                 "numberOfLines": "",
                 "lista": "lista_grados",
                 "getOptionLabel": [
@@ -3427,7 +3428,7 @@
                 "title": "Grado a Cursar",
                 "required": true,
                 "mensaje_error": "",
-                "disabled": true,
+                "disabled": false,
                 "numberOfLines": "",
                 "lista": "lista_colegio_grado",
                 "getOptionLabel": [
@@ -3446,7 +3447,7 @@
                 "title": "¿Posee alguna condición?",
                 "required": false,
                 "mensaje_error": "",
-                "disabled": true,
+                "disabled": false,
                 "numberOfLines": "",
                 "lista": "lista_colegio_sino",
                 "getOptionLabel": [
@@ -3465,7 +3466,7 @@
                 "title": "Condición",
                 "required": false,
                 "mensaje_error": "",
-                "disabled": true,
+                "disabled": false,
                 "numberOfLines": "",
                 "lista": "lista_colegio_condicion",
                 "getOptionLabel": [
@@ -3501,7 +3502,7 @@
                 "label": "Dirección",
                 "placeholder": "Dirección",
                 "title": "Dirección",
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3525,7 +3526,7 @@
                 "title": "Cedula de identidad",
                 "required": true,
                 "mensaje_error": "Indique cedula de identidad",
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3541,7 +3542,7 @@
                 "title": "Nombres del estudiante",
                 "required": true,
                 "mensaje_error": "indique nombre del representante",
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3556,7 +3557,7 @@
                 "title": "Apellidos del estudiante",
                 "mensaje_error": "indique apellido del representate",
                 "required": true,
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3570,7 +3571,7 @@
                 "placeholder": "Telefono Movil",
                 "title": "Telefono Movil",
                 "required": false,
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3584,7 +3585,7 @@
                 "placeholder": "Teléfono Fijo",
                 "title": "Teléfono Fijo",
                 "required": false,
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3598,7 +3599,7 @@
                 "placeholder": "Correo",
                 "title": "Correo",
                 "required": false,
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
@@ -3613,7 +3614,7 @@
                 "title": "Parentesco ",
                 "required": false,
                 "mensaje_error": "",
-                "disabled": true,
+                "disabled": false,
                 "numberOfLines": "",
                 "lista": "lista_colegio_parentesco",
                 "getOptionLabel": [
@@ -3631,7 +3632,7 @@
                 "placeholder": "Profesión/Ocupación",
                 "title": "Profesión/Ocupación",
                 "required": false,
-                "disabled": true,
+                "disabled": false,
                 "getOptionLabel": [
                     "titulo"
                 ],
