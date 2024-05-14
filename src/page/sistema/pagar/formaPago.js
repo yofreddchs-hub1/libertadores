@@ -15,6 +15,7 @@ import Cargando from '../../../componentes/esperar/cargar';
 
 import { genera_formulario, Form_todos, Ver_Valores, conexiones } from '../../../constantes';
 
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,

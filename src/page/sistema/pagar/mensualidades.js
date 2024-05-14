@@ -9,7 +9,10 @@ import Dialogo from '../../../componentes/herramientas/dialogo';
 import Alert from '@mui/material/Alert';
 import Link from '@mui/material/Link';
 import moment from 'moment';
-
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default function Mensualidad(props) {
     const [formulario, setFormulario] = useState();
@@ -184,7 +187,7 @@ export default function Mensualidad(props) {
                                 valor=[...valor, lista[pos]];
                             }
                         }
-                        return 
+                        return me 
                     })
                 }
                 if (lista.length===0){
@@ -250,7 +253,11 @@ export default function Mensualidad(props) {
         const image = dato.valores.media.data;
         setDialogo({
             open:true,
-            Titulo:'Captures enviados por WhatSapp',
+            Titulo:<Box>Captures enviados por WhatSapp
+                        <IconButton color={'primary'} title={'Eliminar Capture'} onClick={()=>EliminarCap(dato)} >
+                            <Icon style={{color:'red'}}>delete_outline</Icon>
+                        </IconButton>
+                    </Box>,
             Cuerpo: <Box component={'div'} sx={{textAlign:'center'}}>
                         <img src={`data:image;base64,${image}`} />
                     </Box>,
@@ -259,6 +266,23 @@ export default function Mensualidad(props) {
             },
         })
     }
+    const EliminarCap = (dato)=>{
+        setDialogo({open:false});
+        confirmAlert({
+            title: `Eliminar`,
+            message:`Desea eliminar referencia: ${dato.valores.referencia}`,
+            buttons: [
+                {label: 'SI', onClick: async()=>{
+                    const resp= await conexiones.Eliminar({_id:dato._id},['uecla_Whatsapp_Capture']);
+                    if (resp.Respuesta==='Ok'){
+                        Inicio();
+                    }
+                }},
+                {label: 'NO'}
+            ]
+        });
+    }
+
     useEffect(()=>{
         Inicio();
     },[props])

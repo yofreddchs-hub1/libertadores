@@ -15,6 +15,18 @@ import Cuerpo from '../../../componentes/herramientas/cuerpo'
 import Cargando from '../../../componentes/esperar/cargar';
 import Dialogo from '../../../componentes/herramientas/dialogo';
 import Estadistica from '../../../componentes/herramientas/estadistica';
+import Grid from '@mui/material/Unstable_Grid2';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+import { PieChart } from '@mui/x-charts/PieChart';
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 function RCensos (props) {
     
@@ -60,6 +72,190 @@ function RCensos (props) {
         
       
     )
+}
+
+function EstadisticaC (props) {
+    
+  const [state, setState]= useState({esperar:false, porano:[], cancelado:[]});
+  
+  const cambiarState = (nuevostate)=>{
+      setState({...state, ...nuevostate, cambio:true})
+  }
+  let Formularios
+  const Ver_data = async(periodo, formulario=null)=>{
+    cambiarState({esperar:true});
+    var y = new Date().getFullYear();
+    var y1= Number(y)-1;
+    let actual = `${y1}-${y}`;
+    periodo=periodo ? periodo.periodo : actual;
+    
+    const resultado = await conexiones.Leer_C(['uecla_Censado'],{uecla_Censado:{'valores.periodo':periodo}});
+    let datos = resultado.datos.uecla_Censado;
+    let porano=[
+      { id: 0, value: 0, label: '1er año' },
+      { id: 1, value: 0, label: '2do año' },
+      { id: 2, value: 0, label: '3er año' },
+      { id: 3, value: 0, label: '4to año' },
+      { id: 4, value: 0, label: '5to año' },
+    ];
+    let cancelado= [
+      { id: 0, value: 0, label: 'SI' },
+      { id: 1, value: 0, label: 'NO' }
+    ]
+    let aprobado= [
+      { id: 0, value: 0, label: 'SI' },
+      { id: 1, value: 0, label: 'NO' }
+    ]
+    datos.map(val=>{
+      const dato= val.valores
+      const pos = porano.findIndex(f=> f.label===dato.grado_estu.titulo);
+      if (pos===-1){
+        porano=[...porano,
+          {id:porano.length, value:1, label:dato.grado_estu.titulo}
+        ]
+      }else{
+        porano[pos].value+=1
+      }
+      if (dato.cancelo && dato.cancelo.titulo==='SI'){
+        cancelado[0].value+=1;
+      }else{
+        cancelado[1].value+=1;
+      }
+
+      if (dato.aprobado && dato.aprobado.titulo==='SI'){
+        aprobado[0].value+=1;
+      }else{
+        aprobado[1].value+=1;
+      }
+      return val
+    })
+
+    porano=porano.map(val=>{
+      return {...val, label:`${val.label} (${(val.value * 100 / datos.length).toFixed(2)}%)`}
+    })
+    cancelado=cancelado.map(val=>{
+      return {...val, label:`${val.label} (${(val.value * 100 / datos.length).toFixed(2)}%)`}
+    })
+    aprobado=aprobado.map(val=>{
+      return {...val, label:`${val.label} (${(val.value * 100 / datos.length).toFixed(2)}%)`}
+    })
+    Formularios= formulario!==null ? formulario : Formularios;
+    
+    if (resultado.Respuesta==='Ok'){
+        cambiarState({datos, porano, cancelado, aprobado, formulario, esperar:false})
+    }else{
+        cambiarState({esperar:false});
+    }
+
+}
+  const Inicio = async() =>{
+      let formulario = await genera_formulario({valores:{}, campos: Form_todos('Form_filtro_censos') })
+      const periodos =formulario.titulos[0].value.periodo.lista.sort((a,b) => a.periodo> b.periodo ? -1 : 1)
+      formulario.titulos[0].value.periodo.value= periodos[0];
+      formulario.titulos[0].value.periodo.lista= periodos;
+      // formulario.titulos[0].value.periodo.onChange= Cambio_dato;
+      // formulario.titulos[0].value.periodo.disabled=mostrar;
+      cambiarState({esperar:false, formulario})
+      Formularios= formulario;
+      Ver_data(periodos[0], formulario)
+  }
+  const ordenar = (dato)=>{
+      const nuevo = dato.filter(f=> f.valores).sort((a,b)=> a.valores.periodo>b.valores.periodo ? -1 :1)
+      return nuevo
+  }
+  useEffect(()=>{
+      Inicio()
+  }, [props])
+  const {Config}= props;
+  return state.esperar ? <Cargando open={state.esperar} Config={Config}/> :(
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={1}>
+        <Grid xs={2}/>
+        <Grid xs={8}>
+          <Item><Formulario {...state.formulario}/></Item>
+        </Grid>
+        <Grid xs={2}/>
+        <Grid xs={4}>
+          <Item>
+            CENSADOS POR AÑO
+            <PieChart
+              series={[
+                {
+                  data: state.porano ? state.porano : [],
+                  highlightScope: { faded: 'global', highlighted: 'item' },
+                  faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                  innerRadius: 0,
+                  outerRadius: 80,
+                  paddingAngle: 0,
+                  cornerRadius: 5,
+                  startAngle: 0,
+                  endAngle: 360,
+                  cx: 100,
+                  cy: 100,
+                },
+                
+              ]}
+              width={370}
+              height={200}
+            />
+          </Item>
+        </Grid>
+        <Grid xs={4}>
+          <Item>
+            CANCELADO
+            <PieChart
+              series={[
+                {
+                  data: state.cancelado ? state.cancelado : [],
+                  highlightScope: { faded: 'global', highlighted: 'item' },
+                  faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                  innerRadius: 0,
+                  outerRadius: 80,
+                  paddingAngle: 0,
+                  cornerRadius: 5,
+                  startAngle: 0,
+                  endAngle: 360,
+                  cx: 100,
+                  cy: 100,
+                },
+                
+              ]}
+              width={370}
+              height={200}
+            />
+          </Item>
+        </Grid>
+        <Grid xs={4}>
+          <Item>
+            APROBADO
+            <PieChart
+              series={[
+                {
+                  data: state.aprobado ? state.aprobado : [],
+                  highlightScope: { faded: 'global', highlighted: 'item' },
+                  faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                  innerRadius: 0,
+                  outerRadius: 80,
+                  paddingAngle: 0,
+                  cornerRadius: 5,
+                  startAngle: 0,
+                  endAngle: 360,
+                  cx: 100,
+                  cy: 100,
+                },
+                
+              ]}
+              width={370}
+              height={200}
+            />
+          </Item>
+        </Grid>
+        <Grid xs={8}>
+          <Item>xs=8</Item>
+        </Grid>
+      </Grid>
+    </Box>
+  )
 }
 
 export function Censados (props) {
@@ -319,6 +515,7 @@ export function Censados (props) {
     )
 }
 
+
 export default class Selecciones extends Component {
     constructor(props) {
         super(props);
@@ -367,6 +564,7 @@ export default class Selecciones extends Component {
       let Bloques1={
         CENSO:<RCensos/>,
         CENSADOS:<Censados />,
+        ESTADISTICA:<EstadisticaC />
       };
       
       let Bloques={
