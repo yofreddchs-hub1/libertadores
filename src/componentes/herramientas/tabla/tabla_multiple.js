@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 // import { createTheme} from '@mui/material/styles';
 // import { makeStyles} from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
 import Tabla from './index';
 import Dialogo from '../dialogo';
 import Formulario from '../formulario';
@@ -26,7 +27,7 @@ function Tabla_multiple (props) {
     const {Form_origen,Table,Titulo_dialogo,Titulo_tabla,Titulos_tabla, Agregar_mas, //Columnas, 
             Acciones1, Seleccion, Nuevo, cargaporparte,Config, multiples_valores,
             Condiciones, Acciones, sinpaginacion, AgregarExcel ,Eliminar_props,
-            Actualizar_valores, Tam_dialogo
+            Actualizar_valores, Tam_dialogo, AgregarAccion
           }=props
     
     // const classes= Estilos(estilos);
@@ -223,23 +224,31 @@ function Tabla_multiple (props) {
                     sinpaginacion= {sinpaginacion}
                     acciones={
                         !Acciones
-                        ? <div>
-                            <IconButton color={'primary'} title={`Refrescar valores de ${Titulo_tabla ? Titulo_tabla : 'Registros'}`} onClick={Refrescar}>
-                                <AutorenewIcon style={color}/>
-                            </IconButton>
-                            {!Nuevo 
-                                ?   <IconButton color={'primary'} title={`Agregrar nuevo ${Titulo_tabla ? Titulo_tabla : 'Registro'}`} onClick={Agregar}>
-                                        <AddIcon style={color}/>
-                                    </IconButton> 
-                                :   null
-                            }
-                            {AgregarExcel
-                                ?   <IconButton color={'primary'} title={'Agregrar datos desde archivo excel'} onClick={Agregar_Excel}>
-                                        <PostAddIcon style={color}/>
-                                    </IconButton>  
-                                :   null
-                            }
-                          </div>
+                        ?   <Stack
+                                direction={ 'row' }
+                                spacing={1}
+                                justifyContent="left" alignItems="center"
+                            >
+                                <IconButton color={'primary'} title={`Refrescar valores de ${Titulo_tabla ? Titulo_tabla : 'Registros'}`} onClick={Refrescar}>
+                                    <AutorenewIcon style={color}/>
+                                </IconButton>
+                                {!Nuevo 
+                                    ?   <IconButton color={'primary'} title={`Agregrar nuevo ${Titulo_tabla ? Titulo_tabla : 'Registro'}`} onClick={Agregar}>
+                                            <AddIcon style={color}/>
+                                        </IconButton> 
+                                    :   null
+                                }
+                                {AgregarExcel
+                                    ?   <IconButton color={'primary'} title={'Agregrar datos desde archivo excel'} onClick={Agregar_Excel}>
+                                            <PostAddIcon style={color}/>
+                                        </IconButton>  
+                                    :   null
+                                }
+                                {AgregarAccion
+                                    ? AgregarAccion
+                                    : null
+                                }
+                          </Stack>
                         : Acciones
                     }
                     acciones1={Acciones1 ? Acciones1 : null}

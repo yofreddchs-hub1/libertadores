@@ -180,6 +180,11 @@
                   "icon": "fact_check"
               },
               {
+                "value": "EnviarWHATSAPP",
+                "primary": "Enviar Mensaje",
+                "icon": "send"
+              },
+              {
                 "value": "Horario",
                 "primary": "Horario",
                 "icon": "calendar_month"
@@ -2765,6 +2770,59 @@
                   "multiline": false
               }
           ]
+      },
+      "Form_Seleccion_Estudiantes": {
+        "columna": 2,
+        "value": [
+            {
+                "nombre": "periodo",
+                "tipo": "lista_multiuso",
+                "label": "Periodo",
+                "placeholder": "Periodo",
+                "title": "Periodo",
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "uecla_Inscripcion",
+                "getOptionLabel": [
+                    "periodo"
+                ],
+                "key": "periodo",
+                "name": "periodo",
+                "multiline": false,
+                "cargar":true
+            },
+            {
+                "nombre": "grado",
+                "tipo": "lista_multiuso",
+                "label": "Grado",
+                "placeholder": "Grado",
+                "title": "Grado",
+                "mensaje_error": "",
+                "disabled": false,
+                "numberOfLines": "",
+                "lista": "lista_colegio_grado",
+                "getOptionLabel": [
+                    "titulo"
+                ],
+                "key": "grado",
+                "name": "grado",
+                "multiline": false
+            },
+            {
+                "key": "estudiantes",
+                "name": "estudiantes",
+                "label": "Estudiantes",
+                "tipo": "Tabla",
+                "titulos": "Titulos_Solvencias",
+                
+                "nopaginar": true,
+                "style": {
+                    "height": 420
+                }
+                
+            }
+        ]
       },
       "Form_horario": {
         "columna": 4,

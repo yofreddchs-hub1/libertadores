@@ -9,6 +9,7 @@ import RAranceles from './arancel';
 import Referencia from './referencia';
 import Horarios from './horarios';
 import RCensos from './censos';
+import EnviarWhatsapp from './enviowhatsapp';
 export const colegio_administrativo_pantallas={
     Administrativo: Inicio,
     Inscripciones: RInscripcion,
@@ -20,5 +21,6 @@ export const colegio_administrativo_pantallas={
     Solvencias:Solvencia,
     Referencias: Referencia,
     Horario:Horarios,
-    Censos:RCensos
+    Censos:RCensos,
+    EnviarWHATSAPP: EnviarWhatsapp
 }

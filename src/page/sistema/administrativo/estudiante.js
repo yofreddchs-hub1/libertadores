@@ -6,12 +6,13 @@ import DialogoR from '../../../componentes/herramientas/dialogo';
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
 import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 import TablaMultiple from '../../../componentes/herramientas/tabla/tabla_multiple';
 import Tabla from '../../../componentes/herramientas/tabla';
 import Cuerpo from '../../../componentes/herramientas/cuerpo'
 import {Condicion_Estudiante, Condicion_Representante} from '../funciones';
 import { Abrir_Recibo } from '../funciones';
-import { Ver_Valores, conexiones, Form_todos, Titulos_todos } from '../../../constantes';
+import { Ver_Valores, conexiones, Form_todos, Titulos_todos, AExcell } from '../../../constantes';
 import Reporte from '../../../componentes/reporte';
 import Recibopdf from '../pagar/pdf/recibonuevo';
 import Constanciapdf from '../../reportes/constancia';
@@ -172,11 +173,113 @@ function Estudiante (props) {
         const titulos = await Titulos_todos(`Titulos_Estudiante`, Config)
         cambiarState({esperar:false, titulos})
     }
+    
+    const FormatoPSB = async() =>{
+        if (state.cargando){
+            console.log('buscando...');
+            return
+        }
+        cambiarState({cargando:true})
+        let resultado = await conexiones.Leer_C(['uecla_Estudiante'],{uecla_Estudiante:{}});
+        console.log(resultado);
+        if (resultado.Respuesta==='Ok'){
+            let datos = resultado.datos.uecla_Estudiante
+                        .filter(f=> (f.valores.estatus && f.valores.estatus.titulo!=='Graduado' && f.valores.estatus.titulo!=='Retirado'))// || !f.valores.estatus)
+            let datosn=[];
+            for (var i=0; i<datos.length;i++ ){
+                const dat = datos[i].valores;
+                const fecha= new Date(dat.fecha_nacimiento);
+                const hoy= new Date();
+                let edad = hoy.getFullYear() - fecha.getFullYear()
+                let diferenciaMeses = hoy.getMonth() - fecha.getMonth()
+                let representa
+                if (!dat.representante){
+                    console.log(dat)
+                }else{
+                    representa = await conexiones.Leer_C(['uecla_Representante'],{uecla_Representante:{_id:dat.representante._id}});
+                }
+                if (representa && representa.Respuesta==='Ok'){
+                    representa = representa.datos.uecla_Representante[0] ? representa.datos.uecla_Representante[0].valores : null;
+                }else{
+                    representa = null
+                }
+                if (
+                    diferenciaMeses < 0 ||
+                    (diferenciaMeses === 0 && hoy.getDate() < fecha.getDate())
+                ) {
+                    edad--
+                }
+
+                datosn=[...datosn,
+                    {
+                        Nucleo:'',
+                        Modulo:'',
+                        Cedula:dat.cedula,
+                        'Apellidos y Nombres': `${dat.apellidos} ${dat.nobres}`,
+                        Dia:dat.fecha_nacimiento ? dat.fecha_nacimiento.split('-')[2] : '',
+                        Mes:dat.fecha_nacimiento ? dat.fecha_nacimiento.split('-')[1] : '',
+                        Ano:dat.fecha_nacimiento ? dat.fecha_nacimiento.split('-')[0] : '',
+                        Edad:edad,
+                        'Lugar de Nacimiento':dat.lugar_nacimiento,
+                        'Apellidos y Nombres de su Madre':dat.representante && dat.representante.parentesco._id===0 ? `${dat.representante.apellidos} ${dat.representante.nombres}` :'',
+                        'Cédula de Identidad': dat.representante && dat.representante.parentesco._id===0 ? `${dat.representante.cedula}` :'',
+                        'Apellidos y Nombres del Representante':dat.representante ? `${dat.representante.apellidos} ${dat.representante.nombres}` : '',
+                        'Cédula de IdentidadR':dat.representante ? dat.representante.cedula :'',
+                        'Teléfonos':representa ? `${representa.telefono_movil ? `${representa.telefono_movil}, ` : ''}${representa.telefono_fijo ? `${representa.telefono_fijo}, ` : ''}${representa.telefono_trabajo ? `${representa.telefono_trabajo}` : ''}` :'',
+                        'Dirección de Habitación':representa ? representa.direccion : ''
+                    }
+                ]
+
+            }
+                        // .map(async val=>{
+                        //     const dat = val.valores
+                        //     const fecha= new Date(dat.fecha_nacimiento);
+                        //     const hoy= new Date();
+                        //     let edad = hoy.getFullYear() - fecha.getFullYear()
+                        //     let diferenciaMeses = hoy.getMonth() - fecha.getMonth()
+                        //     let representa = await conexiones.Leer_C(['uecla_Representante'],{uecla_Representante:{_id:dat.representante._id}});
+                        //     if (representa.Respuesta==='Ok'){
+                        //         representa = representa.datos.uecla_Representante;
+                        //     }else{
+                        //         representa = null
+                        //     }
+                        //     console.log(representa)
+                        //     if (
+                        //         diferenciaMeses < 0 ||
+                        //         (diferenciaMeses === 0 && hoy.getDate() < fecha.getDate())
+                        //     ) {
+                        //         edad--
+                        //     }
+
+                        //     return {
+                        //         Nucleo:'',
+                        //         Modulo:'',
+                        //         Cedula:dat.cedula,
+                        //         'Apellidos y Nombres': `${dat.apellidos} ${dat.nobres}`,
+                        //         Dia:dat.fecha_nacimiento ? dat.fecha_nacimiento.split('-')[2] : '',
+                        //         Mes:dat.fecha_nacimiento ? dat.fecha_nacimiento.split('-')[1] : '',
+                        //         Ano:dat.fecha_nacimiento ? dat.fecha_nacimiento.split('-')[0] : '',
+                        //         Edad:edad,
+                        //         'Lugar de Nacimiento':dat.lugar_nacimiento,
+                        //         'Apellidos y Nombres de su Madre':dat.representante && dat.representante.parentesco._id===0 ? `${dat.representante.apellidos} ${dat.representante.nombres}` :'',
+                        //         'Cédula de Identidad': dat.representante && dat.representante.parentesco._id===0 ? `${dat.representante.cedula}` :'',
+                        //         'Apellidos y Nombres del Representante':dat.representante ? `${dat.representante.apellidos} ${dat.representante.nombres}` : '',
+                        //         'Cédula de IdentidadR':dat.representante ? dat.representante.cedula :'',
+                        //         'Teléfonos':'',
+                        //         'Dirección de Habitación':''
+                        //     }
+                        // })
+            AExcell(datosn, 'Data del PSB Falcón','Data del PSB Falcón.xlsx')
+        }
+        cambiarState({cargando:false})
+    }
     useEffect(()=>{
         Inicio()
     }, [props])
 
     const {Config}= props;
+    const color =  props.Config.Estilos.Input_icono_t ? props.Config.Estilos.Input_icono_t : {};
+
     return state.esperar ? <Cargando open={state.esperar} Config={Config}/> : (
         <Box>
             <TablaMultiple
@@ -196,6 +299,16 @@ function Estudiante (props) {
                 cargaporparte = {true}
                 sinpaginacion = {false}
                 Tam_dialogo={'lg'}
+                AgregarAccion={
+                    <div>
+                        <IconButton color={'primary'} title={'Generar Formato Data del PSB Falcón'} onClick={ FormatoPSB }>
+                            {state.cargando 
+                                ? <CircularProgress  />
+                                : <Icon style={color}>audio_file</Icon>
+                            }
+                        </IconButton>
+                    </div>
+                }
                 
             />
             <Dialogo {...state.Dialogo} config={Config}/>
