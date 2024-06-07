@@ -3,3 +3,5 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/uecoleg3/uecla/
     - /bin/cp -R build/ $DEPLOYPATH
+    - /bin/cp server/package.json $DEPLOYPATH
+    - /bin/cp server/index.js $DEPLOYPATH
