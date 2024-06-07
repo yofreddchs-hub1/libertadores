@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/uecoleg3/uecla/
+    - /bin/cp -R build/ $DEPLOYPATH
