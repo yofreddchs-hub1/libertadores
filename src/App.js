@@ -365,7 +365,11 @@ class InicioPrincipal extends Component {
     const Pantalla = seleccion ? seleccion : <Home {...this.state} Cambiar={()=>{this.setState({pantalla:'Censo'})}}/>
     if (['Electron', null].indexOf(Ver_Valores().tipo)===-1 && !esperar){
       console.log('es web')
-      // let dir = window.location.pathname.split('/');
+      let dir = window.location.pathname.split('/');
+      console.log(dir, window.location.origin)
+      if(window.location.origin.indexOf("ue-libertadores-de-america.onrender")!==-1){
+        window.location.href='https://uecolegiolibertadoresdeamerica.com'
+      }
       // if (dir[1]!=='') {
       //   const {tipo} = Ver_Valores();
       //   confirmAlert({
